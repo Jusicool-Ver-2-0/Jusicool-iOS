@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jusicool_ios/screens/splash_screen.dart';
 
+//테스트용
 void main() {
   runApp(const MyApp());
 }
