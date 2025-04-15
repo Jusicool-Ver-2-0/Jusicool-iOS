@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jusicool_ios/main.dart';
 import 'package:tes/src/core/theme/colors/color_palette.dart';
 import 'package:tes/src/core/theme/texts/typography.dart';
+import 'package:jusicool_ios/screens/login_screen.dart';
 
 double leftPadding = 24;
 double textPadding = 10;
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainPage()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
     });
   }
