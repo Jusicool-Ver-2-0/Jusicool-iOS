@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_ios/main.dart';
+import 'package:jusicool_ios/screens/signup_screens/name_input_screen.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
@@ -19,7 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _showErrorMessage = false;
   String _errorMessage = '';
 
-  // 테스트용 임시 데이터
+  // 테스트용 임시 계정
   final List<Map<String, String>> _database = [
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
@@ -205,7 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const MainPage()),
+                    MaterialPageRoute(
+                      builder: (context) => const NameInputScreen(),
+                    ),
                   );
                 },
                 child: Text(
