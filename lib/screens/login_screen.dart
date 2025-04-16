@@ -24,10 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
 
-  final RegExp _passwordRegex = RegExp(
-    r'^(?=(?:.*[A-Za-z].*[0-9])|(?:.*[A-Za-z].*[@$!%*?&])|(?:.*[0-9].*[@$!%*?&]))[A-Za-z\d@$!%*?&]{8,}$',
-  );
-
   InputDecoration _getInputDecoration(String label, String hint) {
     return InputDecoration(
       labelText: label,
@@ -53,6 +49,21 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  bool isValidPassword(String password) {
+    // 길이 체크
+    if (password.length < 8 || password.length > 13) return false;
+
+    final hasLetter = RegExp(r'[A-Za-z]').hasMatch(password);
+    final hasNumber = RegExp(r'\d').hasMatch(password);
+    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
+
+    // 조건 3개 중 2개 이상 만족해야 함
+    int satisfiedConditions =
+        [hasLetter, hasNumber, hasSpecial].where((e) => e).length;
+
+    return satisfiedConditions >= 2;
+  }
+
   void _handleLogin() {
     final email = _emailController.text;
     final password = _passwordController.text;
@@ -70,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    if (!_passwordRegex.hasMatch(password)) {
+    if (!isValidPassword(password)) {
       setState(() {
         _showErrorMessage = true;
         _errorMessage = '비밀번호는 영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상이어야 합니다.';
