@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tes/src/core/theme/colors/color_palette.dart';
-import 'package:tes/src/core/theme/texts/typography.dart';
-import 'package:tes/src/ui/widgets/textfiled/default_textfiled.dart';
-import 'package:tes/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
+import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -43,7 +43,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
             const SizedBox(height: 24),
             Text('이름', style: AppTypography.bodySmall),
             const SizedBox(height: 8),
-            CustomTextField(
+            DefaultTextField(
               label: "이름",
               hintText: "실명을 적어주세요",
               validator: (value) {

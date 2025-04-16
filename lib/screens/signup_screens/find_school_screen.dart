@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tes/src/core/theme/colors/color_palette.dart';
-import 'package:tes/src/core/theme/texts/typography.dart';
-import 'package:tes/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 
 // 학교 정보 데이터 모델
 class SchoolInfo {
@@ -333,7 +333,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                     isSchoolSelected ? AppColor.main : AppColor.gray300,
                 textColor: isSchoolSelected ? AppColor.white : AppColor.gray600,
                 borderColor:
-                    isSchoolSelected ? AppColor.main : AppColor.gray300,
+                    isSchoolSelected ? AppColor.main : AppColor.gray100,
                 text: '시작하기',
               ),
             ),

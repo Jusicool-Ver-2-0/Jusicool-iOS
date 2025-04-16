@@ -34,12 +34,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('메인 화면')),
-      body: Center(
-        child: Text(
-          '메인 화면입니다.',
-          style: TextStyle(fontSize: 24.sp), // 반응형 폰트 크기
-        ),
-      ),
+      body: Center(child: Text('메인 화면입니다.', style: TextStyle(fontSize: 24.sp))),
     );
   }
 }
