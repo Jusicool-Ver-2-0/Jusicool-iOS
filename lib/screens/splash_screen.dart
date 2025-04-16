@@ -5,6 +5,7 @@ import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
+import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

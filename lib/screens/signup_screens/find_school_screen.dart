@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_ios/main.dart';
 
 // 학교 정보 데이터 모델
 class SchoolInfo {
@@ -71,6 +72,11 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     if (_selectedSchool != null) {
       print('선택된 학교: ${_selectedSchool!.name}');
       print('주소: ${_selectedSchool!.address}');
+      // MainPage로 이동 (값 전달 없이)
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainPage()),
+      );
     }
   }
 
