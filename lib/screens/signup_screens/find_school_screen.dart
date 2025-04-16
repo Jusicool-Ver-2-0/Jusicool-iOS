@@ -62,6 +62,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
         print('검색된 학교: $_filteredSchools');
       } else {
         _filteredSchools = [];
+        _selectedSchool = null; // 검색 결과가 없어지면 선택 해제
       }
     });
   }
@@ -81,7 +82,12 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedSchool = school;
+          // 이미 선택된 학교를 다시 클릭하면 선택 취소
+          if (_selectedSchool == school) {
+            _selectedSchool = null;
+          } else {
+            _selectedSchool = school;
+          }
         });
         onTap();
       },
@@ -172,21 +178,17 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildSearchButton(bool isFieldNotEmpty) {
+  Widget _buildSearchButton() {
     return Positioned(
       top: 194.h,
       left: _searchButtonLeftOffset.w,
       child: GestureDetector(
         onTapDown: (_) {
-          if (isFieldNotEmpty) {
-            setState(() => _isSearchButtonPressed = true);
-          }
+          setState(() => _isSearchButtonPressed = true);
         },
         onTapUp: (_) {
-          if (isFieldNotEmpty) {
-            setState(() => _isSearchButtonPressed = false);
-            _onSearch();
-          }
+          setState(() => _isSearchButtonPressed = false);
+          _onSearch();
         },
         onTapCancel: () {
           setState(() => _isSearchButtonPressed = false);
@@ -197,18 +199,9 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           height: 54.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
-            color:
-                isFieldNotEmpty
-                    ? (_isSearchButtonPressed
-                        ? AppColor.gray100
-                        : AppColor.white)
-                    : AppColor.gray200,
+            color: _isSearchButtonPressed ? AppColor.gray100 : AppColor.white,
           ),
-          child: Image.asset(
-            'assets/images/Search.png',
-            fit: BoxFit.cover,
-            color: isFieldNotEmpty ? null : AppColor.gray400,
-          ),
+          child: Image.asset('assets/images/Search.png', fit: BoxFit.cover),
         ),
       ),
     );
@@ -223,7 +216,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
         height: 54.h,
         child: TextField(
           controller: _schoolNameController,
-          onChanged: (_) => setState(() {}),
+          onChanged: (value) => _onSearch(), // 실시간 검색
           decoration: InputDecoration(
             hintText: '학교명을 입력해주세요',
             hintStyle: AppTypography.bodySmall.copyWith(
@@ -283,6 +276,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
             ),
           ),
           minimumSize: Size(_buttonWidth.w, _buttonHeight.h),
+          animationDuration: const Duration(milliseconds: 100), // 색상 전환 딜레이 최소화
         ),
         child: Text(
           '시작하기',
@@ -328,7 +322,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               ),
             ),
             _buildTextField(),
-            _buildSearchButton(isFieldNotEmpty),
+            _buildSearchButton(),
             Positioned(
               top: 274.h,
               left: _horizontalPadding.w,
