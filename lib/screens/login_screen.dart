@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_ios/main.dart';
 import 'package:tes/src/core/theme/colors/color_palette.dart';
 import 'package:tes/src/core/theme/texts/typography.dart';
@@ -34,19 +35,19 @@ class _LoginScreenState extends State<LoginScreen> {
         color: _showErrorMessage ? AppColor.error : AppColor.gray600,
       ),
       hintText: hint,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
       enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(
           color: _showErrorMessage ? AppColor.error : AppColor.gray300,
-          width: 1,
+          width: 1.w,
         ),
       ),
       focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.r),
         borderSide: BorderSide(
           color: _showErrorMessage ? AppColor.error : AppColor.main,
-          width: 2,
+          width: 2.w,
         ),
       ),
     );
@@ -99,125 +100,126 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     final isFormFilled =
         _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-    final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       backgroundColor: AppColor.white,
-      body: Stack(
-        children: [
-          // 로고
-          Positioned(
-            top: 132,
-            left: 24,
-            child: Image.asset(
-              'assets/images/JUSICOOL.png',
-              width: 220,
-              height: 32,
-            ),
-          ),
-          Positioned(
-            top: 172,
-            left: 26,
-            child: Text(
-              'jusicool로 간단하게 모의투자부터',
-              style: AppTypography.bodySmall.copyWith(
-                color: AppColor.gray600,
-                fontSize: 16,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Positioned(
+              top: 112.h,
+              left: 24.w,
+              child: Image.asset(
+                'assets/images/JUSICOOL.png',
+                width: 220.w,
+                height: 32.h,
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          Positioned(
-            top: 304,
-            left: 24,
-            child: SizedBox(
-              width: screenWidth - 48,
-              child: TextFormField(
-                controller: _emailController,
-                onChanged: (_) => setState(() => _showErrorMessage = false),
-                decoration: _getInputDecoration('이메일', '이메일을 입력해주세요'),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 410,
-            left: 24,
-            child: SizedBox(
-              width: screenWidth - 48,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextFormField(
-                    controller: _passwordController,
-                    onChanged: (_) => setState(() => _showErrorMessage = false),
-                    obscureText: true,
-                    decoration: _getInputDecoration('비밀번호', '비밀번호를 입력해주세요'),
-                  ),
-                  if (_showErrorMessage)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        _errorMessage,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColor.error,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          // 로그인 버튼
-          Positioned(
-            top: 694,
-            left: 24,
-            child: SizedBox(
-              width: screenWidth - 48,
-              child: AppButtonMedium(
-                text: '로그인',
-                onPressed: _handleLogin,
-                backgroundColor:
-                    isFormFilled ? AppColor.main : AppColor.gray300,
-                textColor: isFormFilled ? AppColor.white : AppColor.gray600,
-                borderColor: isFormFilled ? AppColor.main : AppColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 756,
-            left: 0,
-            right: 0,
-            child: Text(
-              '아직 계정이 없으신가요?',
-              textAlign: TextAlign.center,
-              style: AppTypography.bodySmall.copyWith(
-                fontSize: 14,
-                color: AppColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 780,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
-                );
-              },
+            Positioned(
+              top: 152.h,
+              left: 26.w,
               child: Text(
-                '회원가입',
-                textAlign: TextAlign.center,
+                'jusicool로 간단하게 모의투자부터',
                 style: AppTypography.bodySmall.copyWith(
-                  fontSize: 16,
-                  color: AppColor.main,
+                  color: AppColor.gray600,
+                  fontSize: 16.sp,
                 ),
               ),
             ),
-          ),
-        ],
+            Positioned(
+              top: 260.h,
+              left: 24.w,
+              child: SizedBox(
+                width: 312.w,
+                child: TextFormField(
+                  controller: _emailController,
+                  onChanged: (_) => setState(() => _showErrorMessage = false),
+                  decoration: _getInputDecoration('이메일', '이메일을 입력해주세요'),
+                ),
+              ),
+            ),
+            Positioned(
+              top: 360.h,
+              left: 24.w,
+              child: SizedBox(
+                width: 312.w,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFormField(
+                      controller: _passwordController,
+                      onChanged:
+                          (_) => setState(() => _showErrorMessage = false),
+                      obscureText: true,
+                      decoration: _getInputDecoration('비밀번호', '비밀번호를 입력해주세요'),
+                    ),
+                    if (_showErrorMessage)
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.h),
+                        child: Text(
+                          _errorMessage,
+                          style: AppTypography.bodySmall.copyWith(
+                            color: AppColor.error,
+                            fontSize: 12.sp,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+            Positioned(
+              top: 614.h,
+              left: 24.w,
+              child: SizedBox(
+                width: 312.w,
+                child: AppButtonMedium(
+                  text: '로그인',
+                  onPressed: _handleLogin,
+                  backgroundColor:
+                      isFormFilled ? AppColor.main : AppColor.gray300,
+                  textColor: isFormFilled ? AppColor.white : AppColor.gray600,
+                  borderColor: isFormFilled ? AppColor.main : AppColor.gray300,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 672.h,
+              left: 0,
+              right: 0,
+              child: Text(
+                '아직 계정이 없으신가요?',
+                textAlign: TextAlign.center,
+                style: AppTypography.bodySmall.copyWith(
+                  fontSize: 14.sp,
+                  color: AppColor.gray300,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 696.h,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MainPage()),
+                  );
+                },
+                child: Text(
+                  '회원가입',
+                  textAlign: TextAlign.center,
+                  style: AppTypography.bodySmall.copyWith(
+                    fontSize: 16.sp,
+                    color: AppColor.main,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
