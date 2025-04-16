@@ -18,6 +18,7 @@ dependencies:
   flutter_svg: ^2.0.17
   flutter_native_splash: ^2.4.6
   email_validator: ^3.0.0
+  flutter_screenutil: ^5.9.3
 
 flutter_native_splash:
   color: "#FFFFFF"
