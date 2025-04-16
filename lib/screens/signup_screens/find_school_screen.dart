@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 
 // 학교 정보 데이터 모델
 class SchoolInfo {
@@ -33,8 +32,8 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
   static const double _searchButtonLeftOffset = 282.0;
   static const double _bottomPadding = 24.0;
   static const double _buttonHeight = 54.0;
+  static const double _buttonWidth = 312.0;
 
-  // 학교 데이터 (예시 데이터)
   final List<SchoolInfo> _schools = [
     SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
     SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
@@ -124,7 +123,6 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  // 라벨 박스 빌드 메서드
   Widget _buildLabelBox({
     required double top,
     required double left,
@@ -265,6 +263,38 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
+  Widget _buildStartButton({
+    required bool isSchoolSelected,
+    required VoidCallback onPressed,
+  }) {
+    return SizedBox(
+      width: _buttonWidth.w,
+      height: _buttonHeight.h,
+      child: ElevatedButton(
+        onPressed: isSchoolSelected ? onPressed : null,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: isSchoolSelected ? AppColor.main : AppColor.gray300,
+          foregroundColor: isSchoolSelected ? AppColor.white : AppColor.gray600,
+          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.r),
+            side: BorderSide(
+              color: isSchoolSelected ? AppColor.main : AppColor.gray100,
+            ),
+          ),
+          minimumSize: Size(_buttonWidth.w, _buttonHeight.h),
+        ),
+        child: Text(
+          '시작하기',
+          style: AppTypography.bodyMedium.copyWith(
+            color: isSchoolSelected ? AppColor.white : AppColor.gray600,
+            fontSize: 18.sp,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final isFieldNotEmpty = _schoolNameController.text.isNotEmpty;
@@ -327,14 +357,9 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
             Positioned(
               bottom: _bottomPadding.h,
               left: _horizontalPadding.w,
-              child: AppButtonMedium(
-                onPressed: isSchoolSelected ? _onStart : null,
-                backgroundColor:
-                    isSchoolSelected ? AppColor.main : AppColor.gray300,
-                textColor: isSchoolSelected ? AppColor.white : AppColor.gray600,
-                borderColor:
-                    isSchoolSelected ? AppColor.main : AppColor.gray100,
-                text: '시작하기',
+              child: _buildStartButton(
+                isSchoolSelected: isSchoolSelected,
+                onPressed: _onStart,
               ),
             ),
           ],
