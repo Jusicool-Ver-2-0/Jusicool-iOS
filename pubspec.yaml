@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  tes:
+  jusicool_design_system:
     git:
       url: https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git
       ref: main
@@ -20,7 +20,7 @@ dependencies:
   email_validator: ^3.0.0
 
 flutter_native_splash:
-  color: "#FFFFFF" 
+  color: "#FFFFFF"
   image: assets/images/JUSICOOL.png
   android: true
   ios: true

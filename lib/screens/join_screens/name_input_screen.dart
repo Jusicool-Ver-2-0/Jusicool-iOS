@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tes/src/core/theme/colors/color_palette.dart';
-import 'package:tes/src/core/theme/texts/typography.dart';
-import 'package:tes/src/ui/widgets/textfiled/default_textfiled.dart';
-import 'package:tes/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -13,15 +13,53 @@ class NameInputScreen extends StatefulWidget {
 
 class _NameInputScreenState extends State<NameInputScreen> {
   final TextEditingController _controller = TextEditingController();
+  String? _errorMessage;
 
   bool get _isButtonEnabled => _controller.text.trim().isNotEmpty;
 
   @override
   void initState() {
     super.initState();
-    _controller.addListener(() {
-      setState(() {}); // 텍스트 변경 시 버튼 상태 업데이트
-    });
+    _controller.addListener(_clearErrorOnTextChange);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _clearErrorOnTextChange() {
+    if (_errorMessage != null) {
+      setState(() {
+        _errorMessage = null;
+      });
+    }
+  }
+
+  void _handleNext() {
+    final name = _controller.text.trim();
+
+    if (name.isEmpty) {
+      setState(() {
+        _errorMessage = '필수 입력 항목입니다.';
+      });
+      return;
+    }
+
+    if (!_isValidKoreanName(name)) {
+      setState(() {
+        _errorMessage = '한글 이름을 2자 이상 입력해주세요.';
+      });
+      return;
+    }
+
+    // Navigate to the next screen
+    // Navigator.push(context, MaterialPageRoute(builder: (_) => NextScreen()));
+  }
+
+  bool _isValidKoreanName(String name) {
+    return RegExp(r'^[가-힣]{2,}$').hasMatch(name);
   }
 
   @override
@@ -43,27 +81,38 @@ class _NameInputScreenState extends State<NameInputScreen> {
             const SizedBox(height: 24),
             Text('이름', style: AppTypography.bodySmall),
             const SizedBox(height: 8),
-            CustomTextField(
-              label: "이름",
-              hintText: "실명을 적어주세요",
+            DefaultTextField(
+              controller: _controller,
+              label: '이름',
+              hintText: '실명을 적어주세요',
               validator: (value) {
-                if (value == null || value.isEmpty) return '필수 입력 항목입니다.';
-                if (!RegExp(r'^[가-힣]{2,}$').hasMatch(value)) {
-                  return '한글 이름을 2자 이상 입력해주세요.';
+                final name = value?.trim() ?? '';
+                if (name.isEmpty) {
+                  _errorMessage = '이름을 입력해주세요';
+                } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
+                  _errorMessage = '2자 이상 한글로 입력해주세요';
+                } else {
+                  _errorMessage = null;
                 }
-                return null;
+                return _errorMessage;
               },
+              errorText: _errorMessage,
             ),
             const Spacer(),
             SizedBox(
               width: double.infinity,
               height: 48,
               child: AppButtonMedium(
-                text: "다음",
-                onPressed: () {},
-                backgroundColor: AppColor.gray300,
-                textColor: AppColor.gray600,
-                borderColor: AppColor.gray300,
+                text: '다음',
+                onPressed:
+                    _isButtonEnabled
+                        ? _handleNext
+                        : null, // Disable button if not enabled
+                backgroundColor:
+                    _isButtonEnabled ? AppColor.main : AppColor.gray300,
+                textColor: _isButtonEnabled ? AppColor.white : AppColor.gray600,
+                borderColor:
+                    _isButtonEnabled ? AppColor.main : AppColor.gray300,
               ),
             ),
           ],

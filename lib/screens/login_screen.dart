@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:jusicool_ios/main.dart';
-import 'package:tes/src/core/theme/colors/color_palette.dart';
-import 'package:tes/src/core/theme/texts/typography.dart';
-import 'package:tes/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_ios/screens/join_screens/name_input_screen.dart';
+import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:email_validator/email_validator.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -204,7 +205,7 @@ class _LoginScreenState extends State<LoginScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const MainPage()),
+                  MaterialPageRoute(builder: (context) => NameInputScreen()),
                 );
               },
               child: Text(
