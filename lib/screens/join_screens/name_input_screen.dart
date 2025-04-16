@@ -3,6 +3,7 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
+import 'package:jusicool_ios/main.dart';
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -54,8 +55,11 @@ class _NameInputScreenState extends State<NameInputScreen> {
       return;
     }
 
-    // Navigate to the next screen
-    // Navigator.push(context, MaterialPageRoute(builder: (_) => NextScreen()));
+    // 유효성 통과 → 메인 페이지로 이동
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => MainPage()),
+    );
   }
 
   bool _isValidKoreanName(String name) {
@@ -104,10 +108,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
               height: 48,
               child: AppButtonMedium(
                 text: '다음',
-                onPressed:
-                    _isButtonEnabled
-                        ? _handleNext
-                        : null, // Disable button if not enabled
+                onPressed: _isButtonEnabled ? _handleNext : null,
                 backgroundColor:
                     _isButtonEnabled ? AppColor.main : AppColor.gray300,
                 textColor: _isButtonEnabled ? AppColor.white : AppColor.gray600,
