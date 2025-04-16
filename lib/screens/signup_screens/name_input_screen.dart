@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
 import 'package:jusicool_ios/main.dart';
+import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -55,10 +57,9 @@ class _NameInputScreenState extends State<NameInputScreen> {
       return;
     }
 
-    // 유효성 통과 → 메인 페이지로 이동
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => MainPage()),
+      MaterialPageRoute(builder: (_) => FindSchoolScreen()),
     );
   }
 
@@ -69,6 +70,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.white,
       appBar: AppBar(
         leading: const BackButton(),
         title: const Text(''),
@@ -78,42 +80,61 @@ class _NameInputScreenState extends State<NameInputScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Text('이름을 적어 주세요', style: AppTypography.subTitle),
-            const SizedBox(height: 24),
-            Text('이름', style: AppTypography.bodySmall),
-            const SizedBox(height: 8),
-            DefaultTextField(
-              controller: _controller,
-              label: '이름',
-              hintText: '실명을 적어주세요',
-              validator: (value) {
-                final name = value?.trim() ?? '';
-                if (name.isEmpty) {
-                  _errorMessage = '이름을 입력해주세요';
-                } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
-                  _errorMessage = '2자 이상 한글로 입력해주세요';
-                } else {
-                  _errorMessage = null;
-                }
-                return _errorMessage;
-              },
-              errorText: _errorMessage,
+            // "이름을 적어 주세요" 텍스트
+            Positioned(
+              top: 0,
+              left: 0,
+              child: Text('이름을 적어 주세요', style: AppTypography.subTitle),
             ),
-            const Spacer(),
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: AppButtonMedium(
-                text: '다음',
-                onPressed: _isButtonEnabled ? _handleNext : null,
-                backgroundColor:
-                    _isButtonEnabled ? AppColor.main : AppColor.gray300,
-                textColor: _isButtonEnabled ? AppColor.white : AppColor.gray600,
-                borderColor:
-                    _isButtonEnabled ? AppColor.main : AppColor.gray300,
+            // "이름" 라벨
+            Positioned(
+              top: 48.h, // 24 + 24 (기존 간격 유지)
+              left: 0,
+              child: Text('이름', style: AppTypography.bodySmall),
+            ),
+            // 텍스트 필드
+            Positioned(
+              top: 72.h, // 48 + 8 + 8 (기존 간격 유지)
+              left: 0,
+              right: 0,
+              child: DefaultTextField(
+                controller: _controller,
+                label: '이름',
+                hintText: '실명을 적어주세요',
+                validator: (value) {
+                  final name = value?.trim() ?? '';
+                  if (name.isEmpty) {
+                    _errorMessage = '이름을 입력해주세요';
+                  } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
+                    _errorMessage = '2자 이상 한글로 입력해주세요';
+                  } else {
+                    _errorMessage = null;
+                  }
+                  return _errorMessage;
+                },
+                errorText: _errorMessage,
+              ),
+            ),
+            // "다음" 버튼
+            Positioned(
+              bottom: 56.h,
+              left: 0,
+              right: 0,
+              child: SizedBox(
+                width: double.infinity,
+                height: 48.h,
+                child: AppButtonMedium(
+                  text: '다음',
+                  onPressed: _isButtonEnabled ? _handleNext : null,
+                  backgroundColor:
+                      _isButtonEnabled ? AppColor.main : AppColor.gray300,
+                  textColor:
+                      _isButtonEnabled ? AppColor.white : AppColor.gray600,
+                  borderColor:
+                      _isButtonEnabled ? AppColor.main : AppColor.gray300,
+                ),
               ),
             ),
           ],
