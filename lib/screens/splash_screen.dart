@@ -4,6 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
+import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
+import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -28,50 +30,48 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            _buildPositionedRow(
-              top: 132.h,
-              left: 24.w,
-              text: '스마트한',
-              textStyle: AppTypography.titleLarge.copyWith(
-                color: AppColor.black,
-                fontSize: 48.sp,
-              ),
-              imagePath: 'assets/images/Cards.png',
-              imageWidth: 62.w,
-              imageHeight: 62.h,
-              isImageFirst: false,
+      body: Stack(
+        children: [
+          _buildPositionedRow(
+            top: 132.h,
+            left: 24.w,
+            text: '스마트한',
+            textStyle: AppTypography.titleLarge.copyWith(
+              color: AppColor.black,
+              fontSize: 48.sp,
             ),
-            _buildPositionedRow(
-              top: 210.h,
-              left: 24.w,
-              text: '투자의 시작',
-              textStyle: AppTypography.titleLarge.copyWith(
-                color: AppColor.black,
-                fontSize: 48.sp,
-              ),
-              imagePath: 'assets/images/Graphic.png',
-              imageWidth: 62.w,
-              imageHeight: 62.h,
-              isImageFirst: true,
+            imagePath: 'assets/images/Cards.png',
+            imageWidth: 62.w,
+            imageHeight: 62.h,
+            isImageFirst: false,
+          ),
+          _buildPositionedRow(
+            top: 210.h,
+            left: 24.w,
+            text: '투자의 시작',
+            textStyle: AppTypography.titleLarge.copyWith(
+              color: AppColor.black,
+              fontSize: 48.sp,
             ),
-            _buildPositionedRow(
-              top: 298.h,
-              left: 24.w,
-              text: null,
-              textStyle: null,
-              imagePath: 'assets/images/JUSICOOL.png',
-              imageWidth: 220.w,
-              imageHeight: 32.h,
-              trailingImagePath: 'assets/images/Cloud.png',
-              trailingImageWidth: 56.w,
-              trailingImageHeight: 56.h,
-              isImageFirst: false,
-            ),
-          ],
-        ),
+            imagePath: 'assets/images/Graphic.png',
+            imageWidth: 62.w,
+            imageHeight: 62.h,
+            isImageFirst: true,
+          ),
+          _buildPositionedRow(
+            top: 298.h,
+            left: 24.w,
+            text: null,
+            textStyle: null,
+            imagePath: 'assets/images/JUSICOOL.png',
+            imageWidth: 220.w,
+            imageHeight: 32.h,
+            trailingImagePath: 'assets/images/Cloud.png',
+            trailingImageWidth: 56.w,
+            trailingImageHeight: 56.h,
+            isImageFirst: false,
+          ),
+        ],
       ),
     );
   }
@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
               imagePath,
               width: imageWidth,
               height: imageHeight,
-              fit: BoxFit.cover, // 이미지 크기 조정 방식 지정
+              fit: BoxFit.cover,
             ),
           if (isImageFirst) SizedBox(width: 10.w),
           if (text != null) Text(text, style: textStyle),
@@ -110,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen> {
               imagePath,
               width: imageWidth,
               height: imageHeight,
-              fit: BoxFit.cover, // 이미지 크기 조정 방식 지정
+              fit: BoxFit.cover,
             ),
           if (trailingImagePath != null) SizedBox(width: 10.w),
           if (trailingImagePath != null)
@@ -118,7 +118,7 @@ class _SplashScreenState extends State<SplashScreen> {
               trailingImagePath,
               width: trailingImageWidth,
               height: trailingImageHeight,
-              fit: BoxFit.cover, // 이미지 크기 조정 방식 지정
+              fit: BoxFit.cover,
             ),
         ],
       ),

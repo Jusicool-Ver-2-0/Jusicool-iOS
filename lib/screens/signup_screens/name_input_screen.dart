@@ -4,7 +4,6 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
-import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
 import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
 
 class NameInputScreen extends StatefulWidget {
@@ -82,26 +81,24 @@ class _NameInputScreenState extends State<NameInputScreen> {
         padding: const EdgeInsets.all(20.0),
         child: Stack(
           children: [
-            // "이름을 적어 주세요" 텍스트
             Positioned(
               top: 0,
               left: 0,
               child: Text('이름을 적어 주세요', style: AppTypography.subTitle),
             ),
-            // "이름" 라벨
+
             Positioned(
-              top: 48.h, // 24 + 24 (기존 간격 유지)
+              top: 48.h,
               left: 0,
               child: Text('이름', style: AppTypography.bodySmall),
             ),
-            // 텍스트 필드
+
             Positioned(
-              top: 72.h, // 48 + 8 + 8 (기존 간격 유지)
+              top: 72.h,
               left: 0,
               right: 0,
               child: DefaultTextField(
                 controller: _controller,
-                label: '이름',
                 hintText: '실명을 적어주세요',
                 validator: (value) {
                   final name = value?.trim() ?? '';
@@ -117,7 +114,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 errorText: _errorMessage,
               ),
             ),
-            // "다음" 버튼
+
             Positioned(
               bottom: 56.h,
               left: 0,
@@ -133,7 +130,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                   textColor:
                       _isButtonEnabled ? AppColor.white : AppColor.gray600,
                   borderColor:
-                      _isButtonEnabled ? AppColor.main : AppColor.gray300,
+                      _isButtonEnabled ? AppColor.main : AppColor.gray100,
                 ),
               ),
             ),

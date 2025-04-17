@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
@@ -44,6 +45,15 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
     super.initState();
     passwordController.addListener(onPasswordChanged);
     confirmPasswordController.addListener(onConfirmPasswordChanged);
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: AppColor.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: AppColor.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
   }
 
   @override
@@ -154,66 +164,86 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
-        backgroundColor: AppColor.white,
+        leading: const BackButton(),
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       backgroundColor: AppColor.white,
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // AppBar 바로 아래에 딱 붙는 타이틀
-            SizedBox(height: 8.h), // 살짝만 띄움 (너무 붙으면 답답할 수 있어서)
-            Text('비밀번호를 입력해주세요', style: TITLE_STYLE),
-            SizedBox(height: 32.h),
+      extendBodyBehindAppBar: true,
+      body: Stack(
+        children: [
+          Positioned(
+            top: 112.h,
+            left: 24.w,
+            child: Text('비밀번호를 입력해주세요', style: TITLE_STYLE),
+          ),
 
-            // 비밀번호 입력 필드
-            Text(
+          Positioned(
+            top: 179.h,
+            left: 24.w,
+            child: Text(
               '비밀번호',
               style: LABEL_STYLE.copyWith(
                 color: isPasswordValid ? AppColor.black : AppColor.error,
               ),
             ),
-            SizedBox(height: 8.h),
-            buildTextField(
+          ),
+
+          Positioned(
+            top: 209.h,
+            left: 24.w,
+            right: 24.w,
+            child: buildTextField(
               controller: passwordController,
               hintText: '비밀번호를 입력해주세요',
               isValid: isPasswordValid,
             ),
-            if (!isPasswordValid)
-              Padding(
-                padding: EdgeInsets.only(top: 8.h),
-                child: Text(
-                  '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
-                  style: ERROR_STYLE,
-                ),
-              ),
-            SizedBox(height: 24.h),
+          ),
 
-            // 비밀번호 재입력 필드
-            Text(
+          if (!isPasswordValid)
+            Positioned(
+              top: (209 + FIELD_HEIGHT + 8).h,
+              left: 24.w,
+              child: Text(
+                '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
+                style: ERROR_STYLE,
+              ),
+            ),
+
+          Positioned(
+            top: 295.h,
+            left: 24.w,
+            child: Text(
               '비밀번호 재 입력',
               style: LABEL_STYLE.copyWith(
                 color: isPasswordMatched ? AppColor.black : AppColor.error,
               ),
             ),
-            SizedBox(height: 8.h),
-            buildTextField(
+          ),
+
+          Positioned(
+            top: 325.h,
+            left: 24.w,
+            right: 24.w,
+            child: buildTextField(
               controller: confirmPasswordController,
               hintText: '비밀번호를 다시 입력해주세요',
               isValid: isPasswordMatched,
             ),
-            if (!isPasswordMatched)
-              Padding(
-                padding: EdgeInsets.only(top: 8.h),
-                child: Text('비밀번호가 일치하지 않아요', style: ERROR_STYLE),
-              ),
-            SizedBox(height: 48.h),
+          ),
 
-            // 다음 버튼
-            SizedBox(
+          if (!isPasswordMatched)
+            Positioned(
+              top: (325 + FIELD_HEIGHT + 8).h,
+              left: 24.w,
+              child: Text('비밀번호가 일치하지 않아요', style: ERROR_STYLE),
+            ),
+
+          Positioned(
+            bottom: 24.h,
+            left: 24.w,
+            right: 24.w,
+            child: SizedBox(
               width: double.infinity,
               height: BUTTON_HEIGHT.h,
               child: ElevatedButton(
@@ -239,9 +269,8 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
                 ),
               ),
             ),
-            SizedBox(height: 24.h),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
