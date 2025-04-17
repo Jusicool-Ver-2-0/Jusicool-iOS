@@ -313,6 +313,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     final isFieldNotEmpty = schoolNameController.text.isNotEmpty;
     final isSchoolSelected = selectedSchool != null;
 
+
     return Scaffold(
       backgroundColor: AppColor.white,
       appBar: AppBar(
@@ -336,7 +337,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               left: HORIZONTAL_PADDING.w,
               child: Text(
                 '현재 재학 중인 학교 이름을 입력해주세요',
-                style: AppTypography.titleMedium.copyWith(
+                style: AppTypography.subTitle.copyWith(
                   fontSize: 18.sp,
                   color: AppColor.black,
                 ),

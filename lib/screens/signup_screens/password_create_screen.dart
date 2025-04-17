@@ -182,6 +182,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
             top: 179.h,
             left: 24.w,
             child: Text(
+
               '비밀번호',
               style: LABEL_STYLE.copyWith(
                 color: isPasswordValid ? AppColor.black : AppColor.error,
