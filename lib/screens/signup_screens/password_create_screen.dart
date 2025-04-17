@@ -166,7 +166,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
           children: [
             // AppBar 바로 아래에 딱 붙는 타이틀
             SizedBox(height: 8.h), // 살짝만 띄움 (너무 붙으면 답답할 수 있어서)
-            Text('비밀번호를 입력해주세요', style: TITLE_STYLE),
+            Text('비밀번호를 입력해주세요', style: AppTypography.subTitle),
             SizedBox(height: 32.h),
 
             // 비밀번호 입력 필드

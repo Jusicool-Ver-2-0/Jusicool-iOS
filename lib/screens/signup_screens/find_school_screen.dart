@@ -297,7 +297,6 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isFieldNotEmpty = _schoolNameController.text.isNotEmpty;
     final isSchoolSelected = _selectedSchool != null;
 
     return Scaffold(
@@ -311,7 +310,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               left: _horizontalPadding.w,
               child: Text(
                 '현재 재학 중인 학교 이름을 입력해주세요',
-                style: AppTypography.titleMedium.copyWith(
+                style: AppTypography.subTitle.copyWith(
                   fontSize: 18.sp,
                   color: AppColor.black,
                 ),
