@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/main.dart';
+import 'package:jusicool_ios/screens/mycapital_screens/maincapital_screen.dart';
 
-// 학교 정보 데이터 모델
 class SchoolInfo {
   final String name;
   final String address;
@@ -22,20 +22,20 @@ class FindSchoolScreen extends StatefulWidget {
 }
 
 class _FindSchoolScreenState extends State<FindSchoolScreen> {
-  final TextEditingController _schoolNameController = TextEditingController();
-  bool _isSearchButtonPressed = false;
-  List<SchoolInfo> _filteredSchools = [];
-  SchoolInfo? _selectedSchool;
+  final TextEditingController schoolNameController = TextEditingController();
+  bool isSearchButtonPressed = false;
+  List<SchoolInfo> filteredSchools = [];
+  SchoolInfo? selectedSchool;
 
-  static const Color _selectedBorderColor = Color(0xFF2756F1);
-  static const double _selectedBorderOpacity = 0.5;
-  static const double _horizontalPadding = 24.0;
-  static const double _searchButtonLeftOffset = 282.0;
-  static const double _bottomPadding = 24.0;
-  static const double _buttonHeight = 54.0;
-  static const double _buttonWidth = 312.0;
+  static const Color SELECTED_BORDER_COLOR = Color(0xFF2756F1);
+  static const double SELECTED_BORDER_OPACITY = 0.5;
+  static const double HORIZONTAL_PADDING = 24.0;
+  static const double SEARCH_BUTTON_LEFT_OFFSET = 282.0;
+  static const double BOTTOM_PADDING = 24.0;
+  static const double BUTTON_HEIGHT = 54.0;
+  static const double BUTTON_WIDTH = 312.0;
 
-  final List<SchoolInfo> _schools = [
+  final List<SchoolInfo> schools = [
     SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
     SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
     SchoolInfo(name: "가나초등학교", address: "대충남도 대충시 가나동 가나로 5-6"),
@@ -45,42 +45,56 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
   @override
   void initState() {
     super.initState();
-    _filteredSchools = [];
+    filteredSchools = [];
+
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarColor: AppColor.white,
+        statusBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: AppColor.white,
+        systemNavigationBarIconBrightness: Brightness.dark,
+      ),
+    );
   }
 
-  void _onSearch() {
-    final searchQuery = _schoolNameController.text.trim();
+  @override
+  void dispose() {
+    schoolNameController.dispose();
+    super.dispose();
+  }
+
+  void onSearch() {
+    final searchQuery = schoolNameController.text.trim();
     setState(() {
       if (searchQuery.isNotEmpty) {
-        _filteredSchools =
-            _schools
+        filteredSchools =
+            schools
                 .where(
                   (school) => school.name.toLowerCase().contains(
                     searchQuery.toLowerCase(),
                   ),
                 )
                 .toList();
-        print('검색된 학교: $_filteredSchools');
+        print('검색된 학교: $filteredSchools');
       } else {
-        _filteredSchools = [];
-        _selectedSchool = null; // 검색 결과가 없어지면 선택 해제
+        filteredSchools = [];
+        selectedSchool = null;
       }
     });
   }
 
-  void _onStart() {
-    if (_selectedSchool != null) {
-      print('선택된 학교: ${_selectedSchool!.name}');
-      print('주소: ${_selectedSchool!.address}');
-      // MainPage로 이동 (값 전달 없이)
+  void onStart() {
+    if (selectedSchool != null) {
+      print('선택된 학교: ${selectedSchool!.name}');
+      print('주소: ${selectedSchool!.address}');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MainPage()),
+        MaterialPageRoute(builder: (_) => const MainCapitalScreen()),
       );
     }
   }
 
-  Widget _buildSchoolInfoBox({
+  Widget buildSchoolInfoBox({
     required SchoolInfo school,
     required bool isSelected,
     required VoidCallback onTap,
@@ -88,17 +102,16 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          // 이미 선택된 학교를 다시 클릭하면 선택 취소
-          if (_selectedSchool == school) {
-            _selectedSchool = null;
+          if (selectedSchool == school) {
+            selectedSchool = null;
           } else {
-            _selectedSchool = school;
+            selectedSchool = school;
           }
         });
         onTap();
       },
       child: Container(
-        width: 312.w,
+        width: BUTTON_WIDTH.w,
         height: 79.h,
         decoration: BoxDecoration(
           color: AppColor.white,
@@ -106,36 +119,36 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           border: Border.all(
             color:
                 isSelected
-                    ? _selectedBorderColor.withOpacity(_selectedBorderOpacity)
+                    ? SELECTED_BORDER_COLOR.withOpacity(SELECTED_BORDER_OPACITY)
                     : AppColor.gray300,
             width: 1.w,
           ),
         ),
         child: Stack(
           children: [
-            _buildLabelBox(
+            buildLabelBox(
               top: 14.h,
               left: 16.w,
               width: 62.w,
               label: '학교명',
               paddingLeft: 15.w,
             ),
-            _buildLabelBox(
+            buildLabelBox(
               top: 43.h,
               left: 16.w,
               width: 62.w,
               label: '주소',
               paddingLeft: 21.w,
             ),
-            _buildText(top: 17.h, left: 90.w, text: school.name),
-            _buildText(top: 46.h, left: 90.w, text: school.address),
+            buildText(top: 17.h, left: 90.w, text: school.name),
+            buildText(top: 46.h, left: 90.w, text: school.address),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildLabelBox({
+  Widget buildLabelBox({
     required double top,
     required double left,
     required double width,
@@ -166,7 +179,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildText({
+  Widget buildText({
     required double top,
     required double left,
     required String text,
@@ -184,20 +197,20 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildSearchButton() {
+  Widget buildSearchButton() {
     return Positioned(
       top: 92.h,
-      left: _searchButtonLeftOffset.w,
+      left: SEARCH_BUTTON_LEFT_OFFSET.w,
       child: GestureDetector(
         onTapDown: (_) {
-          setState(() => _isSearchButtonPressed = true);
+          setState(() => isSearchButtonPressed = true);
         },
         onTapUp: (_) {
-          setState(() => _isSearchButtonPressed = false);
-          _onSearch();
+          setState(() => isSearchButtonPressed = false);
+          onSearch();
         },
         onTapCancel: () {
-          setState(() => _isSearchButtonPressed = false);
+          setState(() => isSearchButtonPressed = false);
         },
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
@@ -205,7 +218,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           height: 54.h,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.r),
-            color: _isSearchButtonPressed ? AppColor.gray100 : AppColor.white,
+            color: isSearchButtonPressed ? AppColor.gray100 : AppColor.white,
           ),
           child: Image.asset('assets/images/Search.png', fit: BoxFit.cover),
         ),
@@ -213,16 +226,16 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildTextField() {
+  Widget buildTextField() {
     return Positioned(
       top: 92.h,
-      left: _horizontalPadding.w,
+      left: HORIZONTAL_PADDING.w,
       child: SizedBox(
         width: 246.w,
         height: 54.h,
         child: TextField(
-          controller: _schoolNameController,
-          onChanged: (value) => _onSearch(), // 실시간 검색
+          controller: schoolNameController,
+          onChanged: (value) => onSearch(),
           decoration: InputDecoration(
             hintText: '학교명을 입력해주세요',
             hintStyle: AppTypography.bodySmall.copyWith(
@@ -250,7 +263,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildNoResultsMessage() {
+  Widget buildNoResultsMessage() {
     return Center(
       child: Text(
         '검색 결과가 없습니다.',
@@ -262,13 +275,13 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _buildStartButton({
+  Widget buildStartButton({
     required bool isSchoolSelected,
     required VoidCallback onPressed,
   }) {
     return SizedBox(
-      width: _buttonWidth.w,
-      height: _buttonHeight.h,
+      width: BUTTON_WIDTH.w,
+      height: BUTTON_HEIGHT.h,
       child: ElevatedButton(
         onPressed: isSchoolSelected ? onPressed : null,
         style: ElevatedButton.styleFrom(
@@ -281,8 +294,8 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               color: isSchoolSelected ? AppColor.main : AppColor.gray100,
             ),
           ),
-          minimumSize: Size(_buttonWidth.w, _buttonHeight.h),
-          animationDuration: const Duration(milliseconds: 100), // 색상 전환 딜레이 최소화
+          minimumSize: Size(BUTTON_WIDTH.w, BUTTON_HEIGHT.h),
+          animationDuration: const Duration(milliseconds: 100),
         ),
         child: Text(
           '시작하기',
@@ -297,17 +310,31 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isSchoolSelected = _selectedSchool != null;
+    final isFieldNotEmpty = schoolNameController.text.isNotEmpty;
+    final isSchoolSelected = selectedSchool != null;
+
 
     return Scaffold(
       backgroundColor: AppColor.white,
-      appBar: AppBar(leading: BackButton(), backgroundColor: AppColor.white),
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        leading: const BackButton(),
+        backgroundColor: AppColor.white,
+        elevation: 0,
+        systemOverlayStyle: const SystemUiOverlayStyle(
+          statusBarColor: AppColor.white,
+          statusBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: AppColor.white,
+          systemNavigationBarIconBrightness: Brightness.dark,
+        ),
+      ),
+      extendBodyBehindAppBar: false,
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
               top: 10.h,
-              left: _horizontalPadding.w,
+              left: HORIZONTAL_PADDING.w,
               child: Text(
                 '현재 재학 중인 학교 이름을 입력해주세요',
                 style: AppTypography.subTitle.copyWith(
@@ -318,7 +345,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
             ),
             Positioned(
               top: 66.h,
-              left: _horizontalPadding.w,
+              left: HORIZONTAL_PADDING.w,
               child: Text(
                 '학교명',
                 style: AppTypography.bodySmall.copyWith(
@@ -327,26 +354,26 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                 ),
               ),
             ),
-            _buildTextField(),
-            _buildSearchButton(),
+            buildTextField(),
+            buildSearchButton(),
             Positioned(
               top: 172.h,
-              left: _horizontalPadding.w,
-              right: _horizontalPadding.w,
-              bottom: (_buttonHeight + _bottomPadding).h,
+              left: HORIZONTAL_PADDING.w,
+              right: HORIZONTAL_PADDING.w,
+              bottom: (BUTTON_HEIGHT + BOTTOM_PADDING).h,
               child:
-                  _filteredSchools.isEmpty
-                      ? _buildNoResultsMessage()
+                  filteredSchools.isEmpty
+                      ? buildNoResultsMessage()
                       : ListView.separated(
-                        itemCount: _filteredSchools.length,
+                        itemCount: filteredSchools.length,
                         separatorBuilder:
                             (context, index) => SizedBox(height: 12.h),
                         itemBuilder: (context, index) {
-                          final school = _filteredSchools[index];
+                          final school = filteredSchools[index];
                           final isSelected =
-                              _selectedSchool != null &&
-                              _selectedSchool!.name == school.name;
-                          return _buildSchoolInfoBox(
+                              selectedSchool != null &&
+                              selectedSchool!.name == school.name;
+                          return buildSchoolInfoBox(
                             school: school,
                             isSelected: isSelected,
                             onTap: () => print("${school.name} 클릭됨!"),
@@ -355,11 +382,11 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                       ),
             ),
             Positioned(
-              bottom: _bottomPadding.h,
-              left: _horizontalPadding.w,
-              child: _buildStartButton(
+              bottom: BOTTOM_PADDING.h,
+              left: HORIZONTAL_PADDING.w,
+              child: buildStartButton(
                 isSchoolSelected: isSchoolSelected,
-                onPressed: _onStart,
+                onPressed: onStart,
               ),
             ),
           ],
