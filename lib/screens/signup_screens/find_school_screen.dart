@@ -186,7 +186,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
   Widget _buildSearchButton() {
     return Positioned(
-      top: 194.h,
+      top: 92.h,
       left: _searchButtonLeftOffset.w,
       child: GestureDetector(
         onTapDown: (_) {
@@ -215,7 +215,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
   Widget _buildTextField() {
     return Positioned(
-      top: 194.h,
+      top: 92.h,
       left: _horizontalPadding.w,
       child: SizedBox(
         width: 246.w,
@@ -302,11 +302,12 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
     return Scaffold(
       backgroundColor: AppColor.white,
+      appBar: AppBar(leading: BackButton(), backgroundColor: AppColor.white),
       body: SafeArea(
         child: Stack(
           children: [
             Positioned(
-              top: 112.h,
+              top: 10.h,
               left: _horizontalPadding.w,
               child: Text(
                 '현재 재학 중인 학교 이름을 입력해주세요',
@@ -317,7 +318,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               ),
             ),
             Positioned(
-              top: 168.h,
+              top: 66.h,
               left: _horizontalPadding.w,
               child: Text(
                 '학교명',
@@ -330,7 +331,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
             _buildTextField(),
             _buildSearchButton(),
             Positioned(
-              top: 274.h,
+              top: 172.h,
               left: _horizontalPadding.w,
               right: _horizontalPadding.w,
               bottom: (_buttonHeight + _bottomPadding).h,

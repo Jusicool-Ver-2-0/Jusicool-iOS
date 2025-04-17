@@ -4,8 +4,8 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
-import 'package:jusicool_ios/main.dart';
 import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
+import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -57,9 +57,9 @@ class _NameInputScreenState extends State<NameInputScreen> {
       return;
     }
 
-    Navigator.pushReplacement(
+    Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => FindSchoolScreen()),
+      MaterialPageRoute(builder: (_) => PasswordCreateScreen()),
     );
   }
 
