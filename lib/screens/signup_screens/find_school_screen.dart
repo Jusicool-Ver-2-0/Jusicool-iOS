@@ -310,9 +310,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isFieldNotEmpty = schoolNameController.text.isNotEmpty;
     final isSchoolSelected = selectedSchool != null;
-
 
     return Scaffold(
       backgroundColor: AppColor.white,

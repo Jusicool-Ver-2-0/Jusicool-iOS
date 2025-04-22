@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
 import 'package:jusicool_ios/screens/signup_screens/email_auth_screen.dart';
-import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
-import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
+
+const double BUTTON_HEIGHT = 48;
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -24,7 +23,10 @@ class _NameInputScreenState extends State<NameInputScreen> {
   @override
   void initState() {
     super.initState();
-    _controller.addListener(_clearErrorOnTextChange);
+    _controller.addListener(() {
+      _clearErrorOnTextChange();
+      setState(() {}); // 버튼 상태 갱신
+    });
   }
 
   @override
@@ -68,6 +70,51 @@ class _NameInputScreenState extends State<NameInputScreen> {
     return RegExp(r'^[가-힣]{2,}$').hasMatch(name);
   }
 
+  Widget buildButton({
+    required String label,
+    required VoidCallback? onPressed,
+    bool isLoading = false,
+  }) {
+    return Semantics(
+      button: true,
+      label: label,
+      child: SizedBox(
+        width: double.infinity,
+        height: BUTTON_HEIGHT.h,
+        child: ElevatedButton(
+          onPressed: isLoading ? null : onPressed,
+          style: ElevatedButton.styleFrom(
+            backgroundColor:
+                onPressed != null && !isLoading
+                    ? AppColor.main
+                    : AppColor.gray300,
+            foregroundColor:
+                onPressed != null && !isLoading
+                    ? AppColor.white
+                    : AppColor.gray600,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
+              side: BorderSide.none,
+            ),
+            elevation: 0,
+          ),
+          child:
+              isLoading
+                  ? const CircularProgressIndicator(color: AppColor.white)
+                  : Text(
+                    label,
+                    style: AppTypography.bodyMedium.copyWith(
+                      color:
+                          onPressed != null && !isLoading
+                              ? AppColor.white
+                              : AppColor.gray600,
+                    ),
+                  ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,15 +135,13 @@ class _NameInputScreenState extends State<NameInputScreen> {
               left: 0,
               child: Text('이름을 적어 주세요', style: AppTypography.subTitle),
             ),
-
             Positioned(
               top: 48.h,
               left: 0,
               child: Text('이름', style: AppTypography.bodySmall),
             ),
-
             Positioned(
-              top: 72.h,
+              top: 88.h,
               left: 0,
               right: 0,
               child: DefaultTextField(
@@ -116,24 +161,13 @@ class _NameInputScreenState extends State<NameInputScreen> {
                 errorText: _errorMessage,
               ),
             ),
-
             Positioned(
               bottom: 56.h,
               left: 0,
               right: 0,
-              child: SizedBox(
-                width: double.infinity,
-                height: 48.h,
-                child: AppButtonMedium(
-                  text: '다음',
-                  onPressed: _isButtonEnabled ? _handleNext : null,
-                  backgroundColor:
-                      _isButtonEnabled ? AppColor.main : AppColor.gray300,
-                  textColor:
-                      _isButtonEnabled ? AppColor.white : AppColor.gray600,
-                  borderColor:
-                      _isButtonEnabled ? AppColor.main : AppColor.gray100,
-                ),
+              child: buildButton(
+                label: '다음',
+                onPressed: _isButtonEnabled ? _handleNext : null,
               ),
             ),
           ],
