@@ -4,8 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
-import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
-import 'package:jusicool_ios/screens/signup_screens/password_create_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: AppColor.white,
       body: Stack(
         children: [
-          _buildPositionedRow(
+          buildPositionedRow(
             top: 132.h,
             left: 24.w,
             text: '스마트한',
@@ -45,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
             imageHeight: 62.h,
             isImageFirst: false,
           ),
-          _buildPositionedRow(
+          buildPositionedRow(
             top: 210.h,
             left: 24.w,
             text: '투자의 시작',
@@ -58,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
             imageHeight: 62.h,
             isImageFirst: true,
           ),
-          _buildPositionedRow(
+          buildPositionedRow(
             top: 298.h,
             left: 24.w,
             text: null,
@@ -76,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Widget _buildPositionedRow({
+  Widget buildPositionedRow({
     required double top,
     required double left,
     String? text,
