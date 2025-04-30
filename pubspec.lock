@@ -41,6 +41,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
+  clock:
+    dependency: transitive
+    description:
+      name: clock
+      sha256: fddb70d9b5277016c77a80201021d40a2247104d9f4aa7bab7157b7e3f05b84b
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   collection:
     dependency: transitive
     description:
@@ -102,6 +110,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.6"
+  flutter_screenutil:
+    dependency: "direct main"
+    description:
+      name: flutter_screenutil
+      sha256: "8239210dd68bee6b0577aa4a090890342d04a136ce1c81f98ee513fc0ce891de"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.9.3"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -147,6 +163,23 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.4"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "3df61194eb431efc39c4ceba583b95633a403f46c9fd341e550ce0bfa50e9aa5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.20.2"
+  jusicool_design_system:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: "39b4ec53ff8b8bbbbe2eea68e8f96af607705021"
+      url: "https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git"
+    source: git
+    version: "1.0.0+1"
   material_color_utilities:
     dependency: transitive
     description:
@@ -224,15 +257,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.2"
-  tes:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: fb754a15c3f5181cd11624329cc24ed52562b26d
-      url: "https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git"
-    source: git
-    version: "1.0.0+1"
   typed_data:
     dependency: transitive
     description:

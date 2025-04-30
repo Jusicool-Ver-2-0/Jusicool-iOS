@@ -1,13 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:jusicool_ios/main.dart';
-import 'package:tes/src/core/theme/colors/color_palette.dart';
-import 'package:tes/src/core/theme/texts/typography.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
-
-double leftPadding = 24;
-double textPadding = 10;
-double titleSize = 48;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -35,42 +31,42 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Stack(
         children: [
           _buildPositionedRow(
-            top: 132,
-            left: leftPadding,
+            top: 132.h,
+            left: 24.w,
             text: '스마트한',
             textStyle: AppTypography.titleLarge.copyWith(
               color: AppColor.black,
-              fontSize: titleSize,
+              fontSize: 48.sp,
             ),
             imagePath: 'assets/images/Cards.png',
-            imageWidth: 62,
-            imageHeight: 62,
+            imageWidth: 62.w,
+            imageHeight: 62.h,
             isImageFirst: false,
           ),
           _buildPositionedRow(
-            top: 210,
-            left: leftPadding,
+            top: 210.h,
+            left: 24.w,
             text: '투자의 시작',
             textStyle: AppTypography.titleLarge.copyWith(
               color: AppColor.black,
-              fontSize: titleSize,
+              fontSize: 48.sp,
             ),
             imagePath: 'assets/images/Graphic.png',
-            imageWidth: 62,
-            imageHeight: 62,
+            imageWidth: 62.w,
+            imageHeight: 62.h,
             isImageFirst: true,
           ),
           _buildPositionedRow(
-            top: 298,
-            left: leftPadding,
+            top: 298.h,
+            left: 24.w,
             text: null,
             textStyle: null,
             imagePath: 'assets/images/JUSICOOL.png',
-            imageWidth: 220,
-            imageHeight: 32,
+            imageWidth: 220.w,
+            imageHeight: 32.h,
             trailingImagePath: 'assets/images/Cloud.png',
-            trailingImageWidth: 56,
-            trailingImageHeight: 56,
+            trailingImageWidth: 56.w,
+            trailingImageHeight: 56.h,
             isImageFirst: false,
           ),
         ],
@@ -98,18 +94,29 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isImageFirst)
-            Image.asset(imagePath, width: imageWidth, height: imageHeight),
-          if (isImageFirst) SizedBox(width: textPadding),
+            Image.asset(
+              imagePath,
+              width: imageWidth,
+              height: imageHeight,
+              fit: BoxFit.cover,
+            ),
+          if (isImageFirst) SizedBox(width: 10.w),
           if (text != null) Text(text, style: textStyle),
-          if (!isImageFirst) SizedBox(width: textPadding),
+          if (!isImageFirst) SizedBox(width: 10.w),
           if (!isImageFirst)
-            Image.asset(imagePath, width: imageWidth, height: imageHeight),
-          if (trailingImagePath != null) SizedBox(width: textPadding),
+            Image.asset(
+              imagePath,
+              width: imageWidth,
+              height: imageHeight,
+              fit: BoxFit.cover,
+            ),
+          if (trailingImagePath != null) SizedBox(width: 10.w),
           if (trailingImagePath != null)
             Image.asset(
               trailingImagePath,
               width: trailingImageWidth,
               height: trailingImageHeight,
+              fit: BoxFit.cover,
             ),
         ],
       ),
