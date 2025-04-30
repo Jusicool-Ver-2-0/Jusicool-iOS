@@ -169,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (user.isNotEmpty) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainPage()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
       setError(
