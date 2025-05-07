@@ -31,7 +31,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
   static final TextStyle LABEL_STYLE = AppTypography.bodySmall.copyWith(
     fontSize: 16.sp,
   );
-  static final TextStyle ERROR_STYLE = AppTypography.bodySmall.copyWith(
+  static final TextStyle ERROR_STYLE = AppTypography.label.copyWith(
     fontSize: 12.sp,
     color: AppColor.error,
   );
@@ -182,7 +182,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
             top: 179.h,
             left: 24.w,
             child: Text(
-
               '비밀번호',
               style: LABEL_STYLE.copyWith(
                 color: isPasswordValid ? AppColor.black : AppColor.error,
@@ -206,16 +205,17 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               top: (209 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text(
-                '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
+                '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상',
                 style: ERROR_STYLE,
               ),
             ),
 
+          // 간격 조정: 295 -> 315, 325 -> 345
           Positioned(
-            top: 295.h,
+            top: 315.h,
             left: 24.w,
             child: Text(
-              '비밀번호 재 입력',
+              '비밀번호 재입력',
               style: LABEL_STYLE.copyWith(
                 color: isPasswordMatched ? AppColor.black : AppColor.error,
               ),
@@ -223,7 +223,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
           ),
 
           Positioned(
-            top: 325.h,
+            top: 345.h,
             left: 24.w,
             right: 24.w,
             child: buildTextField(
@@ -235,7 +235,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
 
           if (!isPasswordMatched)
             Positioned(
-              top: (325 + FIELD_HEIGHT + 8).h,
+              top: (345 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text('비밀번호가 일치하지 않아요', style: ERROR_STYLE),
             ),

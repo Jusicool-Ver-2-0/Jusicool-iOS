@@ -18,24 +18,46 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _showEmailError = false;
-  String _emailErrorMessage = '';
-
-  bool _showPasswordError = false;
-  String _passwordErrorMessage = '';
-
-  bool _showLoginError = false;
-  String _loginErrorMessage = '';
+  bool showEmailError = false;
+  String emailErrorMessage = '';
+  bool showPasswordError = false;
+  String passwordErrorMessage = '';
+  bool showLoginError = false;
+  String loginErrorMessage = '';
 
   static const double FIELD_HEIGHT = 56.0;
+  static const double FORM_WIDTH = 312.0;
 
-  final List<Map<String, String>> _database = [
+  final List<Map<String, String>> database = [
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
 
-  InputDecoration _getInputDecoration(String hint, bool hasError) {
+  // 공통 에러 처리 함수
+  void setError({
+    required bool emailError,
+    required String emailMsg,
+    required bool passwordError,
+    required String passwordMsg,
+    required bool loginError,
+    required String loginMsg,
+  }) {
+    setState(() {
+      showEmailError = emailError;
+      emailErrorMessage = emailMsg;
+      showPasswordError = passwordError;
+      passwordErrorMessage = passwordMsg;
+      showLoginError = loginError;
+      loginErrorMessage = loginMsg;
+    });
+  }
+
+  // 텍스트 필드 스타일을 관리하는 공통 함수
+  InputDecoration getInputDecoration(String hint, bool hasError) {
     return InputDecoration(
       hintText: hint,
+      hintStyle: AppTypography.bodySmall.copyWith(
+        color: hasError ? AppColor.error : AppColor.gray500,
+      ),
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.r),
@@ -50,6 +72,14 @@ class _LoginScreenState extends State<LoginScreen> {
           color: hasError ? AppColor.error : AppColor.main,
           width: 2.w,
         ),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: AppColor.error, width: 1.w),
+      ),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.r),
+        borderSide: BorderSide(color: AppColor.error, width: 2.w),
       ),
     );
   }
@@ -67,80 +97,71 @@ class _LoginScreenState extends State<LoginScreen> {
     return satisfiedConditions >= 2;
   }
 
-  void _validateEmail(String email) {
-    if (email.isEmpty) {
-      setState(() {
-        _showEmailError = false;
-        _emailErrorMessage = '';
-      });
-      return;
-    }
-
-    if (!EmailValidator.validate(email)) {
-      setState(() {
-        _showEmailError = true;
-        _emailErrorMessage = '유효한 이메일 주소를 입력해주세요.';
-      });
+  void validateEmail(String email) {
+    if (email.isEmpty || EmailValidator.validate(email)) {
+      setError(
+        emailError: false,
+        emailMsg: '',
+        passwordError: showPasswordError,
+        passwordMsg: passwordErrorMessage,
+        loginError: showLoginError,
+        loginMsg: loginErrorMessage,
+      );
     } else {
-      setState(() {
-        _showEmailError = false;
-        _emailErrorMessage = '';
-      });
+      setError(
+        emailError: true,
+        emailMsg: '유효한 이메일 주소를 입력해주세요.',
+        passwordError: showPasswordError,
+        passwordMsg: passwordErrorMessage,
+        loginError: showLoginError,
+        loginMsg: loginErrorMessage,
+      );
     }
   }
 
-  void _validatePassword(String password) {
-    if (password.isEmpty) {
-      setState(() {
-        _showPasswordError = false;
-        _passwordErrorMessage = '';
-      });
-      return;
-    }
-
-    if (!isValidPassword(password)) {
-      setState(() {
-        _showPasswordError = true;
-        _passwordErrorMessage = '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.';
-      });
+  void validatePassword(String password) {
+    if (password.isEmpty || isValidPassword(password)) {
+      setError(
+        emailError: showEmailError,
+        emailMsg: emailErrorMessage,
+        passwordError: false,
+        passwordMsg: '',
+        loginError: showLoginError,
+        loginMsg: loginErrorMessage,
+      );
     } else {
-      setState(() {
-        _showPasswordError = false;
-        _passwordErrorMessage = '';
-      });
+      setError(
+        emailError: showEmailError,
+        emailMsg: emailErrorMessage,
+        passwordError: true,
+        passwordMsg: '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.',
+        loginError: showLoginError,
+        loginMsg: loginErrorMessage,
+      );
     }
   }
 
-  void _handleLogin() {
+  void handleLogin() {
     final email = _emailController.text;
     final password = _passwordController.text;
 
-    setState(() {
-      _showEmailError = false;
-      _emailErrorMessage = '';
-      _showPasswordError = false;
-      _passwordErrorMessage = '';
-      _showLoginError = false;
-      _loginErrorMessage = '';
-    });
+    final isEmailValid = EmailValidator.validate(email);
+    final isPasswordValid = isValidPassword(password);
 
-    if (!EmailValidator.validate(email)) {
-      setState(() {
-        _showEmailError = true;
-        _emailErrorMessage = '유효한 이메일 주소를 입력해주세요.';
-      });
+    if (!isEmailValid || !isPasswordValid) {
+      setError(
+        emailError: !isEmailValid,
+        emailMsg: !isEmailValid ? '유효한 이메일 주소를 입력해주세요.' : '',
+        passwordError: !isPasswordValid,
+        passwordMsg:
+            !isPasswordValid ? '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.' : '',
+        loginError: false,
+        loginMsg: '',
+      );
       return;
     }
 
-    if (!isValidPassword(password)) {
-      setState(() {
-        _showPasswordError = true;
-        _passwordErrorMessage = '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.';
-      });
-      return;
-    }
-
-    final user = _database.firstWhere(
+    final user = database.firstWhere(
       (user) => user['email'] == email && user['password'] == password,
       orElse: () => {},
     );
@@ -151,11 +172,86 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
-      setState(() {
-        _showLoginError = true;
-        _loginErrorMessage = '아이디와 비밀번호를 다시 한 번 확인해주세요';
-      });
+      setError(
+        emailError: false,
+        emailMsg: '',
+        passwordError: false,
+        passwordMsg: '',
+        loginError: true,
+        loginMsg: '아이디와 비밀번호를 다시 한 번 확인해주세요',
+      );
     }
+  }
+
+  Widget buildInputField({
+    required double top,
+    required String label,
+    required TextEditingController controller,
+    required String hint,
+    required bool hasError,
+    required String errorMessage,
+    bool obscureText = false,
+    required Function(String) onChanged,
+  }) {
+    return Positioned(
+      top: top,
+      left: 24.w,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            style: AppTypography.bodySmall.copyWith(
+              fontSize: 16.sp,
+              color: hasError ? AppColor.error : AppColor.black,
+            ),
+          ),
+          SizedBox(height: 8.h),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              SizedBox(
+                width: FORM_WIDTH.w,
+                height: FIELD_HEIGHT.h,
+                child: TextFormField(
+                  controller: controller,
+                  obscureText: obscureText,
+                  onChanged: (value) {
+                    onChanged(value);
+                    if (showLoginError) {
+                      setState(() {
+                        showLoginError = false;
+                        loginErrorMessage = '';
+                      });
+                    }
+                  },
+                  decoration: getInputDecoration(
+                    hint,
+                    hasError || showLoginError,
+                  ),
+                ),
+              ),
+              if (hasError && errorMessage.isNotEmpty)
+                Positioned(
+                  top: FIELD_HEIGHT.h + 4.h,
+                  right: 0,
+                  child: SizedBox(
+                    width: FORM_WIDTH.w,
+                    child: Text(
+                      errorMessage,
+                      textAlign: TextAlign.right,
+                      style: AppTypography.bodySmall.copyWith(
+                        color: AppColor.error,
+                        fontSize: 12.sp,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -188,137 +284,36 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Positioned(
+          buildInputField(
             top: 234.h,
-            left: 24.w,
-            child: Text(
-              '이메일',
-              style: AppTypography.bodySmall.copyWith(
-                fontSize: 16.sp,
-                color: AppColor.black,
-              ),
-            ),
+            label: '이메일',
+            controller: _emailController,
+            hint: '이메일을 입력해주세요',
+            hasError: showEmailError || showLoginError,
+            errorMessage: emailErrorMessage,
+            onChanged: validateEmail,
           ),
-          Positioned(
-            top: 260.h,
-            left: 24.w,
-            child: SizedBox(
-              width: 312.w,
-              height: FIELD_HEIGHT.h + (_showEmailError ? 16.h : 0),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  TextFormField(
-                    controller: _emailController,
-                    onChanged: (value) {
-                      _validateEmail(value);
-                      if (_showLoginError) {
-                        setState(() {
-                          _showLoginError = false;
-                          _loginErrorMessage = '';
-                        });
-                      }
-                    },
-                    decoration: _getInputDecoration(
-                      '이메일을 입력해주세요',
-                      _showEmailError || _showLoginError,
-                    ),
-                  ),
-                  if (_showEmailError)
-                    Positioned(
-                      top: FIELD_HEIGHT.h + 4.h,
-                      right: 24.w,
-                      child: Text(
-                        _emailErrorMessage,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColor.error,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
+          buildInputField(
             top: 330.h,
-            left: 24.w,
-            child: Text(
-              '비밀번호',
-              style: AppTypography.bodySmall.copyWith(
-                fontSize: 16.sp,
-                color: AppColor.black,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 360.h,
-            left: 24.w,
-            child: SizedBox(
-              width: 312.w,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: FIELD_HEIGHT.h + (_showPasswordError ? 16.h : 0),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        TextFormField(
-                          controller: _passwordController,
-                          onChanged: (value) {
-                            _validatePassword(value);
-                            if (_showLoginError) {
-                              setState(() {
-                                _showLoginError = false;
-                                _loginErrorMessage = '';
-                              });
-                            }
-                          },
-                          obscureText: true,
-                          decoration: _getInputDecoration(
-                            '비밀번호를 입력해주세요',
-                            _showPasswordError || _showLoginError,
-                          ),
-                        ),
-                        if (_showPasswordError)
-                          Positioned(
-                            top: FIELD_HEIGHT.h + 4.h,
-                            right: 24.w,
-                            child: Text(
-                              _passwordErrorMessage,
-                              style: AppTypography.bodySmall.copyWith(
-                                color: AppColor.error,
-                                fontSize: 12.sp,
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  if (_showLoginError)
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.h),
-                      child: Text(
-                        _loginErrorMessage,
-                        style: AppTypography.bodySmall.copyWith(
-                          color: AppColor.error,
-                          fontSize: 12.sp,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
+            label: '비밀번호',
+            controller: _passwordController,
+            hint: '비밀번호를 입력해주세요',
+            hasError: showPasswordError || showLoginError,
+            errorMessage:
+                showPasswordError
+                    ? passwordErrorMessage
+                    : (showLoginError ? loginErrorMessage : ''),
+            obscureText: true,
+            onChanged: validatePassword,
           ),
           Positioned(
             top: 614.h,
             left: 24.w,
             child: SizedBox(
-              width: 312.w,
+              width: FORM_WIDTH.w,
               child: AppButtonMedium(
                 text: '로그인',
-                onPressed: _handleLogin,
+                onPressed: handleLogin,
                 backgroundColor:
                     isFormFilled ? AppColor.main : AppColor.gray300,
                 textColor: isFormFilled ? AppColor.white : AppColor.gray600,
