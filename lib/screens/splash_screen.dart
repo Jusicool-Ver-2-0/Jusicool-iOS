@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
-import 'package:jusicool_ios/screens/mycapital_screens/monthlyrevenue_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

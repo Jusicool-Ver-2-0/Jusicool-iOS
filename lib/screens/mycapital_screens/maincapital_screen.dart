@@ -729,45 +729,9 @@ class MainCapitalScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16.h),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    },
-                    child: Container(
-                      width: 312.w,
-                      height: 26,
-                      color: AppColor.white,
-                      padding: EdgeInsets.only(left: 4, right: 4),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "뉴스 더보기",
-                            style: AppTypography.bodySmall.copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              color: AppColor.black,
-                            ),
-                          ),
-                          Image.asset(
-                            'assets/images/small_arrow.png',
-                            width: 24.w,
-                            height: 24.h,
-                            fit: BoxFit.contain,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            SizedBox(height: 52.h),
           ],
         ),
       ),
