@@ -31,7 +31,9 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
   static final TextStyle label_style = AppTypography.bodySmall.copyWith(
     fontSize: 16.sp,
   );
+
   static final TextStyle error_style = AppTypography.bodySmall.copyWith(
+
     fontSize: 12.sp,
     color: AppColor.error,
   );
@@ -205,24 +207,29 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               top: (209 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text(
+
                 '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
                 style: error_style,
+
               ),
             ),
 
+          // 간격 조정: 295 -> 315, 325 -> 345
           Positioned(
-            top: 295.h,
+            top: 315.h,
             left: 24.w,
             child: Text(
+
               '비밀번호 재 입력',
               style: label_style.copyWith(
+
                 color: isPasswordMatched ? AppColor.black : AppColor.error,
               ),
             ),
           ),
 
           Positioned(
-            top: 325.h,
+            top: 345.h,
             left: 24.w,
             right: 24.w,
             child: buildTextField(
@@ -234,7 +241,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
 
           if (!isPasswordMatched)
             Positioned(
-              top: (325 + FIELD_HEIGHT + 8).h,
+              top: (345 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text('비밀번호가 일치하지 않아요', style: error_style),
             ),
