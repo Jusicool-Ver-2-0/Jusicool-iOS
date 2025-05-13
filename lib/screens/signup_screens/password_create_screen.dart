@@ -24,18 +24,18 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
   static const double FIELD_HEIGHT = 58.0;
   static const double BUTTON_HEIGHT = 54.0;
 
-  static final TextStyle TITLE_STYLE = AppTypography.bodyMedium.copyWith(
+  static final TextStyle title_style = AppTypography.bodyMedium.copyWith(
     fontSize: 18.sp,
     color: AppColor.black,
   );
-  static final TextStyle LABEL_STYLE = AppTypography.bodySmall.copyWith(
+  static final TextStyle label_style = AppTypography.bodySmall.copyWith(
     fontSize: 16.sp,
   );
-  static final TextStyle ERROR_STYLE = AppTypography.bodySmall.copyWith(
+  static final TextStyle error_style = AppTypography.bodySmall.copyWith(
     fontSize: 12.sp,
     color: AppColor.error,
   );
-  static final TextStyle HINT_STYLE = AppTypography.bodySmall.copyWith(
+  static final TextStyle hint_style = AppTypography.bodySmall.copyWith(
     fontSize: 16.sp,
     color: AppColor.gray300,
   );
@@ -127,7 +127,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
         obscureText: true,
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: HINT_STYLE,
+          hintStyle: hint_style,
           contentPadding: EdgeInsets.all(16.w),
           filled: true,
           fillColor: AppColor.white,
@@ -175,16 +175,15 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
           Positioned(
             top: 112.h,
             left: 24.w,
-            child: Text('비밀번호를 입력해주세요', style: TITLE_STYLE),
+            child: Text('비밀번호를 입력해주세요', style: title_style),
           ),
 
           Positioned(
             top: 179.h,
             left: 24.w,
             child: Text(
-
               '비밀번호',
-              style: LABEL_STYLE.copyWith(
+              style: label_style.copyWith(
                 color: isPasswordValid ? AppColor.black : AppColor.error,
               ),
             ),
@@ -207,7 +206,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               left: 24.w,
               child: Text(
                 '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
-                style: ERROR_STYLE,
+                style: error_style,
               ),
             ),
 
@@ -216,7 +215,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
             left: 24.w,
             child: Text(
               '비밀번호 재 입력',
-              style: LABEL_STYLE.copyWith(
+              style: label_style.copyWith(
                 color: isPasswordMatched ? AppColor.black : AppColor.error,
               ),
             ),
@@ -237,7 +236,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
             Positioned(
               top: (325 + FIELD_HEIGHT + 8).h,
               left: 24.w,
-              child: Text('비밀번호가 일치하지 않아요', style: ERROR_STYLE),
+              child: Text('비밀번호가 일치하지 않아요', style: error_style),
             ),
 
           Positioned(
