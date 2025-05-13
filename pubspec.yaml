@@ -22,6 +22,7 @@ dependencies:
     git:
       url: https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git
       ref: main
+  intl: ^0.20.2
 
 flutter_native_splash:
   color: "#FFFFFF"

@@ -3,18 +3,25 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/screens/splash_screen.dart';
+import 'package:jusicool_ios/menu_bottom.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: AppColor.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColor.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  );
+class BaseScreen extends StatelessWidget {
+  final String title;
+  final Widget content;
 
-  runApp(const MyApp());
+  const BaseScreen({super.key, required this.title, required this.content});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(title)),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [Center(child: content), SizedBox(height: 52.h)],
+        ),
+      ),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -53,9 +60,19 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('메인 화면')),
-      body: Center(child: Text('메인 화면입니다.', style: TextStyle(fontSize: 24.sp))),
-    );
+    return const MenuBottom();
   }
+}
+
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: AppColor.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: AppColor.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(const MyApp());
 }
