@@ -233,17 +233,21 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     int? maxLength,
     List<TextInputFormatter>? inputFormatters,
   }) {
-    BorderSide borderSide = BorderSide.none;
+    BorderSide borderSide = BorderSide(
+      color: AppColor.gray300, // 기본 테두리
+      width: 1.w,
+    );
+
     if (controller.text.isNotEmpty) {
       if (controller == emailController) {
         borderSide = BorderSide(
           color: isEmailValid && isEmailUnique ? AppColor.main : AppColor.error,
-          width: 2.w,
+          width: 1.w,
         );
       } else {
         borderSide = BorderSide(
           color: isValid ? AppColor.main : AppColor.error,
-          width: 2.w,
+          width: 1.w,
         );
       }
     }
@@ -251,7 +255,8 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return Semantics(
       label: hintText,
       child: SizedBox(
-        height: FIELD_HEIGHT.h,
+        width: 312.w,
+        height: 58.h,
         child: TextField(
           controller: controller,
           keyboardType: keyboardType,
@@ -261,12 +266,9 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle: HINT_STYLE,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.w,
-              vertical: 12.h,
-            ),
+            contentPadding: EdgeInsets.all(16.w),
             filled: true,
-            fillColor: AppColor.gray100,
+            fillColor: AppColor.white,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(8.r),
               borderSide: borderSide,
