@@ -7,7 +7,6 @@ import 'package:jusicool_ios/screens/login_screen.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/monthlyrevenue_screen.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/order_detail.dart';
 
-
 class StockCard extends StatelessWidget {
   final String imagePath;
   final String companyName;
@@ -557,7 +556,8 @@ class MainCapitalScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     monthlyOrderText,
-                                                    style: AppTypography.label
+                                                    style: AppTypography
+                                                        .bodySmall
                                                         .copyWith(
                                                           fontSize: 14.sp,
                                                           fontWeight:
@@ -617,7 +617,8 @@ class MainCapitalScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     monthlyProfit,
-                                                    style: AppTypography.label
+                                                    style: AppTypography
+                                                        .bodySmall
                                                         .copyWith(
                                                           fontSize: 14.sp,
                                                           fontWeight:
