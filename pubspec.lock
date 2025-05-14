@@ -192,7 +192,7 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: a66685857a3b458084c785cc2208790f69197a57
+      resolved-ref: "5830810d89abaf7dc955595bd58aeef3ef5b83d3"
       url: "https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git"
     source: git
     version: "1.0.0+1"

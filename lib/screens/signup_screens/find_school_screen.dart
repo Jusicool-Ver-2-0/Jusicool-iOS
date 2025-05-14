@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/screens/mycapital_screens/maincapital_screen.dart';
+import 'package:jusicool_ios/screens/login_screen.dart';
 
 class SchoolInfo {
   final String name;
@@ -89,7 +89,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
       print('주소: ${selectedSchool!.address}');
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const MainCapitalScreen()),
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
     }
   }
