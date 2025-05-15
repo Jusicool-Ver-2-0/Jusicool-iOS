@@ -167,7 +167,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             SliverToBoxAdapter(
               child: Container(
                 color: AppColor.white,
-                padding: EdgeInsets.only(top: 9.h, left: 24.sp),
+                padding: EdgeInsets.only(top: 9.h, left: 24.sp, bottom: 16.h),
                 child: Text(
                   revenueText,
                   style: AppTypography.titleSmall.copyWith(
