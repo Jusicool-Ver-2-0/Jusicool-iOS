@@ -358,7 +358,7 @@ class MainCapitalScreen extends StatelessWidget {
                                   color: AppColor.black,
                                 ),
                               ),
-                              SizedBox(width: 8.w),
+                              SizedBox(width: 4.w),
                               Icon(
                                 Icons.arrow_forward_ios,
                                 size: 15.w,
@@ -401,7 +401,7 @@ class MainCapitalScreen extends StatelessWidget {
                             color: AppColor.black,
                           ),
                         ),
-                        SizedBox(height: 8.h),
+                        SizedBox(height: 2.h),
                         Text(
                           "$formattedInvestmentValue원",
                           style: AppTypography.titleMedium.copyWith(
@@ -412,7 +412,7 @@ class MainCapitalScreen extends StatelessWidget {
                             color: AppColor.black,
                           ),
                         ),
-                        SizedBox(height: 4.h),
+                        SizedBox(height: 2.h),
                         Text(
                           changeText,
                           style: AppTypography.bodySmall.copyWith(
@@ -557,7 +557,8 @@ class MainCapitalScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     monthlyOrderText,
-                                                    style: AppTypography.label
+                                                    style: AppTypography
+                                                        .bodySmall
                                                         .copyWith(
                                                           fontSize: 14.sp,
                                                           fontWeight:
@@ -617,7 +618,8 @@ class MainCapitalScreen extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     monthlyProfit,
-                                                    style: AppTypography.label
+                                                    style: AppTypography
+                                                        .bodySmall
                                                         .copyWith(
                                                           fontSize: 14.sp,
                                                           fontWeight:
