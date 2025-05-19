@@ -28,7 +28,9 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     super.dispose();
   }
 
+
   final List<Map<String, dynamic>> revenueData = [
+
     {
       'date': '1월 31일',
       'imagePath': 'assets/images/stock.png',
@@ -44,6 +46,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'companyName': '삼성',
       'amount': 987654321,
       'changeValue': 2000000,
+
       'changePercentage': 2.5,
       'isStock': true,
     },
@@ -57,6 +60,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'isStock': false,
     },
     {
+
       'date': '1월 30일',
       'imagePath': 'assets/images/stock.png',
       'companyName': '테슬라',
@@ -95,7 +99,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       0,
       (sum, item) => sum + (item['amount'] as int),
     );
-
     double weightedPercentage =
         revenueData.fold(0.0, (sum, item) {
           return sum +
