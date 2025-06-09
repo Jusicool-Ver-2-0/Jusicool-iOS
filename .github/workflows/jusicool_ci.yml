@@ -40,7 +40,7 @@ jobs:
         run: flutter analyze
 
       - name: Build Test IOS
-        run: flutter build ios --release --no-codesign
+        run: flutter build ios --no-codesign
 
       - name: Set timestamp
         id: timestamp
