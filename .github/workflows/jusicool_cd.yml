@@ -10,7 +10,7 @@ on:
 jobs:
   flutter_test:
     name: Run flutter test and analyze
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
 
       - name: Checkout Flutter repository
@@ -41,7 +41,7 @@ jobs:
         run: flutter analyze
 
       - name: Build Test IOS
-        run: flutter build ios --simulator
+        run: flutter build ios --release --no-codesign
 
 
       - name: Set timestamp
