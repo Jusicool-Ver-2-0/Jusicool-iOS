@@ -28,9 +28,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     super.dispose();
   }
 
-
   final List<Map<String, dynamic>> revenueData = [
-
     {
       'date': '1월 31일',
       'imagePath': 'assets/images/stock.png',
@@ -60,7 +58,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'isStock': false,
     },
     {
-
       'date': '1월 30일',
       'imagePath': 'assets/images/stock.png',
       'companyName': '테슬라',
@@ -130,9 +127,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             : totalChange < 0
             ? AppColor.main
             : AppColor.gray400;
-
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    const appBarHeight = kToolbarHeight;
 
     List<Map<String, dynamic>> filteredData = revenueData;
     if (_tabController.index == 1) {
