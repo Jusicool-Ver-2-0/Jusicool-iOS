@@ -119,7 +119,9 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           border: Border.all(
             color:
                 isSelected
-                    ? SELECTED_BORDER_COLOR.withOpacity(SELECTED_BORDER_OPACITY)
+                    ? SELECTED_BORDER_COLOR.withValues(
+                      alpha: SELECTED_BORDER_OPACITY,
+                    )
                     : AppColor.gray300,
             width: 1.w,
           ),

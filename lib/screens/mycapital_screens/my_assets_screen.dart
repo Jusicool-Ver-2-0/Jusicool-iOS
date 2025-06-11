@@ -24,6 +24,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     _futureData = _loadAssetsData();
   }
 
+/// ==================================== 
   Future<MyAssetsData> _loadAssetsData() async {
     final jsonString = await rootBundle.loadString(
       'assets/data/my_assets.json',
@@ -31,6 +32,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
     return MyAssetsData.fromJson(jsonMap);
   }
+  /// ==================================== 
 
   Color hexToColor(String hex) {
     final buffer = StringBuffer();
