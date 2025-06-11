@@ -322,6 +322,422 @@ class MainCapitalScreen extends StatelessWidget {
           ),
         ),
       ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Container(
+                      width: 312.w,
+                      height: 61.h,
+                      color: AppColor.white,
+                      child: Stack(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "내 자산",
+                                style: AppTypography.bodyMedium.copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600,
+                                  height: 22 / 16,
+                                  letterSpacing: 0,
+                                  color: AppColor.black,
+                                ),
+                              ),
+                              SizedBox(width: 4.w),
+                              Icon(
+                                Icons.arrow_forward_ios,
+                                size: 15.w,
+                                color: AppColor.black,
+                              ),
+                            ],
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            child: Text(
+                              "$formattedInvestmentValue원",
+                              style: AppTypography.titleSmall.copyWith(
+                                fontSize: 24.sp,
+                                fontWeight: FontWeight.w600,
+                                height: 31 / 24,
+                                letterSpacing: 0,
+                                color: AppColor.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 24.h),
+                  Container(
+                    width: 312.w,
+                    color: Colors.transparent,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "투자 자산",
+                          style: AppTypography.bodyMedium.copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
+                            height: 22 / 16,
+                            letterSpacing: 0,
+                            color: AppColor.black,
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          "$formattedInvestmentValue원",
+                          style: AppTypography.titleMedium.copyWith(
+                            fontSize: 36.sp,
+                            fontWeight: FontWeight.w600,
+                            height: 43 / 36,
+                            letterSpacing: 0,
+                            color: AppColor.black,
+                          ),
+                        ),
+                        SizedBox(height: 2.h),
+                        Text(
+                          changeText,
+                          style: AppTypography.bodySmall.copyWith(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w400,
+                            height: 22 / 16,
+                            letterSpacing: 0,
+                            color: changeColor,
+                          ),
+                        ),
+                        SizedBox(height: 20.h),
+                        Container(
+                          width: 312.w,
+                          color: AppColor.white,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 16.h, left: 0.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "보유 주식&코인",
+                                  style: AppTypography.subTitle.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w600,
+                                    height: 27 / 18,
+                                    letterSpacing: 0,
+                                    color: AppColor.black,
+                                  ),
+                                ),
+                                SizedBox(height: 8.h),
+                                Text(
+                                  "주식",
+                                  style: AppTypography.bodySmall.copyWith(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: 22 / 16,
+                                    letterSpacing: 0,
+                                    color: AppColor.black,
+                                  ),
+                                ),
+                                SizedBox(height: 8.h),
+                                ...List.generate(stockData.length, (index) {
+                                  final stock = stockData[index];
+                                  return Column(
+                                    children: [
+                                      StockCard(
+                                        imagePath: stock['imagePath'] as String,
+                                        companyName:
+                                            stock['companyName'] as String,
+                                        stockCount:
+                                            stock['stockCount'] as String,
+                                        amount: stock['amount'] as String,
+                                        changeValue:
+                                            stock['changeValue'] as int,
+                                        changePercentage:
+                                            stock['changePercentage'] as double,
+                                      ),
+                                      if (index < stockData.length - 1)
+                                        SizedBox(height: 4.h),
+                                    ],
+                                  );
+                                }),
+                                SizedBox(height: 16.h),
+                                Text(
+                                  "코인",
+                                  style: AppTypography.bodySmall.copyWith(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w400,
+                                    height: 22 / 16,
+                                    letterSpacing: 0,
+                                    color: AppColor.black,
+                                  ),
+                                ),
+                                SizedBox(height: 8.h),
+                                ...List.generate(coinData.length, (index) {
+                                  final coin = coinData[index];
+                                  return Column(
+                                    children: [
+                                      CoinCard(
+                                        imagePath: coin['imagePath'] as String,
+                                        companyName:
+                                            coin['companyName'] as String,
+                                        stockCount:
+                                            coin['stockCount'] as String,
+                                        amount: coin['amount'] as String,
+                                        changeValue: coin['changeValue'] as int,
+                                        changePercentage:
+                                            coin['changePercentage'] as double,
+                                      ),
+                                      if (index < coinData.length - 1)
+                                        SizedBox(height: 4.h),
+                                    ],
+                                  );
+                                }),
+                                SizedBox(height: 20.h),
+                                Container(
+                                  height: 1.h,
+                                  width: 312.w,
+                                  color: AppColor.gray400,
+                                ),
+                                SizedBox(height: 20.h),
+                                Container(
+                                  width: 312.w,
+                                  height: 60.h,
+                                  color: AppColor.white,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                        width: 312.w,
+                                        height: 26.h,
+                                        color: AppColor.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "주문내역",
+                                              style: AppTypography.bodySmall
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 22 / 16,
+                                                    letterSpacing: 0,
+                                                    color: AppColor.black,
+                                                  ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder:
+                                                        (context) =>
+                                                            OrderDetailScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    monthlyOrderText,
+                                                    style: AppTypography
+                                                        .bodySmall
+                                                        .copyWith(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          height: 16 / 14,
+                                                          letterSpacing: 0,
+                                                          color:
+                                                              AppColor.gray600,
+                                                        ),
+                                                  ),
+                                                  Image.asset(
+                                                    'assets/images/small_arrow.png',
+                                                    width: 24.w,
+                                                    height: 24.h,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(height: 8.h),
+                                      Container(
+                                        width: 312.w,
+                                        height: 26.h,
+                                        color: AppColor.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "이번달 수익",
+                                              style: AppTypography.bodySmall
+                                                  .copyWith(
+                                                    fontSize: 16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    height: 22 / 16,
+                                                    letterSpacing: 0,
+                                                    color: AppColor.black,
+                                                  ),
+                                            ),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder:
+                                                        (context) =>
+                                                            MonthlyRevenueScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    monthlyProfit,
+                                                    style: AppTypography
+                                                        .bodySmall
+                                                        .copyWith(
+                                                          fontSize: 14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w400,
+                                                          height: 16 / 14,
+                                                          letterSpacing: 0,
+                                                          color:
+                                                              AppColor.gray600,
+                                                        ),
+                                                  ),
+                                                  Image.asset(
+                                                    'assets/images/small_arrow.png',
+                                                    width: 24.w,
+                                                    height: 24.h,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Container(
+              width: double.infinity,
+              height: 24.h,
+              color: AppColor.gray100,
+            ),
+            Container(
+              width: 360.w,
+              height: 361.h,
+              padding: EdgeInsets.only(
+                top: 16.h,
+                right: 24.w,
+                bottom: 16.h,
+                left: 24.w,
+              ),
+              color: AppColor.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "보유 종목 뉴스",
+                    style: AppTypography.subTitle.copyWith(
+                      fontSize: 18.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColor.black,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
+                    },
+                    child: Container(
+                      width: 312.w,
+                      height: 244.h,
+                      padding: EdgeInsets.zero,
+                      color: AppColor.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 312.w,
+                            height: 156.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.r),
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/exnews.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            "애플, 사상 최고가... 올해 세계경제 2.6% 성장 전망",
+                            style: AppTypography.bodyMedium.copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColor.black,
+                            ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            "이데일리",
+                            style: AppTypography.label.copyWith(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w400,
+                              color: AppColor.gray400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

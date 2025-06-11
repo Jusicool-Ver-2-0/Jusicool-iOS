@@ -60,9 +60,19 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('메인 화면')),
-      body: Center(child: Text('메인 화면입니다.', style: TextStyle(fontSize: 24.sp))),
-    );
+    return const MenuBottom();
   }
+}
+
+void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: AppColor.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: AppColor.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(const MyApp());
 }
