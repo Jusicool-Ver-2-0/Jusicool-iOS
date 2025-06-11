@@ -3,14 +3,14 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 
-class WritePostScreen extends StatefulWidget {
-  const WritePostScreen({super.key});
+class CommunityPostWriteScreen extends StatefulWidget {
+  const CommunityPostWriteScreen({super.key});
 
   @override
-  State<WritePostScreen> createState() => _WritePostScreenState();
+  State<CommunityPostWriteScreen> createState() => _WritePostScreenState();
 }
 
-class _WritePostScreenState extends State<WritePostScreen> {
+class _WritePostScreenState extends State<CommunityPostWriteScreen> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
 
@@ -33,7 +33,11 @@ class _WritePostScreenState extends State<WritePostScreen> {
   }
 
   void _uploadPost() {
-    // 업로드 로직 작성
+    final title = titleController.text.trim();
+    final content = contentController.text.trim();
+    if (title.isNotEmpty && content.isNotEmpty) {
+      Navigator.pop(context, {'title': title, 'content': content});
+    }
   }
 
   @override
@@ -54,7 +58,7 @@ class _WritePostScreenState extends State<WritePostScreen> {
                 MediaQuery.of(context).size.height -
                 kToolbarHeight -
                 MediaQuery.of(context).padding.top -
-                80, // 대략적인 bottomNavigationBar 높이 고려
+                80,
           ),
           child: IntrinsicHeight(
             child: Column(
@@ -87,7 +91,7 @@ class _WritePostScreenState extends State<WritePostScreen> {
                     style: AppTypography.bodyMedium,
                     keyboardType: TextInputType.multiline,
                     maxLines: null,
-                    minLines: 10, // 최소 입력 줄 수 지정
+                    minLines: 10,
                   ),
                 ),
               ],
