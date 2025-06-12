@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/screens/community_screens/community_post_list_screen.dart';
 import 'package:jusicool_ios/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -20,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => CommunityPostListScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     });
   }
