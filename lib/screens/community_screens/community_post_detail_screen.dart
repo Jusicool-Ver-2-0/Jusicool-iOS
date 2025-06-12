@@ -34,6 +34,54 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
     });
   }
 
+  Widget _buildBottomSheetMenu(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ListTile(
+          title: Center(
+            child: Text(
+              '수정하기',
+              style: AppTypography.bodySmall.copyWith(color: AppColor.gray600),
+            ),
+          ),
+          onTap: () async {
+            Navigator.pop(context);
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder:
+                    (context) => CommunityPostEditScreen(
+                      initialTitle: post['title'],
+                      initialContent: post['content'],
+                    ),
+              ),
+            );
+            if (result != null && mounted) {
+              setState(() {
+                post['title'] = result['title'];
+                post['content'] = result['content'];
+              });
+            }
+          },
+        ),
+        ListTile(
+          title: Center(
+            child: Text(
+              '삭제하기',
+              style: AppTypography.bodySmall.copyWith(color: AppColor.error),
+            ),
+          ),
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.pop(context, {'deleted': true});
+            if (widget.onDelete != null) widget.onDelete!();
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,57 +104,7 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
                 ),
-                builder: (context) {
-                  return Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ListTile(
-                        title: Center(
-                          child: Text(
-                            '수정하기',
-                            style: AppTypography.bodySmall.copyWith(
-                              color: AppColor.gray600,
-                            ),
-                          ),
-                        ),
-                        onTap: () async {
-                          Navigator.pop(context);
-                          final result = await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) => CommunityPostEditScreen(
-                                    initialTitle: post['title'],
-                                    initialContent: post['content'],
-                                  ),
-                            ),
-                          );
-                          if (result != null && mounted) {
-                            setState(() {
-                              post['title'] = result['title'];
-                              post['content'] = result['content'];
-                            });
-                          }
-                        },
-                      ),
-                      ListTile(
-                        title: Center(
-                          child: Text(
-                            '삭제하기',
-                            style: AppTypography.bodySmall.copyWith(
-                              color: AppColor.error,
-                            ),
-                          ),
-                        ),
-                        onTap: () {
-                          Navigator.pop(context);
-                          Navigator.pop(context, {'deleted': true});
-                          if (widget.onDelete != null) widget.onDelete!();
-                        },
-                      ),
-                    ],
-                  );
-                },
+                builder: (context) => _buildBottomSheetMenu(context),
               );
             },
           ),
