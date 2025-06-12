@@ -5,11 +5,13 @@ import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 class CommunityPostEditScreen extends StatefulWidget {
   final String initialTitle;
   final String initialContent;
+  final void Function(String title, String content)? onChanged; // 추가
 
   const CommunityPostEditScreen({
     super.key,
     required this.initialTitle,
     required this.initialContent,
+    this.onChanged, // 추가
   });
 
   @override
@@ -65,6 +67,11 @@ class _CommunityPostEditScreenState extends State<CommunityPostEditScreen> {
               style: AppTypography.titleSmall,
               decoration: const InputDecoration(border: InputBorder.none),
               maxLines: 2,
+              onChanged: (value) {
+                if (widget.onChanged != null) {
+                  widget.onChanged!(value, _contentController.text);
+                }
+              },
             ),
             const SizedBox(height: 16),
             Expanded(
@@ -74,6 +81,11 @@ class _CommunityPostEditScreenState extends State<CommunityPostEditScreen> {
                 decoration: const InputDecoration(border: InputBorder.none),
                 maxLines: null,
                 expands: true,
+                onChanged: (value) {
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(_titleController.text, value);
+                  }
+                },
               ),
             ),
             const SizedBox(height: 24),

@@ -7,12 +7,18 @@ import 'package:jusicool_ios/widgets/comment_item.dart';
 import 'package:jusicool_ios/widgets/like_button.dart';
 
 class CommunityPostDetailScreen extends StatefulWidget {
-  final Map<String, dynamic> post;
+  final String title;
+  final String content;
+  final int likes;
+  final List<Map<String, String>>? initialComments;
   final VoidCallback? onDelete;
 
   const CommunityPostDetailScreen({
     super.key,
-    required this.post,
+    required this.title,
+    required this.content,
+    this.likes = 0,
+    this.initialComments,
     this.onDelete,
   });
 
@@ -22,13 +28,21 @@ class CommunityPostDetailScreen extends StatefulWidget {
 }
 
 class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
-  late Map<String, dynamic> post;
-  final List<Map<String, String>> _comments = [];
+  late String _title;
+  late String _content;
+  late int _likes;
+  late List<Map<String, String>> _comments;
 
   @override
   void initState() {
     super.initState();
-    post = Map<String, dynamic>.from(widget.post);
+    _title = widget.title;
+    _content = widget.content;
+    _likes = widget.likes;
+    _comments =
+        widget.initialComments != null
+            ? List<Map<String, String>>.from(widget.initialComments!)
+            : [];
   }
 
   void addComment(String text) {
@@ -55,15 +69,15 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
               MaterialPageRoute(
                 builder:
                     (context) => CommunityPostEditScreen(
-                      initialTitle: post['title'],
-                      initialContent: post['content'],
+                      initialTitle: _title,
+                      initialContent: _content,
                     ),
               ),
             );
             if (result != null && mounted) {
               setState(() {
-                post['title'] = result['title'];
-                post['content'] = result['content'];
+                _title = result['title'];
+                _content = result['content'];
               });
             }
           },
@@ -118,11 +132,11 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(post['title'] ?? '', style: AppTypography.titleSmall),
+            Text(_title, style: AppTypography.titleSmall),
             const SizedBox(height: 16),
-            Text(post['content'] ?? '', style: AppTypography.bodySmall),
+            Text(_content, style: AppTypography.bodySmall),
             const SizedBox(height: 16),
-            Center(child: LikeButton(initialCount: post['likes'] ?? 0)),
+            Center(child: LikeButton(initialCount: _likes)),
             const SizedBox(height: 24),
             CommentTextField(
               onSubmit: (text) {

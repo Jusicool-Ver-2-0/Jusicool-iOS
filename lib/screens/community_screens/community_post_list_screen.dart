@@ -61,7 +61,8 @@ class _CommunityPostListScreenState extends State<CommunityPostListScreen> {
                         MaterialPageRoute(
                           builder:
                               (_) => CommunityPostDetailScreen(
-                                post: post,
+                                title: post['title'],
+                                content: post['content'],
                                 onDelete: () {
                                   setState(() {
                                     _posts.removeAt(index);
