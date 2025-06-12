@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/community_screens/community_post_edit_screen.dart';
+import 'package:jusicool_ios/widgets/%08comment_textfield.dart';
+import 'package:jusicool_ios/widgets/comment_item.dart';
+import 'package:jusicool_ios/widgets/like_button.dart';
 
 class CommunityPostDetailScreen extends StatefulWidget {
   final Map<String, dynamic> post;
@@ -137,157 +140,6 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class CommentItem extends StatelessWidget {
-  final String name;
-  final String comment;
-
-  const CommentItem({super.key, required this.name, required this.comment});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(name, style: AppTypography.bodyMedium),
-        const SizedBox(height: 4),
-        Text(comment, style: AppTypography.bodySmall),
-      ],
-    );
-  }
-}
-
-class LikeButton extends StatefulWidget {
-  final int initialCount;
-
-  const LikeButton({super.key, this.initialCount = 0});
-
-  @override
-  State<LikeButton> createState() => _LikeButtonState();
-}
-
-class _LikeButtonState extends State<LikeButton> {
-  bool isLiked = false;
-  late int likeCount;
-
-  @override
-  void initState() {
-    super.initState();
-    likeCount = widget.initialCount;
-  }
-
-  void toggleLike() {
-    setState(() {
-      isLiked = !isLiked;
-      likeCount += isLiked ? 1 : -1;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: toggleLike,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: isLiked ? AppColor.main : Colors.transparent,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: isLiked ? AppColor.main : Colors.grey),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              Icons.favorite_border,
-              size: 18,
-              color: isLiked ? Colors.white : Colors.grey,
-            ),
-            const SizedBox(width: 4),
-            Text(
-              '$likeCount',
-              style: TextStyle(
-                color: isLiked ? Colors.white : Colors.grey,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class CommentTextField extends StatefulWidget {
-  final void Function(String)? onSubmit;
-  const CommentTextField({super.key, this.onSubmit});
-
-  @override
-  State<CommentTextField> createState() => _CommentTextFieldState();
-}
-
-class _CommentTextFieldState extends State<CommentTextField> {
-  final TextEditingController _controller = TextEditingController();
-  bool _hasText = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-      setState(() {
-        _hasText = _controller.text.trim().isNotEmpty;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _submit() {
-    if (_hasText && widget.onSubmit != null) {
-      widget.onSubmit!(_controller.text);
-      _controller.clear();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: _controller,
-      onSubmitted: (_) => _submit(),
-      decoration: InputDecoration(
-        hintText: '댓글을 입력하세요',
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(width: 1, color: AppColor.gray200),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(width: 1, color: AppColor.gray200),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(width: 1, color: AppColor.gray200),
-        ),
-        suffixIcon: Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: IconButton(
-            onPressed: _hasText ? _submit : null,
-            icon: Image.asset(
-              'assets/images/ic_arrow_upward.png',
-              width: 28,
-              height: 28,
-              color: _hasText ? AppColor.main : Colors.grey,
-            ),
-          ),
-        ),
-        contentPadding: const EdgeInsets.all(16),
       ),
     );
   }
