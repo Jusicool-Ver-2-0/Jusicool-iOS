@@ -7,7 +7,6 @@ import 'package:jusicool_ios/screens/login_screen.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/monthlyrevenue_screen.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/order_detail.dart';
 
-
 class StockCard extends StatelessWidget {
   final String imagePath;
   final String companyName;

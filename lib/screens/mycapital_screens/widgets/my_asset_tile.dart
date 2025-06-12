@@ -25,8 +25,8 @@ class MyAssetTile extends StatelessWidget {
           children: [
             // 왼쪽 원형 아이콘
             Container(
-              width: 40,
-              height: 40,
+              width: 30,
+              height: 30,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: iconColor, // <-- 여기서 위에서 받은 iconColor 변수 사용

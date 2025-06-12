@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/models/my_assets.dart';
-import 'package:jusicool_ios/widgets/my_asset_tile.dart';
+import 'package:jusicool_ios/screens/mycapital_screens/widgets/my_asset_tile.dart';
 
 class MyAssetsScreen extends StatefulWidget {
   const MyAssetsScreen({super.key});
@@ -24,7 +24,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     _futureData = _loadAssetsData();
   }
 
-/// ==================================== 
+  /// ====================================
   Future<MyAssetsData> _loadAssetsData() async {
     final jsonString = await rootBundle.loadString(
       'assets/data/my_assets.json',
@@ -32,7 +32,8 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     final Map<String, dynamic> jsonMap = json.decode(jsonString);
     return MyAssetsData.fromJson(jsonMap);
   }
-  /// ==================================== 
+
+  /// ====================================
 
   Color hexToColor(String hex) {
     final buffer = StringBuffer();
