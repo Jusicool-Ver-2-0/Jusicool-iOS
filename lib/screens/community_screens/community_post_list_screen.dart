@@ -56,7 +56,7 @@ class _CommunityPostListScreenState extends State<CommunityPostListScreen> {
                   final post = _posts[index];
                   return GestureDetector(
                     onTap: () async {
-                      final result = await Navigator.push(
+                      await Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder:
