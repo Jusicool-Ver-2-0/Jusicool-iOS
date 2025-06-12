@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/community_screens/community_post_edit_screen.dart';
-import 'package:jusicool_ios/widgets/%08comment_textfield.dart';
-import 'package:jusicool_ios/widgets/comment_item.dart';
-import 'package:jusicool_ios/widgets/like_button.dart';
+import 'package:jusicool_ios/screens/community_screens/widgets/comment_textfield.dart';
+import 'package:jusicool_ios/screens/community_screens/widgets/comment_item.dart';
+import 'package:jusicool_ios/screens/community_screens/widgets/like_button.dart';
 
 class CommunityPostDetailScreen extends StatefulWidget {
   final String title;
