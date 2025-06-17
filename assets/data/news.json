@@ -1,14 +1,14 @@
 [
-    {
-      "title": "애플, 사상 최고가 기록",
-      "subtitle": "이데일리",
-      "imageUrl": "https://picsum.photos/200/200?random=1",
-      "linkUrl": "https://www.youtube.com/watch?v=cYRkZmBuDqI&pp=ygUM7Iuc64Kv44WH7ISt"
-    },
-    {
-      "title": "테슬라, 신형 전기차 발표",
-      "subtitle": "테크크런치",
-      "imageUrl": "https://picsum.photos/200/200?random=2",
-      "linkUrl": "https://www.example.com/news2"
-    }
-  ]
+  {
+    "title": "애플, 257달러 넘기며 사상 최고가 경신",
+    "subtitle": "마켓인",
+    "imageUrl": "https://picsum.photos/200/200?random=1",
+    "linkUrl": "https://marketin.edaily.co.kr/News/ReadE?newsId=01102086639122128"
+  },
+  {
+    "title": "테슬라, 신형 전기차 발표",
+    "subtitle": "테크크런치",
+    "imageUrl": "https://picsum.photos/200/200?random=2",
+    "linkUrl": "https://www.example.com/news2"
+  }
+]

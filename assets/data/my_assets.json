@@ -1,0 +1,13 @@
+{
+    "totalAsset": 153450000,
+    "change": -20350,
+    "availableAmount": 8300000,
+    "investmentAmount": 140000000,
+    "sections": [
+      { "name": "애플", "price": 60000000, "percentage": 39.1, "color": "#81D4FA" },
+      { "name": "테슬라", "price": 40000000, "percentage": 26.1, "color": "#FFAB91" },
+      { "name": "마이크로소프트", "price": 30000000, "percentage": 19.6, "color": "#CE93D8" },
+      { "name": "하이닉스", "price": 10000000, "percentage": 6.5, "color": "#AED581" },
+      { "name": "기타", "price": 5000000, "percentage": 3.3, "color": "#B0BEC5" }
+    ]
+  }

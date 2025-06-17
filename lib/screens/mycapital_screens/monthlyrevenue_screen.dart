@@ -45,6 +45,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'companyName': '삼성',
       'amount': 987654321,
       'changeValue': 2000000,
+
       'changePercentage': 2.5,
       'isStock': true,
     },
@@ -96,7 +97,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       0,
       (sum, item) => sum + (item['amount'] as int),
     );
-
     double weightedPercentage =
         revenueData.fold(0.0, (sum, item) {
           return sum +
@@ -129,19 +129,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             ? AppColor.main
             : AppColor.gray400;
 
-    const tabBarHeight = 48.0;
-
-    final adjustedTopPadding =
-        (176.h -
-                    MediaQuery.of(context).padding.top -
-                    kToolbarHeight -
-                    tabBarHeight) >
-                0
-            ? (176.h -
-                MediaQuery.of(context).padding.top -
-                kToolbarHeight -
-                tabBarHeight)
-            : 0.0;
 
     List<Map<String, dynamic>> filteredData = revenueData;
     if (_tabController.index == 1) {
