@@ -47,8 +47,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   String get timerText =>
       '${(timeRemaining.inSeconds ~/ 60).toString().padLeft(1, '0')}:${(timeRemaining.inSeconds % 60).toString().padLeft(2, '0')}';
 
-  static const double BUTTON_HEIGHT = 54.0;
-
   static final TextStyle LABEL_STYLE = AppTypography.bodySmall.copyWith(
     fontSize: 16.sp,
     color: AppColor.black,
