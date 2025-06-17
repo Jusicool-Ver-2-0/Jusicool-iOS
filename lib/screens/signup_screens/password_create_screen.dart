@@ -3,10 +3,16 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/screens/signup_screens/find_school_screen.dart';
+import 'package:go_router/go_router.dart';
 
 class PasswordCreateScreen extends StatefulWidget {
-  const PasswordCreateScreen({super.key});
+  final String username;
+  final String email;
+  const PasswordCreateScreen({
+    super.key,
+    required this.username,
+    required this.email,
+  });
 
   @override
   State<PasswordCreateScreen> createState() => _PasswordCreateScreenState();
@@ -33,7 +39,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
   );
 
   static final TextStyle error_style = AppTypography.bodySmall.copyWith(
-
     fontSize: 12.sp,
     color: AppColor.error,
   );
@@ -111,9 +116,13 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
 
   void onNextButtonPressed() {
     print('비밀번호: ${passwordController.text}');
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const FindSchoolScreen()),
+    context.push(
+      '/find-school',
+      extra: {
+        'username': widget.username,
+        'email': widget.email,
+        'password': passwordController.text,
+      },
     );
   }
 
@@ -179,7 +188,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
             left: 24.w,
             child: Text('비밀번호를 입력해주세요', style: title_style),
           ),
-
           Positioned(
             top: 179.h,
             left: 24.w,
@@ -190,7 +198,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               ),
             ),
           ),
-
           Positioned(
             top: 209.h,
             left: 24.w,
@@ -201,33 +208,25 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               isValid: isPasswordValid,
             ),
           ),
-
           if (!isPasswordValid)
             Positioned(
               top: (209 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text(
-
                 '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
                 style: error_style,
-
               ),
             ),
-
-          // 간격 조정: 295 -> 315, 325 -> 345
           Positioned(
             top: 315.h,
             left: 24.w,
             child: Text(
-
               '비밀번호 재 입력',
               style: label_style.copyWith(
-
                 color: isPasswordMatched ? AppColor.black : AppColor.error,
               ),
             ),
           ),
-
           Positioned(
             top: 345.h,
             left: 24.w,
@@ -238,16 +237,14 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
               isValid: isPasswordMatched,
             ),
           ),
-
           if (!isPasswordMatched)
             Positioned(
               top: (345 + FIELD_HEIGHT + 8).h,
               left: 24.w,
               child: Text('비밀번호가 일치하지 않아요', style: error_style),
             ),
-
           Positioned(
-            bottom: 24.h,
+            bottom: 48.h,
             left: 24.w,
             right: 24.w,
             child: SizedBox(
