@@ -6,6 +6,8 @@ import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/revenuecard.dart';
 import 'package:go_router/go_router.dart';
 
+const adjustedTopPadding = 16.0;
+
 class MonthlyRevenueScreen extends StatefulWidget {
   const MonthlyRevenueScreen({super.key});
 
