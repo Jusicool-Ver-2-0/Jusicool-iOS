@@ -18,6 +18,8 @@ dependencies:
   url_launcher: ^6.2.1
   fl_chart: ^0.64.0
   intl: ^0.20.2
+  flutter_riverpod: ^2.4.0
+
   path_provider: ^2.1.5
   jusicool_design_system:
     git:

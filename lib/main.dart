@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/screens/splash_screen.dart';
 import 'package:jusicool_ios/menu_bottom.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class BaseScreen extends StatelessWidget {
   final String title;
@@ -74,5 +75,5 @@ void main() {
     ),
   );
 
-  runApp(const MyApp());
+  runApp(const ProviderScope(child: MyApp()));
 }
