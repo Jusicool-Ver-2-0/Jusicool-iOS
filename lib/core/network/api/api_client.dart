@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import '../interceptor/dio_interceptor.dart';
+import '../interceptor/dio_error_interceptor.dart';
 
 Dio dio() {
   String? _baseUrlDev = dotenv.env['BASE_URL_DEV'];
