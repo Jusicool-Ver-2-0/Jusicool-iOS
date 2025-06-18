@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'package:jusicool_ios/menu_bottom.dart';
-import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
+import 'package:jusicool_ios/router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,12 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter();
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return MaterialApp.router(
+          routerDelegate: appRouter.router.routerDelegate,
+          routeInformationParser: appRouter.router.routeInformationParser,
+          routeInformationProvider: appRouter.router.routeInformationProvider,
           title: 'Jusicool',
           theme: ThemeData(
             primarySwatch: Colors.blue,
@@ -48,7 +52,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen(),
         );
       },
     );

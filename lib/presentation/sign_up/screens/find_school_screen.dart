@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../sign_in/screens/login_screen.dart';
 
@@ -16,7 +17,15 @@ class SchoolInfo {
 }
 
 class FindSchoolScreen extends StatefulWidget {
-  const FindSchoolScreen({super.key});
+  final String username;
+  final String email;
+  final String password;
+  const FindSchoolScreen({
+    super.key,
+    required this.username,
+    required this.email,
+    required this.password,
+  });
 
   @override
   State<FindSchoolScreen> createState() => _FindSchoolScreenState();
@@ -88,10 +97,8 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     if (selectedSchool != null) {
       print('선택된 학교: ${selectedSchool!.name}');
       print('주소: ${selectedSchool!.address}');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => const LoginScreen()),
-      );
+
+      context.go('/main-capital');
     }
   }
 
@@ -205,16 +212,12 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
       top: 92.h,
       left: SEARCH_BUTTON_LEFT_OFFSET.w,
       child: GestureDetector(
-        onTapDown: (_) {
-          setState(() => isSearchButtonPressed = true);
-        },
+        onTapDown: (_) => setState(() => isSearchButtonPressed = true),
         onTapUp: (_) {
           setState(() => isSearchButtonPressed = false);
           onSearch();
         },
-        onTapCancel: () {
-          setState(() => isSearchButtonPressed = false);
-        },
+        onTapCancel: () => setState(() => isSearchButtonPressed = false),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 100),
           width: 54.w,
