@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_ios/presentation/mycapital_screens/maincapital_screen.dart';
+import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 
 class ScreenConfig {
   final String title;

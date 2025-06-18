@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'package:jusicool_ios/menu_bottom.dart';
-import 'package:jusicool_ios/presentation/splash_screen.dart';
+import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
 
-class BaseScreen extends StatelessWidget {
-  final String title;
-  final Widget content;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  const BaseScreen({super.key, required this.title, required this.content});
+  setDio();
+  di.allReady();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [Center(child: content), SizedBox(height: 52.h)],
-        ),
-      ),
-    );
-  }
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: JusicoolColor.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: JusicoolColor.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -62,17 +62,4 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MenuBottom();
   }
-}
-
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: JusicoolColor.white,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: JusicoolColor.white,
-      systemNavigationBarIconBrightness: Brightness.dark,
-    ),
-  );
-
-  runApp(const MyApp());
 }
