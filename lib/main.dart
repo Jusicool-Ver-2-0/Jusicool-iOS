@@ -29,13 +29,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter();
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp.router(
-          routerConfig: router,
+          routerDelegate: appRouter.router.routerDelegate,
+          routeInformationParser: appRouter.router.routeInformationParser,
+          routeInformationProvider: appRouter.router.routeInformationProvider,
           title: 'Jusicool',
           theme: ThemeData(
             primarySwatch: Colors.blue,
