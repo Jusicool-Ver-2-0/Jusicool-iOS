@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'email_auth_screen.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:go_router/go_router.dart';
 

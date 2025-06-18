@@ -5,8 +5,6 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:go_router/go_router.dart';
 
-import 'find_school_screen.dart';
-
 class PasswordCreateScreen extends StatefulWidget {
   final String username;
   final String email;
