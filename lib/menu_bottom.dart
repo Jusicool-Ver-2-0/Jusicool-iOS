@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_ios/screens/mycapital_screens/maincapital_screen.dart';
+import 'package:jusicool_ios/presentation/mycapital_screens/maincapital_screen.dart';
 
 class ScreenConfig {
   final String title;
@@ -62,7 +62,7 @@ class NavBarItem extends StatelessWidget {
             imagePath,
             width: 24.w,
             height: 24.h,
-            color: isSelected ? AppColor.main : AppColor.gray400,
+            color: isSelected ? JusicoolColor.main : JusicoolColor.gray400,
           ),
           Text(
             label,
@@ -70,7 +70,7 @@ class NavBarItem extends StatelessWidget {
               fontFamily: 'navi',
               fontWeight: FontWeight.w600,
               fontSize: 8.sp,
-              color: isSelected ? AppColor.main : AppColor.gray400,
+              color: isSelected ? JusicoolColor.main : JusicoolColor.gray400,
             ),
           ),
         ],
@@ -98,7 +98,7 @@ class _MenuBottomState extends State<MenuBottom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.white,
+      backgroundColor: JusicoolColor.white,
       body: SafeArea(
         top: false,
         bottom: true,
@@ -117,14 +117,14 @@ class _MenuBottomState extends State<MenuBottom> {
             Container(
               width: 360.w,
               height: 52.h,
-              color: AppColor.white,
+              color: JusicoolColor.white,
               child: Stack(
                 children: [
                   Positioned(
                     child: Container(
                       width: 360.w,
                       height: 1.h,
-                      color: AppColor.gray100,
+                      color: JusicoolColor.gray100,
                     ),
                   ),
                   Positioned(

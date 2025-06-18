@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_ios/screens/splash_screen.dart';
 import 'package:jusicool_ios/menu_bottom.dart';
+import 'package:jusicool_ios/presentation/splash_screen.dart';
 
 class BaseScreen extends StatelessWidget {
   final String title;
@@ -40,10 +40,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             appBarTheme: const AppBarTheme(
               systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarColor: AppColor.white,
+                statusBarColor: JusicoolColor.white,
                 statusBarIconBrightness: Brightness.dark,
               ),
-              backgroundColor: AppColor.white,
+              backgroundColor: JusicoolColor.white,
               elevation: 0,
             ),
           ),
@@ -67,9 +67,9 @@ class MainPage extends StatelessWidget {
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: AppColor.white,
+      statusBarColor: JusicoolColor.white,
       statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: AppColor.white,
+      systemNavigationBarColor: JusicoolColor.white,
       systemNavigationBarIconBrightness: Brightness.dark,
     ),
   );

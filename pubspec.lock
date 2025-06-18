@@ -138,10 +138,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_svg
-      sha256: c200fd79c918a40c5cd50ea0877fa13f81bdaf6f0a5d3dbcc2a13e3285d6aa1b
+      sha256: cd57f7969b4679317c17af6fd16ee233c1e60a82ed209d8a475c54fd6fd6f845
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.17"
+    version: "2.2.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -190,12 +190,11 @@ packages:
   jusicool_design_system:
     dependency: "direct main"
     description:
-      path: "."
-      ref: main
-      resolved-ref: "5830810d89abaf7dc955595bd58aeef3ef5b83d3"
-      url: "https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git"
-    source: git
-    version: "1.0.0+1"
+      name: jusicool_design_system
+      sha256: cbaeaa4c79a2b6921fb75df83355a0a413e120ff0f8700c977abb3493e33bdc7
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   material_color_utilities:
     dependency: transitive
     description:
