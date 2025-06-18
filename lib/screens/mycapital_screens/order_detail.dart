@@ -201,7 +201,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
               ),
             ),
           ),
-
           Container(
             color: AppColor.white,
             child: SingleChildScrollView(

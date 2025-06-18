@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_ios/screens/mycapital_screens/revenuecard.dart';
+import 'package:go_router/go_router.dart';
+
+const adjustedTopPadding = 16.0;
 
 class MonthlyRevenueScreen extends StatefulWidget {
   const MonthlyRevenueScreen({super.key});
@@ -128,6 +131,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             ? AppColor.main
             : AppColor.gray400;
 
+
     List<Map<String, dynamic>> filteredData = revenueData;
     if (_tabController.index == 1) {
       filteredData =
@@ -154,7 +158,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: AppColor.black),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop();
           },
         ),
       ),
@@ -220,7 +224,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         body: Container(
           color: AppColor.white,
           child: Padding(
-            padding: EdgeInsets.only(left: 24.sp, top: 16.h),
+            padding: EdgeInsets.only(left: 24.sp, top: adjustedTopPadding.h),
             child: ListView.builder(
               itemCount: filteredData.length,
               itemBuilder: (context, index) {

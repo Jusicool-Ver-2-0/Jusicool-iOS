@@ -147,6 +147,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  go_router:
+    dependency: "direct main"
+    description:
+      name: go_router
+      sha256: f222e12c5360b0c90aae5d33e6b351a6789d4aa1c97b32691b4a30946fc91813
+      url: "https://pub.dev"
+    source: hosted
+    version: "15.2.0"
   html:
     dependency: transitive
     description:
@@ -159,10 +167,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: fe7ab022b76f3034adc518fb6ea04a82387620e19977665ea18d30a1cf43442f
+      sha256: "2c11f3f94c687ee9bad77c171151672986360b2b001d109814ee7140b2cf261b"
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   http_parser:
     dependency: transitive
     description:
@@ -196,6 +204,14 @@ packages:
       url: "https://github.com/Jusicool-Ver-2-0/Jusicool-iOS-DesignSystem.git"
     source: git
     version: "1.0.0+1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: c8245ada5f1717ed44271ed1c26b8ce85ca3228fd2ffdb75468ab01979309d61
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.3.0"
   material_color_utilities:
     dependency: transitive
     description:

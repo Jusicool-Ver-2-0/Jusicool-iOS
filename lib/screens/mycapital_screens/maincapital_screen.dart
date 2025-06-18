@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/screens/login_screen.dart';
-import 'package:jusicool_ios/screens/mycapital_screens/monthlyrevenue_screen.dart';
-import 'package:jusicool_ios/screens/mycapital_screens/order_detail.dart';
+import 'package:go_router/go_router.dart';
 
 class StockCard extends StatelessWidget {
   final String imagePath;
@@ -333,10 +331,7 @@ class MainCapitalScreen extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                      context.push('/login');
                     },
                     child: Container(
                       width: 312.w,
@@ -543,14 +538,7 @@ class MainCapitalScreen extends StatelessWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            OrderDetailScreen(),
-                                                  ),
-                                                );
+                                                context.push('/order-detail');
                                               },
                                               child: Row(
                                                 children: [
@@ -604,13 +592,8 @@ class MainCapitalScreen extends StatelessWidget {
                                             ),
                                             GestureDetector(
                                               onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder:
-                                                        (context) =>
-                                                            MonthlyRevenueScreen(),
-                                                  ),
+                                                context.push(
+                                                  '/monthly-revenue',
                                                 );
                                               },
                                               child: Row(
@@ -684,10 +667,7 @@ class MainCapitalScreen extends StatelessWidget {
                   SizedBox(height: 16.h),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
+                      context.push('/login');
                     },
                     child: Container(
                       width: 312.w,

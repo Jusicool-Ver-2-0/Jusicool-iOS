@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/screens/login_screen.dart';
+import 'package:go_router/go_router.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -17,10 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
+      context.pushReplacement('/login');
     });
   }
 

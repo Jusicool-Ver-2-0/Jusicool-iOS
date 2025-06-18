@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/textfiled/default_textfiled.dart';
-import 'package:jusicool_ios/screens/signup_screens/email_auth_screen.dart';
+import 'package:go_router/go_router.dart';
 
 const double BUTTON_HEIGHT = 48;
 
@@ -25,7 +25,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
     super.initState();
     _controller.addListener(() {
       _clearErrorOnTextChange();
-      setState(() {}); // 버튼 상태 갱신
+      setState(() {});
     });
   }
 
@@ -60,10 +60,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
       return;
     }
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => EmailAuthScreen()),
-    );
+    context.push('/email-auth', extra: name);
   }
 
   bool _isValidKoreanName(String name) {
