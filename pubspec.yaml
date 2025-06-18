@@ -29,7 +29,7 @@ dependencies:
 
   path_provider: ^2.1.5
 
-  jusicool_design_system: ^1.0.1
+  jusicool_design_system: ^1.0.2
 
   dio: ^5.8.0+1
 

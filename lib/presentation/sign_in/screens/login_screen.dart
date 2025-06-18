@@ -28,6 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
   static const double FORM_WIDTH = 312.0;
 
   final List<Map<String, String>> database = [
+    {'email': 'admin@admin.com', 'password': '12341234!'},
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
 

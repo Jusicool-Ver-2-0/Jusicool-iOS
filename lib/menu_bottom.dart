@@ -56,14 +56,14 @@ class NavBarItem extends StatelessWidget {
     switch (iconName) {
       case 'capital':
         return JusicoolIcon.pieChart(width: 24.w, height: 24.h, color: color);
-      case 'stock':
+      case 'chart':
         return JusicoolIcon.chart(width: 24.w, height: 24.h, color: color);
       case 'news':
         return JusicoolIcon.news(width: 24.w, height: 24.h, color: color);
       case 'account':
-        return JusicoolIcon.pieChart(width: 24.w, height: 24.h, color: color);
+        return JusicoolIcon.person(width: 24.w, height: 24.h, color: color);
       default:
-        return const SizedBox.shrink();
+        throw Exception('Unknown icon name: $iconName');
     }
   }
 
