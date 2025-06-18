@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/presentation/community_screens/widgets/comment_item.dart';
-import 'package:jusicool_ios/presentation/community_screens/widgets/comment_textfield.dart';
-import 'package:jusicool_ios/presentation/community_screens/widgets/like_button.dart';
+import 'package:jusicool_ios/presentation/community/widgets/comment_item.dart';
+import 'package:jusicool_ios/presentation/community/widgets/comment_textfield.dart';
+import 'package:jusicool_ios/presentation/community/widgets/like_button.dart';
+
 import 'community_post_edit_screen.dart';
 
 class CommunityPostDetailScreen extends StatefulWidget {
@@ -59,7 +60,9 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
           title: Center(
             child: Text(
               '수정하기',
-              style: JusicoolTypography.bodySmall.copyWith(color: JusicoolColor.gray600),
+              style: JusicoolTypography.bodySmall.copyWith(
+                color: JusicoolColor.gray600,
+              ),
             ),
           ),
           onTap: () async {
@@ -86,7 +89,9 @@ class _CommunityPostDetailScreenState extends State<CommunityPostDetailScreen> {
           title: Center(
             child: Text(
               '삭제하기',
-              style: JusicoolTypography.bodySmall.copyWith(color: JusicoolColor.error),
+              style: JusicoolTypography.bodySmall.copyWith(
+                color: JusicoolColor.error,
+              ),
             ),
           ),
           onTap: () {

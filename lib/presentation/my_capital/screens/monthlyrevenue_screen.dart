@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_ios/presentation/mycapital_screens/revenuecard.dart';
+import 'package:jusicool_ios/presentation/my_capital/screens/revenuecard.dart';
 
 class MonthlyRevenueScreen extends StatefulWidget {
   const MonthlyRevenueScreen({super.key});

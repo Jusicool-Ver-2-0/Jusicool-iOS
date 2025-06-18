@@ -5,7 +5,8 @@ import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart'
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:jusicool_ios/presentation/signup_screens/name_input_screen.dart';
+
+import '../../sign_up/screens/name_input_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

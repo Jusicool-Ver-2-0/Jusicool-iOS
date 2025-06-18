@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:jusicool_ios/presentation/signup_screens/password_create_screen.dart';
+import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 
 // 문자열 상수 (지역화 지원)
 class AppStrings {
@@ -241,7 +241,10 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     if (controller.text.isNotEmpty) {
       if (controller == emailController) {
         borderSide = BorderSide(
-          color: isEmailValid && isEmailUnique ? JusicoolColor.main : JusicoolColor.error,
+          color:
+              isEmailValid && isEmailUnique
+                  ? JusicoolColor.main
+                  : JusicoolColor.error,
           width: 1.w,
         );
       } else {
@@ -353,7 +356,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 children: [
                   SizedBox(height: 8.h),
                   Text(
-                   AppStrings.verifyEmailTitle,
+                    AppStrings.verifyEmailTitle,
                     style: JusicoolTypography.subTitle,
                   ),
                   SizedBox(height: 32.h),

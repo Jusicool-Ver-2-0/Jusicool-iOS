@@ -5,8 +5,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_ios/presentation/mycapital_screens/widgets/my_asset_tile.dart';
-import '../../data/models/my_assets.dart';
+import 'package:jusicool_ios/presentation/my_capital/widgets/my_asset_tile.dart';
+import '../../../data/models/my_assets.dart';
 
 class MyAssetsScreen extends StatefulWidget {
   const MyAssetsScreen({super.key});
