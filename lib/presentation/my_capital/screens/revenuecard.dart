@@ -52,7 +52,7 @@ class RevenueCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
+          Image.network(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
           SizedBox(width: 12.w),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

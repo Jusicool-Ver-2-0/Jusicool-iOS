@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_ios/main.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
+import 'package:go_router/go_router.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:email_validator/email_validator.dart';
-
+import 'package:jusicool_ios/router.dart';
 import '../../sign_up/screens/name_input_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -168,10 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (user.isNotEmpty) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainPage()),
-      );
+      context.pushReplacement(RoutePaths.main);
     } else {
       setError(
         emailError: false,
@@ -267,12 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Positioned(
             top: 112.h,
             left: 24.w,
-            child: Image.asset(
-              'assets/images/JUSICOOL.png',
-              width: 220.w,
-              height: 32.h,
-              fit: BoxFit.cover,
-            ),
+            child: JusicoolImage.logo(width: 220.w, height: 32.h),
           ),
           Positioned(
             top: 152.h,

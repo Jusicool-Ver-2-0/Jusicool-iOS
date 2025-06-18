@@ -34,7 +34,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
   final List<Map<String, dynamic>> revenueData = [
     {
       'date': '1월 31일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '애플',
       'amount': 123456789,
       'changeValue': -1000000,
@@ -43,7 +43,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 31일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '삼성',
       'amount': 987654321,
       'changeValue': 2000000,
@@ -53,7 +53,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 31일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '비트코인',
       'amount': 123456789,
       'changeValue': 0,
@@ -62,7 +62,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '테슬라',
       'amount': 333333333,
       'changeValue': -500000,
@@ -71,7 +71,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '구글',
       'amount': 444444444,
       'changeValue': 3000000,
@@ -80,7 +80,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'assets/images/stock.png',
+      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '이더리움',
       'amount': 777777777,
       'changeValue': 1500000,

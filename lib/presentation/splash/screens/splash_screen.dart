@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:go_router/go_router.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -36,9 +36,7 @@ class _SplashScreenState extends State<SplashScreen> {
               color: JusicoolColor.black,
               fontSize: 48.sp,
             ),
-            imagePath: 'assets/images/Cards.png',
-            imageWidth: 62.w,
-            imageHeight: 62.h,
+            image: JusicoolImage.card(width: 62.w, height: 62.h),
             isImageFirst: false,
           ),
           buildPositionedRow(
@@ -49,9 +47,7 @@ class _SplashScreenState extends State<SplashScreen> {
               color: JusicoolColor.black,
               fontSize: 48.sp,
             ),
-            imagePath: 'assets/images/Graphic.png',
-            imageWidth: 62.w,
-            imageHeight: 62.h,
+            image: JusicoolImage.graphic(width: 62.w, height: 62.h),
             isImageFirst: true,
           ),
           buildPositionedRow(
@@ -59,12 +55,8 @@ class _SplashScreenState extends State<SplashScreen> {
             left: 24.w,
             text: null,
             textStyle: null,
-            imagePath: 'assets/images/JUSICOOL.png',
-            imageWidth: 220.w,
-            imageHeight: 32.h,
-            trailingImagePath: 'assets/images/Cloud.png',
-            trailingImageWidth: 56.w,
-            trailingImageHeight: 56.h,
+            image: JusicoolImage.logo(width: 220.w, height: 32.h),
+            trailingImage: JusicoolImage.cloud(width: 56.w, height: 56.h),
             isImageFirst: false,
           ),
         ],
@@ -77,12 +69,8 @@ class _SplashScreenState extends State<SplashScreen> {
     required double left,
     String? text,
     TextStyle? textStyle,
-    required String imagePath,
-    required double imageWidth,
-    required double imageHeight,
-    String? trailingImagePath,
-    double? trailingImageWidth,
-    double? trailingImageHeight,
+    required Widget image,
+    Widget? trailingImage,
     bool isImageFirst = false,
   }) {
     return Positioned(
@@ -91,31 +79,13 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isImageFirst)
-            Image.asset(
-              imagePath,
-              width: imageWidth,
-              height: imageHeight,
-              fit: BoxFit.cover,
-            ),
+          if (isImageFirst) image,
           if (isImageFirst) SizedBox(width: 10.w),
           if (text != null) Text(text, style: textStyle),
           if (!isImageFirst) SizedBox(width: 10.w),
-          if (!isImageFirst)
-            Image.asset(
-              imagePath,
-              width: imageWidth,
-              height: imageHeight,
-              fit: BoxFit.cover,
-            ),
-          if (trailingImagePath != null) SizedBox(width: 10.w),
-          if (trailingImagePath != null)
-            Image.asset(
-              trailingImagePath,
-              width: trailingImageWidth,
-              height: trailingImageHeight,
-              fit: BoxFit.cover,
-            ),
+          if (!isImageFirst) image,
+          if (trailingImage != null) SizedBox(width: 10.w),
+          if (trailingImage != null) trailingImage,
         ],
       ),
     );

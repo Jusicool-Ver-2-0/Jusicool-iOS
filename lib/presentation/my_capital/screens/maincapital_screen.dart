@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:go_router/go_router.dart';
@@ -39,75 +40,67 @@ class StockCard extends StatelessWidget {
       changeColor = JusicoolColor.gray400;
     }
 
-    return Container(
-      width: 312.w,
-      height: 48.h,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
-          SizedBox(width: 14.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                companyName,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 22 / 16,
-                  letterSpacing: 0,
-                  color: JusicoolColor.black,
-                ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.network(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
+        SizedBox(width: 14.w),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              companyName,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.black,
               ),
-              SizedBox(height: 2.h),
-              Text(
-                stockCount,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 22 / 16,
-                  letterSpacing: 0,
-                  color: JusicoolColor.gray400,
-                ),
-              ),
-            ],
-          ),
-          Expanded(child: SizedBox()),
-          Container(
-            width: 160.w,
-            height: 44.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  amount,
-                  style: JusicoolTypography.bodySmall.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 22 / 16,
-                    letterSpacing: 0,
-                    color: JusicoolColor.black,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  changeText,
-                  style: JusicoolTypography.label.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 16 / 12,
-                    letterSpacing: 0,
-                    color: changeColor,
-                  ),
-                ),
-              ],
             ),
-          ),
-        ],
-      ),
+            SizedBox(height: 2.h),
+            Text(
+              stockCount,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.gray400,
+              ),
+            ),
+          ],
+        ),
+        Expanded(child: SizedBox()),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              amount,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.black,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              changeText,
+              style: JusicoolTypography.label.copyWith(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                height: 16 / 12,
+                letterSpacing: 0,
+                color: changeColor,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -146,75 +139,67 @@ class CoinCard extends StatelessWidget {
       changeColor = JusicoolColor.gray400;
     }
 
-    return Container(
-      width: 312.w,
-      height: 48.h,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Image.asset(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
-          SizedBox(width: 14.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                companyName,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 22 / 16,
-                  letterSpacing: 0,
-                  color: JusicoolColor.black,
-                ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Image.network(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
+        SizedBox(width: 14.w),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              companyName,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.black,
               ),
-              SizedBox(height: 2.h),
-              Text(
-                stockCount,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 22 / 16,
-                  letterSpacing: 0,
-                  color: JusicoolColor.gray400,
-                ),
-              ),
-            ],
-          ),
-          Expanded(child: SizedBox()),
-          Container(
-            width: 160.w,
-            height: 44.h,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  amount,
-                  style: JusicoolTypography.bodySmall.copyWith(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 22 / 16,
-                    letterSpacing: 0,
-                    color: JusicoolColor.black,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  changeText,
-                  style: JusicoolTypography.label.copyWith(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 16 / 12,
-                    letterSpacing: 0,
-                    color: changeColor,
-                  ),
-                ),
-              ],
             ),
-          ),
-        ],
-      ),
+            SizedBox(height: 2.h),
+            Text(
+              stockCount,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.gray400,
+              ),
+            ),
+          ],
+        ),
+        Expanded(child: SizedBox()),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              amount,
+              style: JusicoolTypography.bodySmall.copyWith(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w400,
+                height: 22 / 16,
+                letterSpacing: 0,
+                color: JusicoolColor.black,
+              ),
+            ),
+            SizedBox(height: 4.h),
+            Text(
+              changeText,
+              style: JusicoolTypography.label.copyWith(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                height: 16 / 12,
+                letterSpacing: 0,
+                color: changeColor,
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -261,7 +246,8 @@ class MainCapitalScreen extends StatelessWidget {
 
     final List<Map<String, dynamic>> stockData = [
       {
-        'imagePath': 'assets/images/stock.png',
+        'imagePath':
+            'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
         'companyName': '애플',
         'stockCount': '123주',
         'amount': '$formattedInvestmentValue원',
@@ -269,7 +255,8 @@ class MainCapitalScreen extends StatelessWidget {
         'changePercentage': changePercent,
       },
       {
-        'imagePath': 'assets/images/stock.png',
+        'imagePath':
+            'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
         'companyName': '삼성',
         'stockCount': '456주',
         'amount': '$formattedInvestmentValue원',
@@ -280,7 +267,8 @@ class MainCapitalScreen extends StatelessWidget {
 
     final List<Map<String, dynamic>> coinData = [
       {
-        'imagePath': 'assets/images/stock.png',
+        'imagePath':
+            'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
         'companyName': '비트코인',
         'stockCount': '0.5코인',
         'amount': '$formattedInvestmentValue원',
@@ -288,7 +276,8 @@ class MainCapitalScreen extends StatelessWidget {
         'changePercentage': 1.8,
       },
       {
-        'imagePath': 'assets/images/stock.png',
+        'imagePath':
+            'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
         'companyName': '이더리움',
         'stockCount': '2코인',
         'amount': '$formattedInvestmentValue원',
@@ -310,12 +299,7 @@ class MainCapitalScreen extends StatelessWidget {
             padding: EdgeInsets.only(top: 40.h, left: 24.w),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Image.asset(
-                'assets/images/JUSICOOL.png',
-                width: 116.w,
-                height: 16.81.h,
-                fit: BoxFit.contain,
-              ),
+              child: JusicoolImage.logo(width: 116.w, height: 16.81.h),
             ),
           ),
         ),
@@ -327,316 +311,296 @@ class MainCapitalScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
               child: Column(
+                spacing: 24.h,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   GestureDetector(
                     onTap: () {
                       context.push('/login');
                     },
-                    child: Container(
-                      width: 312.w,
-                      height: 61.h,
-                      color: JusicoolColor.white,
-                      child: Stack(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          spacing: 4.w,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "내 자산",
+                              style: JusicoolTypography.bodyMedium.copyWith(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600,
+                                height: 22 / 16,
+                                letterSpacing: 0,
+                                color: JusicoolColor.black,
+                              ),
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 15.w,
+                              color: JusicoolColor.black,
+                            ),
+                          ],
+                        ),
+                        Text(
+                          "$formattedInvestmentValue원",
+                          style: JusicoolTypography.titleSmall.copyWith(
+                            fontSize: 24.sp,
+                            fontWeight: FontWeight.w600,
+                            height: 31 / 24,
+                            letterSpacing: 0,
+                            color: JusicoolColor.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
+                    spacing: 2.h,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "투자 자산",
+                        style: JusicoolTypography.bodyMedium.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 22 / 16,
+                          letterSpacing: 0,
+                          color: JusicoolColor.black,
+                        ),
+                      ),
+                      Text(
+                        "$formattedInvestmentValue원",
+                        style: JusicoolTypography.titleMedium.copyWith(
+                          fontSize: 36.sp,
+                          fontWeight: FontWeight.w600,
+                          height: 43 / 36,
+                          letterSpacing: 0,
+                          color: JusicoolColor.black,
+                        ),
+                      ),
+                      Text(
+                        changeText,
+                        style: JusicoolTypography.bodySmall.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          height: 22 / 16,
+                          letterSpacing: 0,
+                          color: changeColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    spacing: 2.h,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        color: JusicoolColor.white,
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 16.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "내 자산",
-                                style: JusicoolTypography.bodyMedium.copyWith(
-                                  fontSize: 16.sp,
+                                "보유 주식&코인",
+                                style: JusicoolTypography.subTitle.copyWith(
+                                  fontSize: 18.sp,
                                   fontWeight: FontWeight.w600,
+                                  height: 27 / 18,
+                                  letterSpacing: 0,
+                                  color: JusicoolColor.black,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              Text(
+                                "주식",
+                                style: JusicoolTypography.bodySmall.copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
                                   height: 22 / 16,
                                   letterSpacing: 0,
                                   color: JusicoolColor.black,
                                 ),
                               ),
-                              SizedBox(width: 4.w),
-                              Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15.w,
-                                color: JusicoolColor.black,
+                              SizedBox(height: 8.h),
+                              ...List.generate(stockData.length, (index) {
+                                final stock = stockData[index];
+                                return Column(
+                                  children: [
+                                    StockCard(
+                                      imagePath: stock['imagePath'] as String,
+                                      companyName:
+                                          stock['companyName'] as String,
+                                      stockCount: stock['stockCount'] as String,
+                                      amount: stock['amount'] as String,
+                                      changeValue: stock['changeValue'] as int,
+                                      changePercentage:
+                                          stock['changePercentage'] as double,
+                                    ),
+                                    if (index < stockData.length - 1)
+                                      SizedBox(height: 4.h),
+                                  ],
+                                );
+                              }),
+                              SizedBox(height: 16.h),
+                              Text(
+                                "코인",
+                                style: JusicoolTypography.bodySmall.copyWith(
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  height: 22 / 16,
+                                  letterSpacing: 0,
+                                  color: JusicoolColor.black,
+                                ),
+                              ),
+                              SizedBox(height: 8.h),
+                              ...List.generate(coinData.length, (index) {
+                                final coin = coinData[index];
+                                return Column(
+                                  children: [
+                                    CoinCard(
+                                      imagePath: coin['imagePath'] as String,
+                                      companyName:
+                                          coin['companyName'] as String,
+                                      stockCount: coin['stockCount'] as String,
+                                      amount: coin['amount'] as String,
+                                      changeValue: coin['changeValue'] as int,
+                                      changePercentage:
+                                          coin['changePercentage'] as double,
+                                    ),
+                                    if (index < coinData.length - 1)
+                                      SizedBox(height: 4.h),
+                                  ],
+                                );
+                              }),
+                              SizedBox(height: 20.h),
+                              Container(
+                                height: 1.h,
+                                width: 312.w,
+                                color: JusicoolColor.gray400,
+                              ),
+                              SizedBox(height: 20.h),
+                              Container(
+                                width: 312.w,
+                                height: 60.h,
+                                color: JusicoolColor.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      width: 312.w,
+                                      height: 26.h,
+                                      color: JusicoolColor.white,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "주문내역",
+                                            style: JusicoolTypography.bodySmall
+                                                .copyWith(
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 22 / 16,
+                                                  letterSpacing: 0,
+                                                  color: JusicoolColor.black,
+                                                ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              context.push('/order-detail');
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  monthlyOrderText,
+                                                  style: JusicoolTypography
+                                                      .bodySmall
+                                                      .copyWith(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        height: 16 / 14,
+                                                        letterSpacing: 0,
+                                                        color:
+                                                            JusicoolColor
+                                                                .gray600,
+                                                      ),
+                                                ),
+                                                JusicoolIcon.forwardArrow(
+                                                  width: 24.w,
+                                                  height: 24.h,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    SizedBox(height: 8.h),
+                                    Container(
+                                      width: 312.w,
+                                      height: 26.h,
+                                      color: JusicoolColor.white,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "이번달 수익",
+                                            style: JusicoolTypography.bodySmall
+                                                .copyWith(
+                                                  fontSize: 16.sp,
+                                                  fontWeight: FontWeight.w400,
+                                                  height: 22 / 16,
+                                                  letterSpacing: 0,
+                                                  color: JusicoolColor.black,
+                                                ),
+                                          ),
+                                          GestureDetector(
+                                            onTap: () {
+                                              context.push('/monthly-revenue');
+                                            },
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  monthlyProfit,
+                                                  style: JusicoolTypography
+                                                      .bodySmall
+                                                      .copyWith(
+                                                        fontSize: 14.sp,
+                                                        fontWeight:
+                                                            FontWeight.w400,
+                                                        height: 16 / 14,
+                                                        letterSpacing: 0,
+                                                        color:
+                                                            JusicoolColor
+                                                                .gray600,
+                                                      ),
+                                                ),
+                                                JusicoolIcon.forwardArrow(
+                                                  width: 24.w,
+                                                  height: 24.h,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                          Positioned(
-                            bottom: 0,
-                            left: 0,
-                            child: Text(
-                              "$formattedInvestmentValue원",
-                              style: JusicoolTypography.titleSmall.copyWith(
-                                fontSize: 24.sp,
-                                fontWeight: FontWeight.w600,
-                                height: 31 / 24,
-                                letterSpacing: 0,
-                                color: JusicoolColor.black,
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  SizedBox(height: 24.h),
-                  Container(
-                    width: 312.w,
-                    color: Colors.transparent,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "투자 자산",
-                          style: JusicoolTypography.bodyMedium.copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600,
-                            height: 22 / 16,
-                            letterSpacing: 0,
-                            color: JusicoolColor.black,
-                          ),
-                        ),
-                        SizedBox(height: 2.h),
-                        Text(
-                          "$formattedInvestmentValue원",
-                          style: JusicoolTypography.titleMedium.copyWith(
-                            fontSize: 36.sp,
-                            fontWeight: FontWeight.w600,
-                            height: 43 / 36,
-                            letterSpacing: 0,
-                            color: JusicoolColor.black,
-                          ),
-                        ),
-                        SizedBox(height: 2.h),
-                        Text(
-                          changeText,
-                          style: JusicoolTypography.bodySmall.copyWith(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w400,
-                            height: 22 / 16,
-                            letterSpacing: 0,
-                            color: changeColor,
-                          ),
-                        ),
-                        SizedBox(height: 20.h),
-                        Container(
-                          width: 312.w,
-                          color: JusicoolColor.white,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 16.h, left: 0.w),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "보유 주식&코인",
-                                  style: JusicoolTypography.subTitle.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w600,
-                                    height: 27 / 18,
-                                    letterSpacing: 0,
-                                    color: JusicoolColor.black,
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                Text(
-                                  "주식",
-                                  style: JusicoolTypography.bodySmall.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    height: 22 / 16,
-                                    letterSpacing: 0,
-                                    color: JusicoolColor.black,
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                ...List.generate(stockData.length, (index) {
-                                  final stock = stockData[index];
-                                  return Column(
-                                    children: [
-                                      StockCard(
-                                        imagePath: stock['imagePath'] as String,
-                                        companyName:
-                                            stock['companyName'] as String,
-                                        stockCount:
-                                            stock['stockCount'] as String,
-                                        amount: stock['amount'] as String,
-                                        changeValue:
-                                            stock['changeValue'] as int,
-                                        changePercentage:
-                                            stock['changePercentage'] as double,
-                                      ),
-                                      if (index < stockData.length - 1)
-                                        SizedBox(height: 4.h),
-                                    ],
-                                  );
-                                }),
-                                SizedBox(height: 16.h),
-                                Text(
-                                  "코인",
-                                  style: JusicoolTypography.bodySmall.copyWith(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    height: 22 / 16,
-                                    letterSpacing: 0,
-                                    color: JusicoolColor.black,
-                                  ),
-                                ),
-                                SizedBox(height: 8.h),
-                                ...List.generate(coinData.length, (index) {
-                                  final coin = coinData[index];
-                                  return Column(
-                                    children: [
-                                      CoinCard(
-                                        imagePath: coin['imagePath'] as String,
-                                        companyName:
-                                            coin['companyName'] as String,
-                                        stockCount:
-                                            coin['stockCount'] as String,
-                                        amount: coin['amount'] as String,
-                                        changeValue: coin['changeValue'] as int,
-                                        changePercentage:
-                                            coin['changePercentage'] as double,
-                                      ),
-                                      if (index < coinData.length - 1)
-                                        SizedBox(height: 4.h),
-                                    ],
-                                  );
-                                }),
-                                SizedBox(height: 20.h),
-                                Container(
-                                  height: 1.h,
-                                  width: 312.w,
-                                  color: JusicoolColor.gray400,
-                                ),
-                                SizedBox(height: 20.h),
-                                Container(
-                                  width: 312.w,
-                                  height: 60.h,
-                                  color: JusicoolColor.white,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: 312.w,
-                                        height: 26.h,
-                                        color: JusicoolColor.white,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "주문내역",
-                                              style: JusicoolTypography
-                                                  .bodySmall
-                                                  .copyWith(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 22 / 16,
-                                                    letterSpacing: 0,
-                                                    color: JusicoolColor.black,
-                                                  ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                context.push('/order-detail');
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    monthlyOrderText,
-                                                    style: JusicoolTypography
-                                                        .bodySmall
-                                                        .copyWith(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 16 / 14,
-                                                          letterSpacing: 0,
-                                                          color:
-                                                              JusicoolColor
-                                                                  .gray600,
-                                                        ),
-                                                  ),
-                                                  Image.asset(
-                                                    'assets/images/small_arrow.png',
-                                                    width: 24.w,
-                                                    height: 24.h,
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: 8.h),
-                                      Container(
-                                        width: 312.w,
-                                        height: 26.h,
-                                        color: JusicoolColor.white,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              "이번달 수익",
-                                              style: JusicoolTypography
-                                                  .bodySmall
-                                                  .copyWith(
-                                                    fontSize: 16.sp,
-                                                    fontWeight: FontWeight.w400,
-                                                    height: 22 / 16,
-                                                    letterSpacing: 0,
-                                                    color: JusicoolColor.black,
-                                                  ),
-                                            ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                context.push(
-                                                  '/monthly-revenue',
-                                                );
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    monthlyProfit,
-                                                    style: JusicoolTypography
-                                                        .bodySmall
-                                                        .copyWith(
-                                                          fontSize: 14.sp,
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          height: 16 / 14,
-                                                          letterSpacing: 0,
-                                                          color:
-                                                              JusicoolColor
-                                                                  .gray600,
-                                                        ),
-                                                  ),
-                                                  Image.asset(
-                                                    'assets/images/small_arrow.png',
-                                                    width: 24.w,
-                                                    height: 24.h,
-                                                    fit: BoxFit.contain,
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    ],
                   ),
                 ],
               ),
@@ -686,10 +650,9 @@ class MainCapitalScreen extends StatelessWidget {
                             height: 156.h,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(12.r),
-                              image: DecorationImage(
-                                image: AssetImage('assets/images/exnews.png'),
-                                fit: BoxFit.cover,
-                              ),
+                            ),
+                            child: Image.network(
+                              'https://gongu.copyright.or.kr/gongu/wrt/cmmn/wrtFileImageView.do?wrtSn=11288734&filePath=L2Rpc2sxL25ld2RhdGEvMjAxNS8wMi9DTFM2OS9OVVJJXzAwMV8wMjIwX251cmltZWRpYV8yMDE1MTIwMw==&thumbAt=Y&thumbSe=b_tbumb&wrtTy=10006',
                             ),
                           ),
                           SizedBox(height: 8.h),

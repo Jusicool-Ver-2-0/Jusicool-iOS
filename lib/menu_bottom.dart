@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 
 class ScreenConfig {
@@ -37,18 +37,35 @@ class ScreenList {
 }
 
 class NavBarItem extends StatelessWidget {
-  final String imagePath;
+  final String iconName;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
   const NavBarItem({
     super.key,
-    required this.imagePath,
+    required this.iconName,
     required this.label,
     required this.isSelected,
     required this.onTap,
   });
+
+  Widget _buildIcon() {
+    final color = isSelected ? JusicoolColor.main : JusicoolColor.gray400;
+
+    switch (iconName) {
+      case 'capital':
+        return JusicoolIcon.pieChart(width: 24.w, height: 24.h, color: color);
+      case 'stock':
+        return JusicoolIcon.chart(width: 24.w, height: 24.h, color: color);
+      case 'news':
+        return JusicoolIcon.news(width: 24.w, height: 24.h, color: color);
+      case 'account':
+        return JusicoolIcon.pieChart(width: 24.w, height: 24.h, color: color);
+      default:
+        return const SizedBox.shrink();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +75,7 @@ class NavBarItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(
-            imagePath,
-            width: 24.w,
-            height: 24.h,
-            color: isSelected ? JusicoolColor.main : JusicoolColor.gray400,
-          ),
+          _buildIcon(),
           Text(
             label,
             style: TextStyle(
@@ -115,7 +127,6 @@ class _MenuBottomState extends State<MenuBottom> {
               ),
             ),
             Container(
-              width: 360.w,
               height: 52.h,
               color: JusicoolColor.white,
               child: Stack(
@@ -132,14 +143,12 @@ class _MenuBottomState extends State<MenuBottom> {
                     top: 9.h,
                     child: Container(
                       width: 277.w,
-                      height: 36.2.h,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: List.generate(
                           _navItems.length,
                           (index) => NavBarItem(
-                            imagePath:
-                                'assets/images/${_navItems[index]['image'] ?? 'capital'}.png',
+                            iconName: _navItems[index]['image']!,
                             label: ScreenList.getTitle(index),
                             isSelected: selectedIndex == index,
                             onTap: () => onTap(index),
