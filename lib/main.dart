@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'package:jusicool_ios/menu_bottom.dart';
 import 'package:jusicool_ios/router.dart';
 
-class BaseScreen extends StatelessWidget {
-  final String title;
-  final Widget content;
+import 'core/config/theme/app_theme.dart';
 
-  const BaseScreen({super.key, required this.title, required this.content});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [Center(child: content), SizedBox(height: 52.h)],
-        ),
-      ),
-    );
-  }
+  await dotenv.load(fileName: '.env');
+
+  setDio();
+  await di.allReady();
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: JusicoolColor.white,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: JusicoolColor.white,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -29,28 +34,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appRouter = AppRouter();
     return ScreenUtilInit(
       designSize: const Size(360, 800),
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
         return MaterialApp.router(
-          routerDelegate: appRouter.router.routerDelegate,
-          routeInformationParser: appRouter.router.routeInformationParser,
-          routeInformationProvider: appRouter.router.routeInformationProvider,
-          title: 'Jusicool',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            appBarTheme: const AppBarTheme(
-              systemOverlayStyle: SystemUiOverlayStyle(
-                statusBarColor: AppColor.white,
-                statusBarIconBrightness: Brightness.dark,
-              ),
-              backgroundColor: AppColor.white,
-              elevation: 0,
-            ),
-          ),
+          routerDelegate: AppRouter.router.routerDelegate,
+          routeInformationParser: AppRouter.router.routeInformationParser,
+          routeInformationProvider: AppRouter.router.routeInformationProvider,
+          theme: appTheme,
           debugShowCheckedModeBanner: false,
         );
       },
@@ -65,8 +58,4 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MenuBottom();
   }
-}
-
-void main() {
-  runApp(const MyApp());
 }
