@@ -123,48 +123,42 @@ class _NameInputScreenState extends State<NameInputScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Positioned(
-              top: 0,
-              left: 0,
+            Padding(
+              padding: EdgeInsets.only(bottom: 48.h),
               child: Text('이름을 적어 주세요', style: JusicoolTypography.subTitle),
             ),
-            Positioned(
-              top: 48.h,
-              left: 0,
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
               child: Text('이름', style: JusicoolTypography.bodySmall),
             ),
-            Positioned(
-              top: 88.h,
-              left: 0,
-              right: 0,
-              child: DefaultTextField(
-                controller: _controller,
-                hintText: '실명을 적어주세요',
-                validator: (value) {
-                  final name = value?.trim() ?? '';
-                  if (name.isEmpty) {
-                    _errorMessage = '이름을 입력해주세요';
-                  } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
-                    _errorMessage = '2자 이상 한글로 입력해주세요';
-                  } else {
-                    _errorMessage = null;
-                  }
-                  return _errorMessage;
-                },
-                errorText: _errorMessage,
-              ),
+            DefaultTextField(
+              controller: _controller,
+              hintText: '실명을 적어주세요',
+              validator: (value) {
+                final name = value?.trim() ?? '';
+                if (name.isEmpty) {
+                  _errorMessage = '이름을 입력해주세요';
+                } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
+                  _errorMessage = '2자 이상 한글로 입력해주세요';
+                } else {
+                  _errorMessage = null;
+                }
+                return _errorMessage;
+              },
+              errorText: _errorMessage,
             ),
-            Positioned(
-              bottom: 56.h,
-              left: 0,
-              right: 0,
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.h),
               child: buildButton(
                 label: '다음',
                 onPressed: _isButtonEnabled ? _handleNext : null,
               ),
             ),
+            Padding(padding: EdgeInsets.only(bottom: 32.h)),
           ],
         ),
       ),
