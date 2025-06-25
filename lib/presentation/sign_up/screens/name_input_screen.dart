@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:go_router/go_router.dart';
 
-const double BUTTON_HEIGHT = 48;
+const double BUTTON_HEIGHT = 54;
 
 class NameInputScreen extends StatefulWidget {
   const NameInputScreen({super.key});
@@ -70,26 +70,24 @@ class _NameInputScreenState extends State<NameInputScreen> {
     required VoidCallback? onPressed,
     bool isLoading = false,
   }) {
+    final isEnabled = onPressed != null && !isLoading;
+
     return Semantics(
       button: true,
       label: label,
-      child: SizedBox(
+      child: Container(
         width: double.infinity,
         height: BUTTON_HEIGHT.h,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.r)),
         child: ElevatedButton(
           onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor:
-                onPressed != null && !isLoading
-                    ? JusicoolColor.main
-                    : JusicoolColor.gray300,
+                isEnabled ? JusicoolColor.main : JusicoolColor.gray300,
             foregroundColor:
-                onPressed != null && !isLoading
-                    ? JusicoolColor.white
-                    : JusicoolColor.gray600,
+                isEnabled ? JusicoolColor.white : JusicoolColor.gray600,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.r),
-              side: BorderSide.none,
             ),
             elevation: 0,
           ),
@@ -100,7 +98,7 @@ class _NameInputScreenState extends State<NameInputScreen> {
                     label,
                     style: JusicoolTypography.bodyMedium.copyWith(
                       color:
-                          onPressed != null && !isLoading
+                          isEnabled
                               ? JusicoolColor.white
                               : JusicoolColor.gray600,
                     ),
@@ -116,49 +114,46 @@ class _NameInputScreenState extends State<NameInputScreen> {
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text(''),
+        title: null,
         elevation: 0,
         backgroundColor: JusicoolColor.white,
         foregroundColor: JusicoolColor.black,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text('이름을 적어 주세요', style: JusicoolTypography.subTitle),
             Padding(
-              padding: EdgeInsets.only(bottom: 48.h),
-              child: Text('이름을 적어 주세요', style: JusicoolTypography.subTitle),
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 8.h),
+              padding: EdgeInsets.only(top: 24.h),
               child: Text('이름', style: JusicoolTypography.bodySmall),
             ),
-            DefaultTextField(
-              controller: _controller,
-              hintText: '실명을 적어주세요',
-              validator: (value) {
-                final name = value?.trim() ?? '';
-                if (name.isEmpty) {
-                  _errorMessage = '이름을 입력해주세요';
-                } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
-                  _errorMessage = '2자 이상 한글로 입력해주세요';
-                } else {
-                  _errorMessage = null;
-                }
-                return _errorMessage;
-              },
-              errorText: _errorMessage,
-            ),
-            const Spacer(),
             Padding(
-              padding: EdgeInsets.only(bottom: 8.h),
-              child: buildButton(
-                label: '다음',
-                onPressed: _isButtonEnabled ? _handleNext : null,
+              padding: EdgeInsets.only(top: 8.h),
+              child: DefaultTextField(
+                controller: _controller,
+                hintText: '실명을 적어주세요',
+                validator: (value) {
+                  final name = value?.trim() ?? '';
+                  if (name.isEmpty) {
+                    _errorMessage = '이름을 입력해주세요';
+                  } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
+                    _errorMessage = '2자 이상 한글로 입력해주세요';
+                  } else {
+                    _errorMessage = null;
+                  }
+                  return _errorMessage;
+                },
+                errorText: _errorMessage,
               ),
             ),
-            Padding(padding: EdgeInsets.only(bottom: 32.h)),
+            const Spacer(),
+            buildButton(
+              label: '다음',
+              onPressed: _isButtonEnabled ? _handleNext : null,
+            ),
+            Padding(padding: EdgeInsets.only(top: 16.h)),
           ],
         ),
       ),
