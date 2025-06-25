@@ -180,8 +180,111 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final isFormFilled =
+        _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
+
+    return Scaffold(
+      backgroundColor: JusicoolColor.white,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 112.h),
+              JusicoolImage.logo(width: 220.w, height: 32.h),
+              SizedBox(height: 8.h),
+              Padding(
+                padding: EdgeInsets.only(left: 2.w),
+                child: Text(
+                  'jusicool로 간단하게 모의투자부터',
+                  style: JusicoolTypography.bodySmall.copyWith(
+                    color: JusicoolColor.gray600,
+                    fontSize: 16.sp,
+                  ),
+                ),
+              ),
+              SizedBox(height: 74.h),
+              buildInputField(
+                label: '이메일',
+                controller: _emailController,
+                hint: '이메일을 입력해주세요',
+                hasError: showEmailError || showLoginError,
+                errorMessage: emailErrorMessage,
+                onChanged: validateEmail,
+              ),
+              SizedBox(height: 32.h),
+              buildInputField(
+                label: '비밀번호',
+                controller: _passwordController,
+                hint: '비밀번호를 입력해주세요',
+                hasError: showPasswordError || showLoginError,
+                errorMessage:
+                    showPasswordError
+                        ? passwordErrorMessage
+                        : (showLoginError ? loginErrorMessage : ''),
+                obscureText: true,
+                onChanged: validatePassword,
+              ),
+              SizedBox(height: 120.h),
+              SizedBox(
+                width: FORM_WIDTH.w,
+                child: AppButtonMedium(
+                  text: '로그인',
+                  onPressed: handleLogin,
+                  backgroundColor:
+                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                  textColor:
+                      isFormFilled
+                          ? JusicoolColor.white
+                          : JusicoolColor.gray600,
+                  borderColor:
+                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                ),
+              ),
+              SizedBox(height: 32.h),
+              Center(
+                child: Text(
+                  '아직 계정이 없으신가요?',
+                  style: JusicoolTypography.bodySmall.copyWith(
+                    fontSize: 14.sp,
+                    color: JusicoolColor.gray300,
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Center(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NameInputScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    '회원가입',
+                    style: JusicoolTypography.bodySmall.copyWith(
+                      fontSize: 16.sp,
+                      color: JusicoolColor.main,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 24.h),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // buildInputField에서 Positioned 제거
   Widget buildInputField({
-    required double top,
+    // required double top, // top 파라미터 제거
     required String label,
     required TextEditingController controller,
     required String hint,
@@ -190,169 +293,51 @@ class _LoginScreenState extends State<LoginScreen> {
     bool obscureText = false,
     required Function(String) onChanged,
   }) {
-    return Positioned(
-      top: top,
-      left: 24.w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: JusicoolTypography.bodySmall.copyWith(
-              fontSize: 16.sp,
-              color: hasError ? JusicoolColor.error : JusicoolColor.black,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: JusicoolTypography.bodySmall.copyWith(
+            fontSize: 16.sp,
+            color: hasError ? JusicoolColor.error : JusicoolColor.black,
           ),
-          SizedBox(height: 8.h),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              SizedBox(
-                width: FORM_WIDTH.w,
-                height: FIELD_HEIGHT.h,
-                child: TextFormField(
-                  controller: controller,
-                  obscureText: obscureText,
-                  onChanged: (value) {
-                    onChanged(value);
-                    if (showLoginError) {
-                      setState(() {
-                        showLoginError = false;
-                        loginErrorMessage = '';
-                      });
-                    }
-                  },
-                  decoration: getInputDecoration(
-                    hint,
-                    hasError || showLoginError,
-                  ),
-                ),
-              ),
-              if (hasError && errorMessage.isNotEmpty)
-                Positioned(
-                  top: FIELD_HEIGHT.h + 4.h,
-                  right: 0,
-                  child: SizedBox(
-                    width: FORM_WIDTH.w,
-                    child: Text(
-                      errorMessage,
-                      textAlign: TextAlign.right,
-                      style: JusicoolTypography.bodySmall.copyWith(
-                        color: JusicoolColor.error,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
+        ),
+        SizedBox(height: 8.h),
+        SizedBox(
+          width: FORM_WIDTH.w,
+          height: FIELD_HEIGHT.h,
+          child: TextFormField(
+            controller: controller,
+            obscureText: obscureText,
+            onChanged: (value) {
+              onChanged(value);
+              if (showLoginError) {
+                setState(() {
+                  showLoginError = false;
+                  loginErrorMessage = '';
+                });
+              }
+            },
+            decoration: getInputDecoration(hint, hasError || showLoginError),
           ),
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final isFormFilled =
-        _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-
-    return Scaffold(
-      backgroundColor: JusicoolColor.white,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 112.h,
-            left: 24.w,
-            child: JusicoolImage.logo(width: 220.w, height: 32.h),
-          ),
-          Positioned(
-            top: 152.h,
-            left: 26.w,
-            child: Text(
-              'jusicool로 간단하게 모의투자부터',
-              style: JusicoolTypography.bodySmall.copyWith(
-                color: JusicoolColor.gray600,
-                fontSize: 16.sp,
-              ),
-            ),
-          ),
-          buildInputField(
-            top: 234.h,
-            label: '이메일',
-            controller: _emailController,
-            hint: '이메일을 입력해주세요',
-            hasError: showEmailError || showLoginError,
-            errorMessage: emailErrorMessage,
-            onChanged: validateEmail,
-          ),
-          buildInputField(
-            top: 330.h,
-            label: '비밀번호',
-            controller: _passwordController,
-            hint: '비밀번호를 입력해주세요',
-            hasError: showPasswordError || showLoginError,
-            errorMessage:
-                showPasswordError
-                    ? passwordErrorMessage
-                    : (showLoginError ? loginErrorMessage : ''),
-            obscureText: true,
-            onChanged: validatePassword,
-          ),
-          Positioned(
-            top: 614.h,
-            left: 24.w,
+        ),
+        if (hasError && errorMessage.isNotEmpty)
+          Padding(
+            padding: EdgeInsets.only(top: 4.h),
             child: SizedBox(
               width: FORM_WIDTH.w,
-              child: AppButtonMedium(
-                text: '로그인',
-                onPressed: handleLogin,
-                backgroundColor:
-                    isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-                textColor:
-                    isFormFilled ? JusicoolColor.white : JusicoolColor.gray600,
-                borderColor:
-                    isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 672.h,
-            left: 0,
-            right: 0,
-            child: Text(
-              '아직 계정이 없으신가요?',
-              textAlign: TextAlign.center,
-              style: JusicoolTypography.bodySmall.copyWith(
-                fontSize: 14.sp,
-                color: JusicoolColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 696.h,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NameInputScreen(),
-                  ),
-                );
-              },
               child: Text(
-                '회원가입',
-                textAlign: TextAlign.center,
+                errorMessage,
+                textAlign: TextAlign.right,
                 style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  color: JusicoolColor.main,
+                  color: JusicoolColor.error,
+                  fontSize: 12.sp,
                 ),
               ),
             ),
           ),
-        ],
-      ),
+      ],
     );
   }
 }
