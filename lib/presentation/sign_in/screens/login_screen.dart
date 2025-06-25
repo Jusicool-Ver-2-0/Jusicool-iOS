@@ -27,10 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
   static const double FIELD_HEIGHT = 56.0;
   static const double FORM_WIDTH = 312.0;
 
+  /// ====================================
   final List<Map<String, String>> database = [
     {'email': 'admin@admin.com', 'password': '12341234!'},
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
+
+  /// ====================================
 
   // 공통 에러 처리 함수
   void setError({
@@ -193,88 +196,108 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 112.h),
-              JusicoolImage.logo(width: 220.w, height: 32.h),
-              SizedBox(height: 8.h),
-              Padding(
-                padding: EdgeInsets.only(left: 2.w),
-                child: Text(
-                  'jusicool로 간단하게 모의투자부터',
-                  style: JusicoolTypography.bodySmall.copyWith(
-                    color: JusicoolColor.gray600,
-                    fontSize: 16.sp,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 112.h),
+                    child: JusicoolImage.logo(width: 220.w, height: 32.h),
                   ),
-                ),
-              ),
-              SizedBox(height: 74.h),
-              buildInputField(
-                label: '이메일',
-                controller: _emailController,
-                hint: '이메일을 입력해주세요',
-                hasError: showEmailError || showLoginError,
-                errorMessage: emailErrorMessage,
-                onChanged: validateEmail,
-              ),
-              SizedBox(height: 32.h),
-              buildInputField(
-                label: '비밀번호',
-                controller: _passwordController,
-                hint: '비밀번호를 입력해주세요',
-                hasError: showPasswordError || showLoginError,
-                errorMessage:
-                    showPasswordError
-                        ? passwordErrorMessage
-                        : (showLoginError ? loginErrorMessage : ''),
-                obscureText: true,
-                onChanged: validatePassword,
-              ),
-              SizedBox(height: 120.h),
-              SizedBox(
-                width: FORM_WIDTH.w,
-                child: AppButtonMedium(
-                  text: '로그인',
-                  onPressed: handleLogin,
-                  backgroundColor:
-                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-                  textColor:
-                      isFormFilled
-                          ? JusicoolColor.white
-                          : JusicoolColor.gray600,
-                  borderColor:
-                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-                ),
-              ),
-              SizedBox(height: 32.h),
-              Center(
-                child: Text(
-                  '아직 계정이 없으신가요?',
-                  style: JusicoolTypography.bodySmall.copyWith(
-                    fontSize: 14.sp,
-                    color: JusicoolColor.gray300,
-                  ),
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NameInputScreen(),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h, left: 2.w),
+                    child: Text(
+                      'jusicool로 간단하게 모의투자부터',
+                      style: JusicoolTypography.bodySmall.copyWith(
+                        color: JusicoolColor.gray600,
+                        fontSize: 16.sp,
                       ),
-                    );
-                  },
-                  child: Text(
-                    '회원가입',
-                    style: JusicoolTypography.bodySmall.copyWith(
-                      fontSize: 16.sp,
-                      color: JusicoolColor.main,
                     ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 74.h),
+                    child: buildInputField(
+                      label: '이메일',
+                      controller: _emailController,
+                      hint: '이메일을 입력해주세요',
+                      hasError: showEmailError || showLoginError,
+                      errorMessage: emailErrorMessage,
+                      onChanged: validateEmail,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 32.h),
+                    child: buildInputField(
+                      label: '비밀번호',
+                      controller: _passwordController,
+                      hint: '비밀번호를 입력해주세요',
+                      hasError: showPasswordError || showLoginError,
+                      errorMessage:
+                          showPasswordError
+                              ? passwordErrorMessage
+                              : (showLoginError ? loginErrorMessage : ''),
+                      obscureText: true,
+                      onChanged: validatePassword,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 120.h),
+                    child: SizedBox(
+                      width: FORM_WIDTH.w,
+                      child: AppButtonMedium(
+                        text: '로그인',
+                        onPressed: handleLogin,
+                        backgroundColor:
+                            isFormFilled
+                                ? JusicoolColor.main
+                                : JusicoolColor.gray300,
+                        textColor:
+                            isFormFilled
+                                ? JusicoolColor.white
+                                : JusicoolColor.gray600,
+                        borderColor:
+                            isFormFilled
+                                ? JusicoolColor.main
+                                : JusicoolColor.gray300,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 32.h),
+                    child: Center(
+                      child: Text(
+                        '아직 계정이 없으신가요?',
+                        style: JusicoolTypography.bodySmall.copyWith(
+                          fontSize: 14.sp,
+                          color: JusicoolColor.gray300,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8.h),
+                    child: Center(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const NameInputScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          '회원가입',
+                          style: JusicoolTypography.bodySmall.copyWith(
+                            fontSize: 16.sp,
+                            color: JusicoolColor.main,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 24.h)),
+                ],
               ),
-              SizedBox(height: 24.h),
             ],
           ),
         ),
