@@ -28,22 +28,19 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
   bool isPasswordValid = true;
   bool isPasswordMatched = true;
 
-  static const double FIELD_HEIGHT = 58.0;
-  static const double BUTTON_HEIGHT = 54.0;
-
-  static final TextStyle title_style = JusicoolTypography.bodyMedium.copyWith(
+  static final TextStyle titleStyle = JusicoolTypography.bodyMedium.copyWith(
     fontSize: 18.sp,
     color: JusicoolColor.black,
   );
-  static final TextStyle label_style = JusicoolTypography.bodySmall.copyWith(
+  static final TextStyle labelStyle = JusicoolTypography.bodySmall.copyWith(
     fontSize: 16.sp,
+    color: JusicoolColor.black,
   );
-
-  static final TextStyle error_style = JusicoolTypography.bodySmall.copyWith(
+  static final TextStyle errorStyle = JusicoolTypography.bodySmall.copyWith(
     fontSize: 12.sp,
     color: JusicoolColor.error,
   );
-  static final TextStyle hint_style = JusicoolTypography.bodySmall.copyWith(
+  static final TextStyle hintStyle = JusicoolTypography.bodySmall.copyWith(
     fontSize: 16.sp,
     color: JusicoolColor.gray300,
   );
@@ -110,13 +107,11 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
     final hasNumber = RegExp(r'\d').hasMatch(password);
     final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
 
-    int satisfiedConditions =
-        [hasLetter, hasNumber, hasSpecial].where((e) => e).length;
-    return satisfiedConditions >= 2;
+    int count = [hasLetter, hasNumber, hasSpecial].where((e) => e).length;
+    return count >= 2;
   }
 
   void onNextButtonPressed() {
-    print('비밀번호: ${passwordController.text}');
     context.push(
       '/find-school',
       extra: {
@@ -132,37 +127,34 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
     required String hintText,
     required bool isValid,
   }) {
-    return SizedBox(
-      height: FIELD_HEIGHT.h,
-      child: TextField(
-        controller: controller,
-        obscureText: true,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: hint_style,
-          contentPadding: EdgeInsets.all(16.w),
-          filled: true,
-          fillColor: JusicoolColor.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(
-              color: isValid ? JusicoolColor.gray300 : JusicoolColor.error,
-              width: 1.w,
-            ),
+    return TextField(
+      controller: controller,
+      obscureText: true,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: hintStyle,
+        contentPadding: EdgeInsets.all(16.w),
+        filled: true,
+        fillColor: JusicoolColor.white,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(
+            color: isValid ? JusicoolColor.gray300 : JusicoolColor.error,
+            width: 1.w,
           ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(
-              color: isValid ? JusicoolColor.gray300 : JusicoolColor.error,
-              width: 1.w,
-            ),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(
+            color: isValid ? JusicoolColor.gray300 : JusicoolColor.error,
+            width: 1.w,
           ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(
-              color: isValid ? JusicoolColor.main : JusicoolColor.error,
-              width: 2.w,
-            ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.r),
+          borderSide: BorderSide(
+            color: isValid ? JusicoolColor.main : JusicoolColor.error,
+            width: 2.w,
           ),
         ),
       ),
@@ -176,120 +168,110 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(),
-        backgroundColor: Colors.transparent,
+        leading: const BackButton(color: JusicoolColor.black),
+        backgroundColor: JusicoolColor.white,
         elevation: 0,
       ),
       backgroundColor: JusicoolColor.white,
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 112.h,
-            left: 24.w,
-            child: Text('비밀번호를 입력해주세요', style: title_style),
-          ),
-          Positioned(
-            top: 179.h,
-            left: 24.w,
-            child: Text(
-              '비밀번호',
-              style: label_style.copyWith(
-                color:
-                    isPasswordValid ? JusicoolColor.black : JusicoolColor.error,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10.h),
+                child: Text('비밀번호를 입력해주세요', style: titleStyle),
               ),
-            ),
-          ),
-          Positioned(
-            top: 209.h,
-            left: 24.w,
-            right: 24.w,
-            child: buildTextField(
-              controller: passwordController,
-              hintText: '비밀번호를 입력해주세요',
-              isValid: isPasswordValid,
-            ),
-          ),
-          if (!isPasswordValid)
-            Positioned(
-              top: (209 + FIELD_HEIGHT + 8).h,
-              left: 24.w,
-              child: Text(
-                '영문, 숫자, 특수문자 중 2개 이상의 조합으로 8글자 이상 13글자 이하',
-                style: error_style,
+              Padding(
+                padding: EdgeInsets.only(top: 40.h),
+                child: Text(
+                  '비밀번호',
+                  style: labelStyle.copyWith(
+                    color:
+                        isPasswordValid
+                            ? JusicoolColor.black
+                            : JusicoolColor.error,
+                  ),
+                ),
               ),
-            ),
-          Positioned(
-            top: 315.h,
-            left: 24.w,
-            child: Text(
-              '비밀번호 재 입력',
-              style: label_style.copyWith(
-                color:
-                    isPasswordMatched
-                        ? JusicoolColor.black
-                        : JusicoolColor.error,
+              Padding(
+                padding: EdgeInsets.only(top: 8.h),
+                child: buildTextField(
+                  controller: passwordController,
+                  hintText: '비밀번호를 입력해주세요',
+                  isValid: isPasswordValid,
+                ),
               ),
-            ),
-          ),
-          Positioned(
-            top: 345.h,
-            left: 24.w,
-            right: 24.w,
-            child: buildTextField(
-              controller: confirmPasswordController,
-              hintText: '비밀번호를 다시 입력해주세요',
-              isValid: isPasswordMatched,
-            ),
-          ),
-          if (!isPasswordMatched)
-            Positioned(
-              top: (345 + FIELD_HEIGHT + 8).h,
-              left: 24.w,
-              child: Text('비밀번호가 일치하지 않아요', style: error_style),
-            ),
-          Positioned(
-            bottom: 48.h,
-            left: 24.w,
-            right: 24.w,
-            child: SizedBox(
-              width: double.infinity,
-              height: BUTTON_HEIGHT.h,
-              child: ElevatedButton(
-                onPressed: isButtonEnabled ? onNextButtonPressed : null,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                      isButtonEnabled
-                          ? JusicoolColor.main
-                          : JusicoolColor.gray300,
-                  foregroundColor:
-                      isButtonEnabled
-                          ? JusicoolColor.white
-                          : JusicoolColor.gray600,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                    side: BorderSide(
-                      color:
+              if (!isPasswordValid)
+                Padding(
+                  padding: EdgeInsets.only(top: 8.h),
+                  child: Text(
+                    '영문, 숫자, 특수문자 중 2개 이상 조합으로 8~13자',
+                    style: errorStyle,
+                  ),
+                ),
+              Padding(
+                padding: EdgeInsets.only(top: 32.h),
+                child: Text(
+                  '비밀번호 재 입력',
+                  style: labelStyle.copyWith(
+                    color:
+                        isPasswordMatched
+                            ? JusicoolColor.black
+                            : JusicoolColor.error,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 8.h),
+                child: buildTextField(
+                  controller: confirmPasswordController,
+                  hintText: '비밀번호를 다시 입력해주세요',
+                  isValid: isPasswordMatched,
+                ),
+              ),
+              if (!isPasswordMatched)
+                Padding(
+                  padding: EdgeInsets.only(top: 8.h),
+                  child: Text('비밀번호가 일치하지 않아요', style: errorStyle),
+                ),
+              const Spacer(),
+              Padding(
+                padding: EdgeInsets.only(bottom: 24.h),
+                child: Container(
+                  width: double.infinity,
+                  height: 54.h,
+                  child: ElevatedButton(
+                    onPressed: isButtonEnabled ? onNextButtonPressed : null,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
                           isButtonEnabled
                               ? JusicoolColor.main
-                              : JusicoolColor.gray100,
-                      width: 1.w,
+                              : JusicoolColor.gray300,
+                      foregroundColor:
+                          isButtonEnabled
+                              ? JusicoolColor.white
+                              : JusicoolColor.gray600,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                    child: Text(
+                      '다음',
+                      style: JusicoolTypography.bodyMedium.copyWith(
+                        color:
+                            isButtonEnabled
+                                ? JusicoolColor.white
+                                : JusicoolColor.gray600,
+                      ),
                     ),
                   ),
                 ),
-                child: Text(
-                  '다음',
-                  style: JusicoolTypography.bodyMedium.copyWith(
-                    color:
-                        isButtonEnabled
-                            ? JusicoolColor.white
-                            : JusicoolColor.gray600,
-                  ),
-                ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
