@@ -2,6 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/monthlyrevenue_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/order_detail.dart';
+import 'package:jusicool_ios/presentation/my_capital/screens/my_assets_screen.dart';
 import 'package:jusicool_ios/presentation/sign_in/screens/login_screen.dart';
 import 'package:jusicool_ios/presentation/sign_up/screens/email_auth_screen.dart';
 import 'package:jusicool_ios/presentation/sign_up/screens/find_school_screen.dart';
@@ -23,6 +24,7 @@ class RoutePaths {
   static const String mainCapital = '/main-capital';
   static const String monthlyRevenue = '/monthly-revenue';
   static const String orderDetail = '/order-detail';
+  static const String myAssets = '/my-assets';
 }
 
 class AppRouter {
@@ -90,6 +92,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.orderDetail,
         builder: (context, state) => const OrderDetailScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.myAssets,
+        builder: (context, state) => const MyAssetsScreen(),
       ),
     ],
   );
