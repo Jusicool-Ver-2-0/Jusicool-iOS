@@ -31,10 +31,12 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     super.dispose();
   }
 
+  //=========================
   final List<Map<String, dynamic>> revenueData = [
     {
       'date': '1월 31일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '애플',
       'amount': 123456789,
       'changeValue': -1000000,
@@ -43,7 +45,8 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 31일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '삼성',
       'amount': 987654321,
       'changeValue': 2000000,
@@ -53,7 +56,8 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 31일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '비트코인',
       'amount': 123456789,
       'changeValue': 0,
@@ -62,7 +66,8 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '테슬라',
       'amount': 333333333,
       'changeValue': -500000,
@@ -71,7 +76,8 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '구글',
       'amount': 444444444,
       'changeValue': 3000000,
@@ -80,7 +86,8 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     },
     {
       'date': '1월 30일',
-      'imagePath': 'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
+      'imagePath':
+          'https://1000logos.net/wp-content/uploads/2016/10/Apple-Logo-500x281.png',
       'companyName': '이더리움',
       'amount': 777777777,
       'changeValue': 1500000,
@@ -88,6 +95,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'isStock': false,
     },
   ];
+  //=========================
 
   Map<String, dynamic> _calculateTotalRevenue() {
     final numberFormat = NumberFormat("#,###", "en_US");
@@ -234,28 +242,36 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
                 final date = item['date'] as String;
                 final isNewDate =
                     index == 0 || filteredData[index - 1]['date'] != date;
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (isNewDate)
-                      Text(
-                        date,
-                        style: JusicoolTypography.bodySmall.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          color: JusicoolColor.black,
+                return Padding(
+                  padding: EdgeInsets.only(
+                    top: isNewDate ? 16.h : 16.h, // 수직 간격을 Padding으로 처리
+                    bottom: index == filteredData.length - 1 ? 0 : 0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (isNewDate)
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 4.h), // 날짜와 카드 사이 간격
+                          child: Text(
+                            date,
+                            style: JusicoolTypography.bodySmall.copyWith(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w400,
+                              color: JusicoolColor.black,
+                            ),
+                          ),
                         ),
+                      // 수평 간격은 RevenueCard 내부에서 Row + Padding/margin으로 처리
+                      RevenueCard(
+                        imagePath: item['imagePath'] as String,
+                        companyName: item['companyName'] as String,
+                        amount: item['amount'] as int,
+                        changeValue: item['changeValue'] as int,
+                        changePercentage: item['changePercentage'] as double,
                       ),
-                    if (isNewDate) SizedBox(height: 4.h),
-                    RevenueCard(
-                      imagePath: item['imagePath'] as String,
-                      companyName: item['companyName'] as String,
-                      amount: item['amount'] as int,
-                      changeValue: item['changeValue'] as int,
-                      changePercentage: item['changePercentage'] as double,
-                    ),
-                    if (index < filteredData.length - 1) SizedBox(height: 16.h),
-                  ],
+                    ],
+                  ),
                 );
               },
             ),
