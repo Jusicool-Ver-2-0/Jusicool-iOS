@@ -1,3 +1,4 @@
+// 생략된 import는 동일
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   String get timerText =>
       '${(timeRemaining.inSeconds ~/ 60).toString().padLeft(1, '0')}:${(timeRemaining.inSeconds % 60).toString().padLeft(2, '0')}';
 
-  // 스타일 정의
   static final TextStyle LABEL_STYLE = JusicoolTypography.bodySmall.copyWith(
     fontSize: 16.sp,
     color: JusicoolColor.black,
@@ -204,9 +204,10 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
       width: 1.w,
     );
 
-    return SizedBox(
+    return Container(
       width: 312.w,
       height: 58.h,
+      padding: EdgeInsets.zero,
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
@@ -242,9 +243,10 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     required VoidCallback? onPressed,
     bool isLoading = false,
   }) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
       height: 54.h,
+      margin: EdgeInsets.only(top: 12.h),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
@@ -285,7 +287,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
         leading: const BackButton(color: JusicoolColor.black),
         backgroundColor: JusicoolColor.white,
         elevation: 0,
-        foregroundColor: JusicoolColor.black,
       ),
       backgroundColor: JusicoolColor.white,
       body: SafeArea(
@@ -297,72 +298,91 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: 8.h),
-                    Text(
-                      AppStrings.verifyEmailTitle,
-                      style: JusicoolTypography.subTitle,
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      child: Text(
+                        AppStrings.verifyEmailTitle,
+                        style: JusicoolTypography.subTitle,
+                      ),
                     ),
-                    SizedBox(height: 32.h),
-                    Text(AppStrings.emailLabel, style: LABEL_STYLE),
-                    SizedBox(height: 8.h),
-                    buildTextField(
-                      controller: emailController,
-                      hintText: AppStrings.emailHint,
-                      isValid: isEmailValid,
-                      keyboardType: TextInputType.emailAddress,
+                    Container(
+                      margin: EdgeInsets.only(top: 32.h),
+                      child: Text(AppStrings.emailLabel, style: LABEL_STYLE),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(top: 8.h),
+                      child: buildTextField(
+                        controller: emailController,
+                        hintText: AppStrings.emailHint,
+                        isValid: isEmailValid,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
                     ),
                     if (emailController.text.isNotEmpty && !isEmailValid)
-                      Padding(
-                        padding: EdgeInsets.only(top: 8.h),
+                      Container(
+                        margin: EdgeInsets.only(top: 8.h),
                         child: Text(
                           AppStrings.emailInvalidFormat,
                           style: ERROR_STYLE,
                         ),
                       ),
-                    SizedBox(height: 24.h),
-                    if (codeSent) ...[
-                      Row(
-                        children: [
-                          Text(AppStrings.codeLabel, style: LABEL_STYLE),
-                          SizedBox(width: 8.w),
-                          Text(timerText, style: TIMER_STYLE),
-                        ],
-                      ),
-                      SizedBox(height: 8.h),
-                      buildTextField(
-                        controller: codeController,
-                        hintText: AppStrings.codeHint,
-                        isValid: isCodeMatched,
-                        keyboardType: TextInputType.number,
-                        focusNode: _codeFocusNode,
-                        maxLength: 4,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                      ),
-                      if (codeController.text.isNotEmpty && !isCodeMatched)
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.h),
-                          child: Text(
-                            AppStrings.codeInvalid,
-                            style: ERROR_STYLE,
-                          ),
+                    if (codeSent)
+                      Container(
+                        margin: EdgeInsets.only(top: 24.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(AppStrings.codeLabel, style: LABEL_STYLE),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 8.w),
+                                  child: Text(timerText, style: TIMER_STYLE),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8.h),
+                              child: buildTextField(
+                                controller: codeController,
+                                hintText: AppStrings.codeHint,
+                                isValid: isCodeMatched,
+                                keyboardType: TextInputType.number,
+                                focusNode: _codeFocusNode,
+                                maxLength: 4,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                              ),
+                            ),
+                            if (codeController.text.isNotEmpty &&
+                                !isCodeMatched)
+                              Container(
+                                margin: EdgeInsets.only(top: 8.h),
+                                child: Text(
+                                  AppStrings.codeInvalid,
+                                  style: ERROR_STYLE,
+                                ),
+                              ),
+                            Container(
+                              margin: EdgeInsets.only(top: 8.h),
+                              child: TextButton(
+                                onPressed: sendVerificationCode,
+                                child: Text(
+                                  AppStrings.resendCodeButton,
+                                  style: RESEND_STYLE,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      SizedBox(height: 8.h),
-                      TextButton(
-                        onPressed: sendVerificationCode,
-                        child: Text(
-                          AppStrings.resendCodeButton,
-                          style: RESEND_STYLE,
-                        ),
                       ),
-                    ],
                   ],
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
               child: buildButton(
                 label: AppStrings.nextButton,
                 onPressed: isNextEnabled ? handleNextButton : null,

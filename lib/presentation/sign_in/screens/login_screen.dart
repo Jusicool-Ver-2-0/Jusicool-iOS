@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 120.h),
+                    padding: EdgeInsets.only(top: 170.h),
                     child: SizedBox(
                       width: FORM_WIDTH.w,
                       child: AppButtonMedium(
@@ -262,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 32.h),
+                    padding: EdgeInsets.only(top: 12.h),
                     child: Center(
                       child: Text(
                         '아직 계정이 없으신가요?',
@@ -274,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 8.h),
+                    padding: EdgeInsets.only(top: 1.h),
                     child: Center(
                       child: GestureDetector(
                         onTap: () {
