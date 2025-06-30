@@ -9,7 +9,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
 
-import 'main.dart';
+import '../../main.dart';
 
 class RoutePaths {
   static const String splash = '/splash';
