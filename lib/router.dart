@@ -9,6 +9,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/find_school_screen.dar
 import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart';
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
+import 'package:jusicool_ios/presentation/community/screens/community_post_list_screen.dart';
 
 import 'main.dart';
 
@@ -25,6 +26,7 @@ class RoutePaths {
   static const String monthlyRevenue = '/monthly-revenue';
   static const String orderDetail = '/order-detail';
   static const String myAssets = '/my-assets';
+  static const String communityPostList = '/community-post-list';
 }
 
 class AppRouter {
@@ -96,6 +98,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.myAssets,
         builder: (context, state) => const MyAssetsScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.communityPostList,
+        builder: (context, state) => const CommunityPostListScreen(),
       ),
     ],
   );
