@@ -35,16 +35,14 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
   bool isSearchButtonPressed = false;
   List<SchoolInfo> filteredSchools = [];
   SchoolInfo? selectedSchool;
-
-  static const Color SELECTED_BORDER_COLOR = Color(0xFF2756F1);
-  static const double SELECTED_BORDER_OPACITY = 0.5;
-
+  //==========
   final List<SchoolInfo> schools = [
     SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
     SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
     SchoolInfo(name: "가나초등학교", address: "대충남도 대충시 가나동 가나로 5-6"),
     SchoolInfo(name: "다라중학교", address: "대충남도 대충시 다라동 다라로 7-8"),
   ];
+  //==========
 
   @override
   void initState() {
@@ -115,10 +113,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           color: JusicoolColor.white,
           borderRadius: BorderRadius.circular(8.r),
           border: Border.all(
-            color:
-                isSelected
-                    ? SELECTED_BORDER_COLOR.withOpacity(SELECTED_BORDER_OPACITY)
-                    : JusicoolColor.gray300,
+            color: isSelected ? JusicoolColor.blueSky : JusicoolColor.gray300,
             width: 1.w,
           ),
         ),
