@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
@@ -13,15 +15,15 @@ Dio dio() {
   bool _homeDebugMode = dotenv.env['HOME_DEBUG_MODE'] == 'true';
 
   if (_baseUrlDev == null || _baseUrlProd == null) {
-    throw Exception('BASE_URL_DEV or BASE_URL_PROD is not set in .env file');
+    log('⛔ :: BASE_URL_DEV or BASE_URL_PROD is not set in .env file');
   }
 
-  String _baseUrl =
+  String? _baseUrl =
       (kReleaseMode || _homeDebugMode) ? _baseUrlProd : _baseUrlDev;
 
   Dio dio = Dio(
     BaseOptions(
-      baseUrl: _baseUrl,
+      baseUrl: _baseUrl ?? "",
       connectTimeout: Duration(seconds: 30),
       receiveTimeout: Duration(seconds: 30),
     ),
