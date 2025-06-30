@@ -1,4 +1,3 @@
-// 생략된 import는 동일
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -207,7 +206,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return Container(
       width: 312.w,
       height: 58.h,
-      padding: EdgeInsets.zero,
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
@@ -243,10 +241,9 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     required VoidCallback? onPressed,
     bool isLoading = false,
   }) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 54.h,
-      margin: EdgeInsets.only(top: 12.h),
       child: ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
@@ -260,7 +257,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   : JusicoolColor.gray600,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
-            side: BorderSide.none,
           ),
           elevation: 0,
         ),
@@ -285,7 +281,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: EdgeInsets.only(left: 16.0, top: 20.h),
+          padding: EdgeInsets.only(left: 15.w, top: 20.h),
           child: const BackButton(),
         ),
         backgroundColor: JusicoolColor.white,
@@ -296,57 +292,61 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      child: Text(
-                        AppStrings.verifyEmailTitle,
-                        style: JusicoolTypography.subTitle,
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 32.h),
-                      child: Text(AppStrings.emailLabel, style: LABEL_STYLE),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 8.h),
-                      child: buildTextField(
-                        controller: emailController,
-                        hintText: AppStrings.emailHint,
-                        isValid: isEmailValid,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                    ),
-                    if (emailController.text.isNotEmpty && !isEmailValid)
-                      Container(
-                        margin: EdgeInsets.only(top: 8.h),
-                        child: Text(
-                          AppStrings.emailInvalidFormat,
-                          style: ERROR_STYLE,
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 56.h),
+                    child: Column(
+                      spacing: 40.h,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 타이틀
+                        Padding(
+                          padding: EdgeInsets.only(top: 8.h),
+                          child: Text(
+                            AppStrings.verifyEmailTitle,
+                            style: JusicoolTypography.subTitle,
+                          ),
                         ),
-                      ),
-                    if (codeSent)
-                      Container(
-                        margin: EdgeInsets.only(top: 24.h),
-                        child: Column(
+
+                        // 이메일 입력
+                        Column(
+                          spacing: 4.h,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              children: [
-                                Text(AppStrings.codeLabel, style: LABEL_STYLE),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 8.w),
-                                  child: Text(timerText, style: TIMER_STYLE),
-                                ),
-                              ],
+                            Text(AppStrings.emailLabel, style: LABEL_STYLE),
+                            buildTextField(
+                              controller: emailController,
+                              hintText: AppStrings.emailHint,
+                              isValid: isEmailValid,
+                              keyboardType: TextInputType.emailAddress,
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 8.h),
-                              child: buildTextField(
+                            if (emailController.text.isNotEmpty &&
+                                !isEmailValid)
+                              Text(
+                                AppStrings.emailInvalidFormat,
+                                style: ERROR_STYLE,
+                              ),
+                          ],
+                        ),
+
+                        // 인증번호 입력 (codeSent 상태에서만 표시)
+                        if (codeSent)
+                          Column(
+                            spacing: 4.h,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                spacing: 8.w,
+                                children: [
+                                  Text(
+                                    AppStrings.codeLabel,
+                                    style: LABEL_STYLE,
+                                  ),
+                                  Text(timerText, style: TIMER_STYLE),
+                                ],
+                              ),
+                              buildTextField(
                                 controller: codeController,
                                 hintText: AppStrings.codeHint,
                                 isValid: isCodeMatched,
@@ -357,35 +357,34 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                                   FilteringTextInputFormatter.digitsOnly,
                                 ],
                               ),
-                            ),
-                            if (codeController.text.isNotEmpty &&
-                                !isCodeMatched)
-                              Container(
-                                margin: EdgeInsets.only(top: 8.h),
-                                child: Text(
+                              if (codeController.text.isNotEmpty &&
+                                  !isCodeMatched)
+                                Text(
                                   AppStrings.codeInvalid,
                                   style: ERROR_STYLE,
                                 ),
-                              ),
-                            Container(
-                              margin: EdgeInsets.only(top: 8.h),
-                              child: TextButton(
-                                onPressed: sendVerificationCode,
-                                child: Text(
-                                  AppStrings.resendCodeButton,
-                                  style: RESEND_STYLE,
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton(
+                                  onPressed: sendVerificationCode,
+                                  child: Text(
+                                    AppStrings.resendCodeButton,
+                                    style: RESEND_STYLE,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+
+            // 하단 버튼
+            Padding(
+              padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
               child: buildButton(
                 label: AppStrings.nextButton,
                 onPressed: isNextEnabled ? handleNextButton : null,
