@@ -114,8 +114,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
     );
   }
 
-  /* -------------------------------- WIDGET -------------------------------- */
-
   @override
   Widget build(BuildContext context) {
     final isButtonEnabled =
@@ -136,12 +134,12 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
           padding: EdgeInsets.fromLTRB(24.w, 26.h, 24.w, 56.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 40.h, // 🔹 주요 간격 한 번에 적용
+            spacing: 40.h,
             children: [
               Text('비밀번호를 입력해주세요', style: _titleStyle),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 4.h, // 🔸 라벨 ↔ 필드 간격
+                spacing: 4.h,
                 children: [
                   Text(
                     '비밀번호',
@@ -155,7 +153,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
                   DefaultTextField(
                     controller: _passwordController,
                     hintText: '비밀번호를 입력해주세요',
-                    obscureText: true, // ⭐ 항상 * 표시
+                    obscureText: true,
                     errorText:
                         _isPasswordValid
                             ? null
@@ -173,7 +171,6 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
                   ),
                 ],
               ),
-              // ───────── 비밀번호 재입력 섹션 ─────────
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 4.h,
@@ -190,7 +187,7 @@ class _PasswordCreateScreenState extends State<PasswordCreateScreen> {
                   DefaultTextField(
                     controller: _confirmPasswordController,
                     hintText: '비밀번호를 다시 입력해주세요',
-                    obscureText: true, // ⭐ 항상 * 표시
+                    obscureText: true,
                     errorText: _isPasswordMatched ? null : '비밀번호가 일치하지 않아요',
                     validator: (value) {
                       final confirmPwd = value ?? '';

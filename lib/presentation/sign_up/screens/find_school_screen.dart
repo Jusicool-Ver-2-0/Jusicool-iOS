@@ -39,7 +39,6 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
   static const Color SELECTED_BORDER_COLOR = Color(0xFF2756F1);
   static const double SELECTED_BORDER_OPACITY = 0.5;
 
-  /// ====================================
   final List<SchoolInfo> schools = [
     SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
     SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
@@ -47,7 +46,6 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     SchoolInfo(name: "다라중학교", address: "대충남도 대충시 다라동 다라로 7-8"),
   ];
 
-  /// ====================================
   @override
   void initState() {
     super.initState();
@@ -223,7 +221,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     ],
   );
 
-  Widget _startButton(bool enabled) => Container(
+  Widget _startButton(bool enabled) => SizedBox(
     width: double.infinity,
     height: 54.h,
     child: ElevatedButton(
@@ -252,7 +250,10 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
-        leading: const BackButton(),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15.w, top: 20.h),
+          child: const BackButton(),
+        ),
         backgroundColor: JusicoolColor.white,
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -264,62 +265,62 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.fromLTRB(24.w, 26.h, 24.w, 56.h),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 30.h,
             children: [
-              // 제목
-              Padding(
-                padding: EdgeInsets.only(top: 10.h),
-                child: Text(
-                  '현재 재학 중인 학교 이름을 입력해주세요',
-                  style: JusicoolTypography.subTitle.copyWith(
-                    fontSize: 18.sp,
-                    color: JusicoolColor.black,
-                  ),
-                ),
-              ),
-              // 라벨
-              Padding(
-                padding: EdgeInsets.only(top: 30.h),
-                child: Text(
-                  '학교명',
-                  style: JusicoolTypography.bodySmall.copyWith(
-                    fontSize: 16.sp,
-                    color: JusicoolColor.black,
-                  ),
-                ),
-              ),
-              // 검색 입력 & 버튼
-              Padding(padding: EdgeInsets.only(top: 12.h), child: _searchRow()),
-              // 검색 결과 리스트
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(top: 32.h),
-                  child:
-                      filteredSchools.isEmpty
-                          ? Center(
-                            child: Text(
-                              '검색 결과가 없습니다.',
-                              style: JusicoolTypography.bodyMedium.copyWith(
-                                fontSize: 16.sp,
-                                color: JusicoolColor.gray600,
-                              ),
+              Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 29.h,
+                    children: [
+                      Text(
+                        '현재 재학 중인 학교 이름을 입력해주세요',
+                        style: JusicoolTypography.subTitle.copyWith(
+                          fontSize: 18.sp,
+                          color: JusicoolColor.black,
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 4.h,
+                        children: [
+                          Text(
+                            '학교명',
+                            style: JusicoolTypography.bodySmall.copyWith(
+                              fontSize: 16.sp,
+                              color: JusicoolColor.black,
                             ),
-                          )
-                          : ListView.builder(
-                            itemCount: filteredSchools.length,
-                            itemBuilder:
-                                (_, index) =>
-                                    _schoolCard(filteredSchools[index]),
                           ),
-                ),
+                          _searchRow(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              // 시작하기 버튼
-              Padding(
-                padding: EdgeInsets.only(bottom: 24.h),
-                child: _startButton(isSchoolSelected),
+              Expanded(
+                child:
+                    filteredSchools.isEmpty
+                        ? Center(
+                          child: Text(
+                            '검색 결과가 없습니다.',
+                            style: JusicoolTypography.bodyMedium.copyWith(
+                              fontSize: 16.sp,
+                              color: JusicoolColor.gray600,
+                            ),
+                          ),
+                        )
+                        : ListView.builder(
+                          padding: EdgeInsets.only(top: 2.h),
+                          itemCount: filteredSchools.length,
+                          itemBuilder:
+                              (_, index) => _schoolCard(filteredSchools[index]),
+                        ),
               ),
+              Column(children: [_startButton(isSchoolSelected)]),
             ],
           ),
         ),
