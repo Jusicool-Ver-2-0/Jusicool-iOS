@@ -284,7 +284,10 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: JusicoolColor.black),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 16.0, top: 20.h),
+          child: const BackButton(),
+        ),
         backgroundColor: JusicoolColor.white,
         elevation: 0,
       ),

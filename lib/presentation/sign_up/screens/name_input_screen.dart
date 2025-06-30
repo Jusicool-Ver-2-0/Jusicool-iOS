@@ -113,47 +113,49 @@ class _NameInputScreenState extends State<NameInputScreen> {
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
-        leading: const BackButton(),
-        title: null,
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15.w, top: 20.h),
+          child: const BackButton(),
+        ),
         elevation: 0,
         backgroundColor: JusicoolColor.white,
         foregroundColor: JusicoolColor.black,
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 56.h),
         child: Column(
+          spacing: 40.h,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text('이름을 적어 주세요', style: JusicoolTypography.subTitle),
-            Padding(
-              padding: EdgeInsets.only(top: 24.h),
-              child: Text('이름', style: JusicoolTypography.bodySmall),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 8.h),
-              child: DefaultTextField(
-                controller: _controller,
-                hintText: '실명을 적어주세요',
-                validator: (value) {
-                  final name = value?.trim() ?? '';
-                  if (name.isEmpty) {
-                    _errorMessage = '이름을 입력해주세요';
-                  } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
-                    _errorMessage = '2자 이상 한글로 입력해주세요';
-                  } else {
-                    _errorMessage = null;
-                  }
-                  return _errorMessage;
-                },
-                errorText: _errorMessage,
-              ),
+            Column(
+              spacing: 4.h,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('이름', style: JusicoolTypography.bodySmall),
+                DefaultTextField(
+                  controller: _controller,
+                  hintText: '실명을 적어주세요',
+                  validator: (value) {
+                    final name = value?.trim() ?? '';
+                    if (name.isEmpty) {
+                      _errorMessage = '이름을 입력해주세요';
+                    } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
+                      _errorMessage = '2자 이상 한글로 입력해주세요';
+                    } else {
+                      _errorMessage = null;
+                    }
+                    return _errorMessage;
+                  },
+                  errorText: _errorMessage,
+                ),
+              ],
             ),
             const Spacer(),
             buildButton(
               label: '다음',
               onPressed: _isButtonEnabled ? _handleNext : null,
             ),
-            Padding(padding: EdgeInsets.only(top: 16.h)),
           ],
         ),
       ),
