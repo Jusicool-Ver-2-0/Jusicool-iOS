@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:jusicool_ios/router.dart';
+import 'package:jusicool_ios/core/router/router.dart';
 import '../../sign_up/screens/name_input_screen.dart';
 
 class LoginScreen extends StatefulWidget {
