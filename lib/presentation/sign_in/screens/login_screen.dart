@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:jusicool_ios/core/router/router.dart';
+import 'package:jusicool_ios/presentation/sign_in/widgets/input_field.dart';
+import 'package:jusicool_ios/router.dart';
 import '../../sign_up/screens/name_input_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,10 +28,13 @@ class _LoginScreenState extends State<LoginScreen> {
   static const double FIELD_HEIGHT = 56.0;
   static const double FORM_WIDTH = 312.0;
 
+  /// ====================================
   final List<Map<String, String>> database = [
     {'email': 'admin@admin.com', 'password': '12341234!'},
     {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
   ];
+
+  /// ====================================
 
   // 공통 에러 처리 함수
   void setError({
@@ -180,77 +184,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Widget buildInputField({
-    required double top,
-    required String label,
-    required TextEditingController controller,
-    required String hint,
-    required bool hasError,
-    required String errorMessage,
-    bool obscureText = false,
-    required Function(String) onChanged,
-  }) {
-    return Positioned(
-      top: top,
-      left: 24.w,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: JusicoolTypography.bodySmall.copyWith(
-              fontSize: 16.sp,
-              color: hasError ? JusicoolColor.error : JusicoolColor.black,
-            ),
-          ),
-          SizedBox(height: 8.h),
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              SizedBox(
-                width: FORM_WIDTH.w,
-                height: FIELD_HEIGHT.h,
-                child: TextFormField(
-                  controller: controller,
-                  obscureText: obscureText,
-                  onChanged: (value) {
-                    onChanged(value);
-                    if (showLoginError) {
-                      setState(() {
-                        showLoginError = false;
-                        loginErrorMessage = '';
-                      });
-                    }
-                  },
-                  decoration: getInputDecoration(
-                    hint,
-                    hasError || showLoginError,
-                  ),
-                ),
-              ),
-              if (hasError && errorMessage.isNotEmpty)
-                Positioned(
-                  top: FIELD_HEIGHT.h + 4.h,
-                  right: 0,
-                  child: SizedBox(
-                    width: FORM_WIDTH.w,
-                    child: Text(
-                      errorMessage,
-                      textAlign: TextAlign.right,
-                      style: JusicoolTypography.bodySmall.copyWith(
-                        color: JusicoolColor.error,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final isFormFilled =
@@ -258,100 +191,115 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
-      body: Stack(
-        children: [
-          Positioned(
-            top: 112.h,
-            left: 24.w,
-            child: JusicoolImage.logo(width: 220.w, height: 32.h),
-          ),
-          Positioned(
-            top: 152.h,
-            left: 26.w,
-            child: Text(
-              'jusicool로 간단하게 모의투자부터',
-              style: JusicoolTypography.bodySmall.copyWith(
-                color: JusicoolColor.gray600,
-                fontSize: 16.sp,
-              ),
-            ),
-          ),
-          buildInputField(
-            top: 234.h,
-            label: '이메일',
-            controller: _emailController,
-            hint: '이메일을 입력해주세요',
-            hasError: showEmailError || showLoginError,
-            errorMessage: emailErrorMessage,
-            onChanged: validateEmail,
-          ),
-          buildInputField(
-            top: 330.h,
-            label: '비밀번호',
-            controller: _passwordController,
-            hint: '비밀번호를 입력해주세요',
-            hasError: showPasswordError || showLoginError,
-            errorMessage:
-                showPasswordError
-                    ? passwordErrorMessage
-                    : (showLoginError ? loginErrorMessage : ''),
-            obscureText: true,
-            onChanged: validatePassword,
-          ),
-          Positioned(
-            top: 614.h,
-            left: 24.w,
-            child: SizedBox(
-              width: FORM_WIDTH.w,
-              child: AppButtonMedium(
-                text: '로그인',
-                onPressed: handleLogin,
-                backgroundColor:
-                    isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-                textColor:
-                    isFormFilled ? JusicoolColor.white : JusicoolColor.gray600,
-                borderColor:
-                    isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 672.h,
-            left: 0,
-            right: 0,
-            child: Text(
-              '아직 계정이 없으신가요?',
-              textAlign: TextAlign.center,
-              style: JusicoolTypography.bodySmall.copyWith(
-                fontSize: 14.sp,
-                color: JusicoolColor.gray300,
-              ),
-            ),
-          ),
-          Positioned(
-            top: 696.h,
-            left: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const NameInputScreen(),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(24.w, 112.h, 24.w, 84.h),
+        child: Column(
+          spacing: 60.h,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              spacing: 8.h,
+              children: [
+                JusicoolImage.logo(width: 220.w, height: 32.h),
+                Text(
+                  'jusicool로 간단하게 모의투자부터',
+                  style: JusicoolTypography.bodySmall.copyWith(
+                    color: JusicoolColor.gray600,
+                    fontSize: 16.sp,
                   ),
-                );
-              },
-              child: Text(
-                '회원가입',
-                textAlign: TextAlign.center,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  color: JusicoolColor.main,
                 ),
-              ),
+              ],
             ),
-          ),
-        ],
+            Column(
+              spacing: 24.h,
+              children: [
+                InputField(
+                  label: '이메일',
+                  controller: _emailController,
+                  hint: '이메일을 입력해주세요',
+                  hasError: showEmailError || showLoginError,
+                  errorMessage: emailErrorMessage,
+                  onChanged: validateEmail,
+                  obscureText: false,
+                  width: FORM_WIDTH.w,
+                  height: FIELD_HEIGHT.h,
+                  getInputDecoration: getInputDecoration,
+                  showLoginError: showLoginError,
+                  clearLoginError: () {
+                    setState(() {
+                      showLoginError = false;
+                      loginErrorMessage = '';
+                    });
+                  },
+                ),
+                InputField(
+                  label: '비밀번호',
+                  controller: _passwordController,
+                  hint: '비밀번호를 입력해주세요',
+                  hasError: showPasswordError || showLoginError,
+                  errorMessage:
+                      showPasswordError
+                          ? passwordErrorMessage
+                          : (showLoginError ? loginErrorMessage : ''),
+                  obscureText: true,
+                  onChanged: validatePassword,
+                  width: FORM_WIDTH.w,
+                  height: FIELD_HEIGHT.h,
+                  getInputDecoration: getInputDecoration,
+                  showLoginError: showLoginError,
+                  clearLoginError: () {
+                    setState(() {
+                      showLoginError = false;
+                      loginErrorMessage = '';
+                    });
+                  },
+                ),
+              ],
+            ),
+            Spacer(),
+            Column(
+              spacing: 8.h,
+              children: [
+                AppButtonMedium(
+                  text: '로그인',
+                  onPressed: handleLogin,
+                  backgroundColor:
+                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                  textColor:
+                      isFormFilled
+                          ? JusicoolColor.white
+                          : JusicoolColor.gray600,
+                  borderColor:
+                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                ),
+                Text(
+                  '아직 계정이 없으신가요?',
+                  style: JusicoolTypography.bodySmall.copyWith(
+                    fontSize: 14.sp,
+                    color: JusicoolColor.gray300,
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NameInputScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    '회원가입',
+                    style: JusicoolTypography.bodySmall.copyWith(
+                      fontSize: 16.sp,
+                      color: JusicoolColor.main,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
