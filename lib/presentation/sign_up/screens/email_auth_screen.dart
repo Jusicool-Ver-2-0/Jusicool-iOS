@@ -48,7 +48,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   String get timerText =>
       '${(timeRemaining.inSeconds ~/ 60).toString().padLeft(1, '0')}:${(timeRemaining.inSeconds % 60).toString().padLeft(2, '0')}';
 
-  // 스타일 정의
   static final TextStyle LABEL_STYLE = JusicoolTypography.bodySmall.copyWith(
     fontSize: 16.sp,
     color: JusicoolColor.black,
@@ -204,7 +203,7 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
       width: 1.w,
     );
 
-    return SizedBox(
+    return Container(
       width: 312.w,
       height: 58.h,
       child: TextField(
@@ -258,7 +257,6 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
                   : JusicoolColor.gray600,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12.r),
-            side: BorderSide.none,
           ),
           elevation: 0,
         ),
@@ -282,87 +280,111 @@ class _EmailAuthScreenState extends State<EmailAuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const BackButton(color: JusicoolColor.black),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15.w, top: 20.h),
+          child: const BackButton(),
+        ),
         backgroundColor: JusicoolColor.white,
         elevation: 0,
-        foregroundColor: JusicoolColor.black,
       ),
       backgroundColor: JusicoolColor.white,
       body: SafeArea(
         child: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 8.h),
-                    Text(
-                      AppStrings.verifyEmailTitle,
-                      style: JusicoolTypography.subTitle,
-                    ),
-                    SizedBox(height: 32.h),
-                    Text(AppStrings.emailLabel, style: LABEL_STYLE),
-                    SizedBox(height: 8.h),
-                    buildTextField(
-                      controller: emailController,
-                      hintText: AppStrings.emailHint,
-                      isValid: isEmailValid,
-                      keyboardType: TextInputType.emailAddress,
-                    ),
-                    if (emailController.text.isNotEmpty && !isEmailValid)
-                      Padding(
-                        padding: EdgeInsets.only(top: 8.h),
-                        child: Text(
-                          AppStrings.emailInvalidFormat,
-                          style: ERROR_STYLE,
-                        ),
-                      ),
-                    SizedBox(height: 24.h),
-                    if (codeSent) ...[
-                      Row(
-                        children: [
-                          Text(AppStrings.codeLabel, style: LABEL_STYLE),
-                          SizedBox(width: 8.w),
-                          Text(timerText, style: TIMER_STYLE),
-                        ],
-                      ),
-                      SizedBox(height: 8.h),
-                      buildTextField(
-                        controller: codeController,
-                        hintText: AppStrings.codeHint,
-                        isValid: isCodeMatched,
-                        keyboardType: TextInputType.number,
-                        focusNode: _codeFocusNode,
-                        maxLength: 4,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.digitsOnly,
-                        ],
-                      ),
-                      if (codeController.text.isNotEmpty && !isCodeMatched)
+              child: Column(
+                children: [
+                  SingleChildScrollView(
+                    padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 56.h),
+                    child: Column(
+                      spacing: 40.h,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // 타이틀
                         Padding(
                           padding: EdgeInsets.only(top: 8.h),
                           child: Text(
-                            AppStrings.codeInvalid,
-                            style: ERROR_STYLE,
+                            AppStrings.verifyEmailTitle,
+                            style: JusicoolTypography.subTitle,
                           ),
                         ),
-                      SizedBox(height: 8.h),
-                      TextButton(
-                        onPressed: sendVerificationCode,
-                        child: Text(
-                          AppStrings.resendCodeButton,
-                          style: RESEND_STYLE,
+
+                        // 이메일 입력
+                        Column(
+                          spacing: 4.h,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(AppStrings.emailLabel, style: LABEL_STYLE),
+                            buildTextField(
+                              controller: emailController,
+                              hintText: AppStrings.emailHint,
+                              isValid: isEmailValid,
+                              keyboardType: TextInputType.emailAddress,
+                            ),
+                            if (emailController.text.isNotEmpty &&
+                                !isEmailValid)
+                              Text(
+                                AppStrings.emailInvalidFormat,
+                                style: ERROR_STYLE,
+                              ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ],
-                ),
+
+                        // 인증번호 입력 (codeSent 상태에서만 표시)
+                        if (codeSent)
+                          Column(
+                            spacing: 4.h,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                spacing: 8.w,
+                                children: [
+                                  Text(
+                                    AppStrings.codeLabel,
+                                    style: LABEL_STYLE,
+                                  ),
+                                  Text(timerText, style: TIMER_STYLE),
+                                ],
+                              ),
+                              buildTextField(
+                                controller: codeController,
+                                hintText: AppStrings.codeHint,
+                                isValid: isCodeMatched,
+                                keyboardType: TextInputType.number,
+                                focusNode: _codeFocusNode,
+                                maxLength: 4,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                ],
+                              ),
+                              if (codeController.text.isNotEmpty &&
+                                  !isCodeMatched)
+                                Text(
+                                  AppStrings.codeInvalid,
+                                  style: ERROR_STYLE,
+                                ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton(
+                                  onPressed: sendVerificationCode,
+                                  child: Text(
+                                    AppStrings.resendCodeButton,
+                                    style: RESEND_STYLE,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
+
+            // 하단 버튼
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+              padding: EdgeInsets.fromLTRB(24.w, 0, 24.w, 24.h),
               child: buildButton(
                 label: AppStrings.nextButton,
                 onPressed: isNextEnabled ? handleNextButton : null,

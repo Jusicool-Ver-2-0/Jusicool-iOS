@@ -52,54 +52,69 @@ class RevenueCard extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.network(imagePath, width: 40.w, height: 40.h, fit: BoxFit.cover),
-          SizedBox(width: 12.w),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                companyName,
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w400,
-                  height: 22 / 16,
-                  letterSpacing: 0,
-                  color: JusicoolColor.black,
-                ),
-              ),
-            ],
+          Padding(
+            padding: EdgeInsets.only(right: 12.w),
+            child: Image.network(
+              imagePath,
+              width: 40.w,
+              height: 40.h,
+              fit: BoxFit.cover,
+            ),
           ),
-          Expanded(child: SizedBox()),
-          Container(
-            width: 160.w,
-            height: 44.h,
+          Padding(
+            padding: EdgeInsets.only(right: 8.w), // 수평 간격 조정
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  formattedAmount,
+                  companyName,
                   style: JusicoolTypography.bodySmall.copyWith(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                     height: 22 / 16,
                     letterSpacing: 0,
-                    color: changeColor,
-                  ),
-                ),
-                SizedBox(height: 4.h),
-                Text(
-                  "(${changePercentage.toStringAsFixed(1)}%)",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    height: 16 / 12,
-                    letterSpacing: 0,
-                    color: changeColor,
+                    color: JusicoolColor.black,
                   ),
                 ),
               ],
+            ),
+          ),
+          Expanded(child: Container()), // 남은 공간 채우기
+          Container(
+            width: 160.w,
+            height: 44.h,
+            child: Padding(
+              padding: EdgeInsets.only(top: 0, bottom: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    formattedAmount,
+                    style: JusicoolTypography.bodySmall.copyWith(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w400,
+                      height: 22 / 16,
+                      letterSpacing: 0,
+                      color: changeColor,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 4.h), // 수직 간격을 Padding으로 처리
+                    child: Text(
+                      "(${changePercentage.toStringAsFixed(1)}%)",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w400,
+                        height: 16 / 12,
+                        letterSpacing: 0,
+                        color: changeColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
