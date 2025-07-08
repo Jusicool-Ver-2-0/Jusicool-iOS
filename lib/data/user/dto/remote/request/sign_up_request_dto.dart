@@ -9,7 +9,8 @@ abstract class SignUpRequestDto with _$SignUpRequestDto {
   factory SignUpRequestDto({
     required String email,
     required String password,
-    required String name,
+    required String username,
+    required String school,
   }) = _SignUpRequestDto;
 
   factory SignUpRequestDto.fromJson(Map<String, dynamic> json) =>
