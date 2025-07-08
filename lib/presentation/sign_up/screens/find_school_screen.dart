@@ -1,252 +1,106 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
-import 'package:go_router/go_router.dart';
+import 'package:jusicool_ios/presentation/sign_up/controller/sign_up_email_controller.dart';
+import '../controller/sign_up_name_controller.dart';
+import '../controller/sign_up_password_controller.dart';
+import '../controller/sign_up_school_controller.dart';
+import '../state/sign_up_school_state.dart';
 
-class SchoolInfo {
-  final String name;
-  final String address;
+class FindSchoolScreen extends ConsumerWidget {
+  const FindSchoolScreen({super.key});
 
-  SchoolInfo({required this.name, required this.address});
-
-  Map<String, String> toMap() => {"name": name, "address": address};
-}
-
-class FindSchoolScreen extends StatefulWidget {
-  final String username;
-  final String email;
-  final String password;
-
-  const FindSchoolScreen({
-    super.key,
-    required this.username,
-    required this.email,
-    required this.password,
-  });
-
-  @override
-  State<FindSchoolScreen> createState() => _FindSchoolScreenState();
-}
-
-class _FindSchoolScreenState extends State<FindSchoolScreen> {
-  final TextEditingController schoolNameController = TextEditingController();
-  bool isSearchButtonPressed = false;
-  List<SchoolInfo> filteredSchools = [];
-  SchoolInfo? selectedSchool;
-
-  static const Color SELECTED_BORDER_COLOR = Color(0xFF2756F1);
-  static const double SELECTED_BORDER_OPACITY = 0.5;
-  static const double HORIZONTAL_PADDING = 24.0;
-  static const double SEARCH_BUTTON_LEFT_OFFSET = 282.0;
-  static const double BOTTOM_PADDING = 24.0;
-  static const double BUTTON_HEIGHT = 54.0;
-  static const double BUTTON_WIDTH = 312.0;
-
-  final List<SchoolInfo> schools = [
-    SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
-    SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
-    SchoolInfo(name: "가나초등학교", address: "대충남도 대충시 가나동 가나로 5-6"),
-    SchoolInfo(name: "다라중학교", address: "대충남도 대충시 다라동 다라로 7-8"),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    filteredSchools = [];
-
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: JusicoolColor.white,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: JusicoolColor.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
+  Widget _labelChip(String text) => Container(
+    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
+    decoration: BoxDecoration(
+      color: JusicoolColor.gray100,
+      borderRadius: BorderRadius.circular(4.r),
+    ),
+    child: Text(
+      text,
+      style: JusicoolTypography.bodySmall.copyWith(
+        fontSize: 12.sp,
+        color: JusicoolColor.gray600,
       ),
-    );
-  }
+    ),
+  );
 
-  @override
-  void dispose() {
-    schoolNameController.dispose();
-    super.dispose();
-  }
-
-  void onSearch() {
-    final searchQuery = schoolNameController.text.trim();
-    setState(() {
-      if (searchQuery.isNotEmpty) {
-        filteredSchools =
-            schools
-                .where(
-                  (school) => school.name.toLowerCase().contains(
-                    searchQuery.toLowerCase(),
-                  ),
-                )
-                .toList();
-        print('검색된 학교: $filteredSchools');
-      } else {
-        filteredSchools = [];
-        selectedSchool = null;
-      }
-    });
-  }
-
-  void onStart() {
-    if (selectedSchool != null) {
-      print('선택된 학교: ${selectedSchool!.name}');
-      print('주소: ${selectedSchool!.address}');
-
-      context.go('/main-capital');
-    }
-  }
-
-  Widget buildSchoolInfoBox({
-    required SchoolInfo school,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
+  Widget _schoolCard(
+    SchoolInfoState school,
+    SchoolInfoState? selectedSchool,
+    VoidCallback onTap,
+  ) {
+    final isSelected = selectedSchool?.schoolName == school.schoolName;
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          if (selectedSchool == school) {
-            selectedSchool = null;
-          } else {
-            selectedSchool = school;
-          }
-        });
-        onTap();
-      },
+      onTap: () => onTap(),
       child: Container(
-        width: BUTTON_WIDTH.w,
-        height: 79.h,
+        margin: EdgeInsets.only(bottom: 12.h),
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           color: JusicoolColor.white,
           borderRadius: BorderRadius.circular(8.r),
           border: Border.all(
-            color:
-                isSelected
-                    ? SELECTED_BORDER_COLOR.withValues(
-                      alpha: SELECTED_BORDER_OPACITY,
-                    )
-                    : JusicoolColor.gray300,
+            color: isSelected ? JusicoolColor.blueSky : JusicoolColor.gray300,
             width: 1.w,
           ),
         ),
-        child: Stack(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            buildLabelBox(
-              top: 14.h,
-              left: 16.w,
-              width: 62.w,
-              label: '학교명',
-              paddingLeft: 15.w,
+            Row(
+              children: [
+                _labelChip('학교명'),
+                Padding(
+                  padding: EdgeInsets.only(left: 12.w),
+                  child: Text(
+                    school.schoolName,
+                    style: JusicoolTypography.bodySmall.copyWith(
+                      fontSize: 12.sp,
+                      color: JusicoolColor.black,
+                    ),
+                  ),
+                ),
+              ],
             ),
-            buildLabelBox(
-              top: 43.h,
-              left: 16.w,
-              width: 62.w,
-              label: '주소',
-              paddingLeft: 21.w,
+            Padding(
+              padding: EdgeInsets.only(top: 8.h),
+              child: Row(
+                children: [
+                  _labelChip('주소'),
+                  Padding(
+                    padding: EdgeInsets.only(left: 12.w),
+                    child: Text(
+                      school.schoolAddress,
+                      style: JusicoolTypography.bodySmall.copyWith(
+                        fontSize: 12.sp,
+                        color: JusicoolColor.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-            buildText(top: 17.h, left: 90.w, text: school.name),
-            buildText(top: 46.h, left: 90.w, text: school.address),
           ],
         ),
       ),
     );
   }
 
-  Widget buildLabelBox({
-    required double top,
-    required double left,
-    required double width,
-    required String label,
-    required double paddingLeft,
-  }) {
-    return Positioned(
-      top: top,
-      left: left,
-      child: Container(
-        width: width,
-        height: 22.h,
-        decoration: BoxDecoration(
-          color: JusicoolColor.gray100,
-          borderRadius: BorderRadius.circular(4.r),
-        ),
-        child: Padding(
-          padding: EdgeInsets.only(top: 3.h, left: paddingLeft),
-          child: Text(
-            label,
-            style: JusicoolTypography.bodySmall.copyWith(
-              fontSize: 12.sp,
-              color: JusicoolColor.gray600,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildText({
-    required double top,
-    required double left,
-    required String text,
-  }) {
-    return Positioned(
-      top: top,
-      left: left,
-      child: Text(
-        text,
-        style: JusicoolTypography.bodySmall.copyWith(
-          fontSize: 12.sp,
-          color: JusicoolColor.black,
-        ),
-      ),
-    );
-  }
-
-  Widget buildSearchButton() {
-    return Positioned(
-      top: 92.h,
-      left: SEARCH_BUTTON_LEFT_OFFSET.w,
-      child: GestureDetector(
-        onTapDown: (_) => setState(() => isSearchButtonPressed = true),
-        onTapUp: (_) {
-          setState(() => isSearchButtonPressed = false);
-          onSearch();
-        },
-        onTapCancel: () => setState(() => isSearchButtonPressed = false),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 100),
-          width: 54.w,
-          height: 54.h,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.r),
-            color:
-                isSearchButtonPressed
-                    ? JusicoolColor.gray100
-                    : JusicoolColor.white,
-          ),
-          child: JusicoolIcon.search(),
-        ),
-      ),
-    );
-  }
-
-  Widget buildTextField() {
-    return Positioned(
-      top: 92.h,
-      left: HORIZONTAL_PADDING.w,
-      child: SizedBox(
-        width: 246.w,
-        height: 54.h,
+  Widget _searchRow(
+    TextEditingController schoolNameController,
+    bool isSelect,
+    Function onTap,
+  ) => Row(
+    children: [
+      Expanded(
         child: TextField(
           controller: schoolNameController,
-          onChanged: (value) => onSearch(),
           decoration: InputDecoration(
             hintText: '학교명을 입력해주세요',
             hintStyle: JusicoolTypography.bodySmall.copyWith(
-              color: JusicoolColor.gray100,
+              color: JusicoolColor.gray400,
             ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 16.w,
@@ -267,67 +121,74 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildNoResultsMessage() {
-    return Center(
-      child: Text(
-        '검색 결과가 없습니다.',
-        style: JusicoolTypography.bodyMedium.copyWith(
-          fontSize: 16.sp,
-          color: JusicoolColor.gray600,
-        ),
-      ),
-    );
-  }
-
-  Widget buildStartButton({
-    required bool isSchoolSelected,
-    required VoidCallback onPressed,
-  }) {
-    return SizedBox(
-      width: BUTTON_WIDTH.w,
-      height: BUTTON_HEIGHT.h,
-      child: ElevatedButton(
-        onPressed: isSchoolSelected ? onPressed : null,
-        style: ElevatedButton.styleFrom(
-          backgroundColor:
-              isSchoolSelected ? JusicoolColor.main : JusicoolColor.gray300,
-          foregroundColor:
-              isSchoolSelected ? JusicoolColor.white : JusicoolColor.gray600,
-          padding: EdgeInsets.symmetric(horizontal: 32.w, vertical: 16.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12.r),
-            side: BorderSide(
-              color:
-                  isSchoolSelected ? JusicoolColor.main : JusicoolColor.gray100,
+      Container(
+        margin: EdgeInsets.only(left: 12.w),
+        width: 54.w,
+        height: 54.h,
+        child: GestureDetector(
+          onTap: () => onTap(),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 100),
+            decoration: BoxDecoration(
+              color: isSelect ? JusicoolColor.gray100 : JusicoolColor.white,
+              borderRadius: BorderRadius.circular(8.r),
+            ),
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: JusicoolColor.main.withValues(alpha:0.5),
+                  width: 1.sp,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: JusicoolIcon.search(
+                height: 24.h,
+                width: 24.w,
+                color: JusicoolColor.main.withValues(alpha: 0.5),
+              ),
             ),
           ),
-          minimumSize: Size(BUTTON_WIDTH.w, BUTTON_HEIGHT.h),
-          animationDuration: const Duration(milliseconds: 100),
-        ),
-        child: Text(
-          '시작하기',
-          style: JusicoolTypography.bodyMedium.copyWith(
-            color:
-                isSchoolSelected ? JusicoolColor.white : JusicoolColor.gray600,
-            fontSize: 18.sp,
-          ),
         ),
       ),
-    );
-  }
+    ],
+  );
+
+  Widget _startButton(bool enabled, Function onTap) => SizedBox(
+    width: double.infinity,
+    height: 54.h,
+    child: ElevatedButton(
+      onPressed: () => onTap(),
+      style: ElevatedButton.styleFrom(
+        backgroundColor: enabled ? JusicoolColor.main : JusicoolColor.gray300,
+        foregroundColor: enabled ? JusicoolColor.white : JusicoolColor.gray600,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+      ),
+      child: Text(
+        '시작하기',
+        style: JusicoolTypography.bodyMedium.copyWith(
+          fontSize: 18.sp,
+          color: enabled ? JusicoolColor.white : JusicoolColor.gray600,
+        ),
+      ),
+    ),
+  );
 
   @override
-  Widget build(BuildContext context) {
-    final isSchoolSelected = selectedSchool != null;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(signupSchoolControllerProvider.notifier);
+    final state = ref.watch(signupSchoolControllerProvider);
+    final isSchoolSelected = state.selectedSchool != null;
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
-        scrolledUnderElevation: 0,
-        leading: const BackButton(),
+        leading: Padding(
+          padding: EdgeInsets.only(left: 15.w, top: 20.h),
+          child: const BackButton(),
+        ),
         backgroundColor: JusicoolColor.white,
         elevation: 0,
         systemOverlayStyle: const SystemUiOverlayStyle(
@@ -337,68 +198,89 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
       ),
-      extendBodyBehindAppBar: false,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Positioned(
-              top: 10.h,
-              left: HORIZONTAL_PADDING.w,
-              child: Text(
-                '현재 재학 중인 학교 이름을 입력해주세요',
-                style: JusicoolTypography.subTitle.copyWith(
-                  fontSize: 18.sp,
-                  color: JusicoolColor.black,
-                ),
-              ),
-            ),
-            Positioned(
-              top: 66.h,
-              left: HORIZONTAL_PADDING.w,
-              child: Text(
-                '학교명',
-                style: JusicoolTypography.bodySmall.copyWith(
-                  fontSize: 16.sp,
-                  color: JusicoolColor.black,
-                ),
-              ),
-            ),
-            buildTextField(),
-            buildSearchButton(),
-            Positioned(
-              top: 172.h,
-              left: HORIZONTAL_PADDING.w,
-              right: HORIZONTAL_PADDING.w,
-              bottom: (BUTTON_HEIGHT + BOTTOM_PADDING).h,
-              child:
-                  filteredSchools.isEmpty
-                      ? buildNoResultsMessage()
-                      : ListView.separated(
-                        itemCount: filteredSchools.length,
-                        separatorBuilder:
-                            (context, index) => SizedBox(height: 12.h),
-                        itemBuilder: (context, index) {
-                          final school = filteredSchools[index];
-                          final isSelected =
-                              selectedSchool != null &&
-                              selectedSchool!.name == school.name;
-                          return buildSchoolInfoBox(
-                            school: school,
-                            isSelected: isSelected,
-                            onTap: () => print("${school.name} 클릭됨!"),
-                          );
-                        },
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(24.w, 26.h, 24.w, 56.h),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: 30.h,
+            children: [
+              Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 29.h,
+                    children: [
+                      Text(
+                        '현재 재학 중인 학교 이름을 입력해주세요',
+                        style: JusicoolTypography.subTitle.copyWith(
+                          fontSize: 18.sp,
+                          color: JusicoolColor.black,
+                        ),
                       ),
-            ),
-            Positioned(
-              bottom: BOTTOM_PADDING.h,
-              left: HORIZONTAL_PADDING.w,
-              child: buildStartButton(
-                isSchoolSelected: isSchoolSelected,
-                onPressed: onStart,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 4.h,
+                        children: [
+                          Text(
+                            '학교명',
+                            style: JusicoolTypography.bodySmall.copyWith(
+                              fontSize: 16.sp,
+                              color: JusicoolColor.black,
+                            ),
+                          ),
+                          _searchRow(
+                            provider.schoolNameController,
+                            state.selectedSchool != null,
+                            provider.searchSchool,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ),
-          ],
+              Expanded(
+                child:
+                    state.filteredSchools.isEmpty
+                        ? Center(
+                          child: Text(
+                            '검색 결과가 없습니다.',
+                            style: JusicoolTypography.bodyMedium.copyWith(
+                              fontSize: 16.sp,
+                              color: JusicoolColor.gray600,
+                            ),
+                          ),
+                        )
+                        : ListView.builder(
+                          padding: EdgeInsets.only(top: 2.h),
+                          itemCount: state.filteredSchools.length,
+                          itemBuilder:
+                              (_, index) => _schoolCard(
+                                state.filteredSchools[index],
+                                state.selectedSchool,
+                                () => provider.selectSchool(
+                                  state.filteredSchools[index],
+                                ),
+                              ),
+                        ),
+              ),
+              Column(
+                children: [
+                  _startButton(
+                    isSchoolSelected,
+                    () => provider.start(
+                      context: context,
+                      email: ref.watch(emailAuthControllerProvider).email,
+                      password:
+                          ref.watch(signupPasswordControllerProvider).password,
+                      name: ref.watch(nameControllerProvider).username,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/presentation/my_capital/widgets/my_asset_tile.dart';
-import '../../../data/models/my_assets.dart';
+import '../../../domain/my_capital/entities/my_assets.dart';
 
 class MyAssetsScreen extends StatefulWidget {
   const MyAssetsScreen({super.key});
@@ -24,7 +24,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     _futureData = _loadAssetsData();
   }
 
-  /// ====================================
+  /* --------------------- 데이터 로드 --------------------- */
   Future<MyAssetsData> _loadAssetsData() async {
     final jsonString = await rootBundle.loadString(
       'assets/data/my_assets.json',
@@ -33,11 +33,10 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     return MyAssetsData.fromJson(jsonMap);
   }
 
-  /// ====================================
-
+  /* ----------------- HEX → Color 유틸 ------------------ */
   Color hexToColor(String hex) {
     final buffer = StringBuffer();
-    if (hex.length == 7) buffer.write('ff'); // 투명도 설정 (기본값: 100%)
+    if (hex.length == 7) buffer.write('ff'); // 투명도(100%)
     buffer.write(hex.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
@@ -130,31 +129,38 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
                         sectionsSpace: 4,
                         centerSpaceRadius: 80,
                         sections:
-                            data.sections.map((s) {
-                              return PieChartSectionData(
-                                color: hexToColor(s.colorHex),
-                                value: s.percentage,
-                                title: '',
-                                radius: 45, // ✅ 모든 조각 동일 크기
-                              );
-                            }).toList(),
+                            data.sections
+                                .map(
+                                  (s) => PieChartSectionData(
+                                    color: hexToColor(s.colorHex),
+                                    value: s.percentage,
+                                    title: '',
+                                    radius: 45,
+                                  ),
+                                )
+                                .toList(),
                       ),
                     ),
                   ),
                   const SizedBox(height: 24),
-                  ...data.sections.map(
-                    (s) => Column(
-                      children: [
-                        MyAssetTile(
-                          stockName: s.name,
-                          stockPrice: "${formatter.format(s.price)}원",
-                          percentage: "${s.percentage.toStringAsFixed(1)}%",
-                          iconColor: hexToColor(s.colorHex),
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-                    ),
+
+                  /* ---------- 자산 리스트: ListView.separated ---------- */
+                  ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: data.sections.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 24),
+                    itemBuilder: (context, index) {
+                      final s = data.sections[index];
+                      return MyAssetTile(
+                        stockName: s.name,
+                        stockPrice: "${formatter.format(s.price)}원",
+                        percentage: "${s.percentage.toStringAsFixed(1)}%",
+                        iconColor: hexToColor(s.colorHex),
+                      );
+                    },
                   ),
+
                   const SizedBox(height: 32),
                 ],
               ),
