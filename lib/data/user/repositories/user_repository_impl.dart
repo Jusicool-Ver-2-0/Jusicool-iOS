@@ -3,7 +3,6 @@ import 'package:jusicool_ios/data/user/dto/remote/request/sign_in_request_dto.da
 import 'package:jusicool_ios/data/user/dto/remote/request/sign_up_request_dto.dart';
 import 'package:jusicool_ios/data/user/dto/remote/request/sign_up_search_school_request_dto.dart';
 import 'package:jusicool_ios/data/user/dto/remote/request/sign_up_verify_email_request_dto.dart';
-import 'package:jusicool_ios/data/user/dto/remote/response/sign_up_search_school_response_dto.dart';
 import 'package:jusicool_ios/data/user/mappers/remote/request/sign_in_request_mapper.dart';
 import 'package:jusicool_ios/data/user/mappers/remote/request/sign_up_request_mapper.dart';
 import 'package:jusicool_ios/data/user/mappers/remote/request/sign_up_send_email_request_mapper.dart';

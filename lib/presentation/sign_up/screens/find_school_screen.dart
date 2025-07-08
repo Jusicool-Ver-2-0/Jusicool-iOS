@@ -137,7 +137,7 @@ class FindSchoolScreen extends ConsumerWidget {
               padding: EdgeInsets.all(15),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: JusicoolColor.main.withOpacity(0.5),
+                  color: JusicoolColor.main.withValues(alpha:0.5),
                   width: 1.sp,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -145,7 +145,7 @@ class FindSchoolScreen extends ConsumerWidget {
               child: JusicoolIcon.search(
                 height: 24.h,
                 width: 24.w,
-                color: JusicoolColor.main.withOpacity(0.5),
+                color: JusicoolColor.main.withValues(alpha: 0.5),
               ),
             ),
           ),
