@@ -1,69 +1,16 @@
+import 'package:cookie_jar/cookie_jar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jusicool_ios/presentation/sign_up/controller/sign_up_name_controller.dart';
 
-const double BUTTON_HEIGHT = 54;
+import '../../../core/config/di/dependencies.dart';
+import '../../../core/config/router/router.dart';
 
-class NameInputScreen extends StatefulWidget {
+class NameInputScreen extends ConsumerWidget {
   const NameInputScreen({super.key});
-
-  @override
-  State<NameInputScreen> createState() => _NameInputScreenState();
-}
-
-class _NameInputScreenState extends State<NameInputScreen> {
-  final TextEditingController _controller = TextEditingController();
-  String? _errorMessage;
-
-  bool get _isButtonEnabled => _controller.text.trim().isNotEmpty;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() {
-      _clearErrorOnTextChange();
-      setState(() {});
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _clearErrorOnTextChange() {
-    if (_errorMessage != null) {
-      setState(() {
-        _errorMessage = null;
-      });
-    }
-  }
-
-  void _handleNext() {
-    final name = _controller.text.trim();
-
-    if (name.isEmpty) {
-      setState(() {
-        _errorMessage = '필수 입력 항목입니다.';
-      });
-      return;
-    }
-
-    if (!_isValidKoreanName(name)) {
-      setState(() {
-        _errorMessage = '한글 이름을 2자 이상 입력해주세요.';
-      });
-      return;
-    }
-
-    context.push('/email-auth', extra: name);
-  }
-
-  bool _isValidKoreanName(String name) {
-    return RegExp(r'^[가-힣]{2,}$').hasMatch(name);
-  }
 
   Widget buildButton({
     required String label,
@@ -77,11 +24,11 @@ class _NameInputScreenState extends State<NameInputScreen> {
       label: label,
       child: Container(
         width: double.infinity,
-        height: BUTTON_HEIGHT.h,
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.r)),
         child: ElevatedButton(
           onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 16.h),
             backgroundColor:
                 isEnabled ? JusicoolColor.main : JusicoolColor.gray300,
             foregroundColor:
@@ -109,7 +56,11 @@ class _NameInputScreenState extends State<NameInputScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final CookieJar cookieJar = di.get<CookieJar>();
+    cookieJar.deleteAll(); // 쿠키 삭제
+    final provider = ref.watch(nameControllerProvider.notifier);
+    final state = ref.watch(nameControllerProvider);
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
@@ -134,27 +85,26 @@ class _NameInputScreenState extends State<NameInputScreen> {
               children: [
                 Text('이름', style: JusicoolTypography.bodySmall),
                 DefaultTextField(
-                  controller: _controller,
+                  controller: provider.controller,
                   hintText: '실명을 적어주세요',
-                  validator: (value) {
-                    final name = value?.trim() ?? '';
-                    if (name.isEmpty) {
-                      _errorMessage = '이름을 입력해주세요';
-                    } else if (!RegExp(r'^[가-힣]{2,}$').hasMatch(name)) {
-                      _errorMessage = '2자 이상 한글로 입력해주세요';
-                    } else {
-                      _errorMessage = null;
-                    }
-                    return _errorMessage;
+                  errorText: state.errorMessage,
+                  validator: (String) {
+                    return null;
                   },
-                  errorText: _errorMessage,
                 ),
               ],
             ),
             const Spacer(),
             buildButton(
               label: '다음',
-              onPressed: _isButtonEnabled ? _handleNext : null,
+              onPressed:
+                  state.enableButton
+                      ? () {
+                        if (provider.validateUsername()) {
+                          context.push(RoutePaths.emailAuth);
+                        }
+                      }
+                      : null,
             ),
           ],
         ),
