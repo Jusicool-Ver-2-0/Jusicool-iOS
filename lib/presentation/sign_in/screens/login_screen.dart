@@ -1,195 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:jusicool_ios/presentation/sign_in/widgets/input_field.dart';
-import 'package:jusicool_ios/router.dart';
+import 'package:jusicool_ios/presentation/sign_in/screens/widgets/input_field.dart';
 import '../../sign_up/screens/name_input_screen.dart';
+import '../controller/sign_in_controller.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  bool showEmailError = false;
-  String emailErrorMessage = '';
-  bool showPasswordError = false;
-  String passwordErrorMessage = '';
-  bool showLoginError = false;
-  String loginErrorMessage = '';
-
-  static const double FIELD_HEIGHT = 56.0;
-  static const double FORM_WIDTH = 312.0;
-
-  /// ====================================
-  final List<Map<String, String>> database = [
-    {'email': 'admin@admin.com', 'password': '12341234!'},
-    {'email': 's24001@gsm.hs.kr', 'password': '12345678!'},
-  ];
-
-  /// ====================================
-
-  // 공통 에러 처리 함수
-  void setError({
-    required bool emailError,
-    required String emailMsg,
-    required bool passwordError,
-    required String passwordMsg,
-    required bool loginError,
-    required String loginMsg,
-  }) {
-    setState(() {
-      showEmailError = emailError;
-      emailErrorMessage = emailMsg;
-      showPasswordError = passwordError;
-      passwordErrorMessage = passwordMsg;
-      showLoginError = loginError;
-      loginErrorMessage = loginMsg;
-    });
-  }
-
-  // 텍스트 필드 스타일을 관리하는 공통 함수
-  InputDecoration getInputDecoration(String hint, bool hasError) {
-    return InputDecoration(
-      hintText: hint,
-      hintStyle: JusicoolTypography.bodySmall.copyWith(
-        color: hasError ? JusicoolColor.error : JusicoolColor.gray500,
-      ),
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 18.h),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.r),
-        borderSide: BorderSide(
-          color: hasError ? JusicoolColor.error : JusicoolColor.gray300,
-          width: 1.w,
-        ),
-      ),
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.r),
-        borderSide: BorderSide(
-          color: hasError ? JusicoolColor.error : JusicoolColor.main,
-          width: 2.w,
-        ),
-      ),
-      errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.r),
-        borderSide: BorderSide(color: JusicoolColor.error, width: 1.w),
-      ),
-      focusedErrorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8.r),
-        borderSide: BorderSide(color: JusicoolColor.error, width: 2.w),
-      ),
-    );
-  }
-
-  bool isValidPassword(String password) {
-    if (password.length < 8 || password.length > 13) return false;
-
-    final hasLetter = RegExp(r'[A-Za-z]').hasMatch(password);
-    final hasNumber = RegExp(r'\d').hasMatch(password);
-    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
-
-    int satisfiedConditions =
-        [hasLetter, hasNumber, hasSpecial].where((e) => e).length;
-
-    return satisfiedConditions >= 2;
-  }
-
-  void validateEmail(String email) {
-    if (email.isEmpty || EmailValidator.validate(email)) {
-      setError(
-        emailError: false,
-        emailMsg: '',
-        passwordError: showPasswordError,
-        passwordMsg: passwordErrorMessage,
-        loginError: showLoginError,
-        loginMsg: loginErrorMessage,
-      );
-    } else {
-      setError(
-        emailError: true,
-        emailMsg: '유효한 이메일 주소를 입력해주세요.',
-        passwordError: showPasswordError,
-        passwordMsg: passwordErrorMessage,
-        loginError: showLoginError,
-        loginMsg: loginErrorMessage,
-      );
-    }
-  }
-
-  void validatePassword(String password) {
-    if (password.isEmpty || isValidPassword(password)) {
-      setError(
-        emailError: showEmailError,
-        emailMsg: emailErrorMessage,
-        passwordError: false,
-        passwordMsg: '',
-        loginError: showLoginError,
-        loginMsg: loginErrorMessage,
-      );
-    } else {
-      setError(
-        emailError: showEmailError,
-        emailMsg: emailErrorMessage,
-        passwordError: true,
-        passwordMsg: '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.',
-        loginError: showLoginError,
-        loginMsg: loginErrorMessage,
-      );
-    }
-  }
-
-  void handleLogin() {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-
-    final isEmailValid = EmailValidator.validate(email);
-    final isPasswordValid = isValidPassword(password);
-
-    if (!isEmailValid || !isPasswordValid) {
-      setError(
-        emailError: !isEmailValid,
-        emailMsg: !isEmailValid ? '유효한 이메일 주소를 입력해주세요.' : '',
-        passwordError: !isPasswordValid,
-        passwordMsg:
-            !isPasswordValid ? '영문, 숫자, 특수문자 중 2개 이상 조합으로 8글자 이상.' : '',
-        loginError: false,
-        loginMsg: '',
-      );
-      return;
-    }
-
-    final user = database.firstWhere(
-      (user) => user['email'] == email && user['password'] == password,
-      orElse: () => {},
-    );
-
-    if (user.isNotEmpty) {
-      context.pushReplacement(RoutePaths.main);
-    } else {
-      setError(
-        emailError: false,
-        emailMsg: '',
-        passwordError: false,
-        passwordMsg: '',
-        loginError: true,
-        loginMsg: '아이디와 비밀번호를 다시 한 번 확인해주세요',
-      );
-    }
-  }
+class LoginScreen extends ConsumerWidget {
+  LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isFormFilled =
-        _emailController.text.isNotEmpty && _passwordController.text.isNotEmpty;
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(signInControllerProvider);
+    final provider = ref.watch(signInControllerProvider.notifier);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: JusicoolColor.white,
       body: Padding(
         padding: EdgeInsets.fromLTRB(24.w, 112.h, 24.w, 84.h),
@@ -215,44 +40,18 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 InputField(
                   label: '이메일',
-                  controller: _emailController,
+                  controller: provider.emailController,
                   hint: '이메일을 입력해주세요',
-                  hasError: showEmailError || showLoginError,
-                  errorMessage: emailErrorMessage,
-                  onChanged: validateEmail,
+                  hasError: state.hasError,
                   obscureText: false,
-                  width: FORM_WIDTH.w,
-                  height: FIELD_HEIGHT.h,
-                  getInputDecoration: getInputDecoration,
-                  showLoginError: showLoginError,
-                  clearLoginError: () {
-                    setState(() {
-                      showLoginError = false;
-                      loginErrorMessage = '';
-                    });
-                  },
                 ),
                 InputField(
                   label: '비밀번호',
-                  controller: _passwordController,
+                  controller: provider.passwordController,
                   hint: '비밀번호를 입력해주세요',
-                  hasError: showPasswordError || showLoginError,
-                  errorMessage:
-                      showPasswordError
-                          ? passwordErrorMessage
-                          : (showLoginError ? loginErrorMessage : ''),
+                  errorMessage: state.errorMessage,
+                  hasError: state.hasError,
                   obscureText: true,
-                  onChanged: validatePassword,
-                  width: FORM_WIDTH.w,
-                  height: FIELD_HEIGHT.h,
-                  getInputDecoration: getInputDecoration,
-                  showLoginError: showLoginError,
-                  clearLoginError: () {
-                    setState(() {
-                      showLoginError = false;
-                      loginErrorMessage = '';
-                    });
-                  },
                 ),
               ],
             ),
@@ -262,15 +61,19 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 AppButtonMedium(
                   text: '로그인',
-                  onPressed: handleLogin,
+                  onPressed: () => provider.signIn(context),
                   backgroundColor:
-                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                      state.enableButton
+                          ? JusicoolColor.main
+                          : JusicoolColor.gray300,
                   textColor:
-                      isFormFilled
+                      state.enableButton
                           ? JusicoolColor.white
                           : JusicoolColor.gray600,
                   borderColor:
-                      isFormFilled ? JusicoolColor.main : JusicoolColor.gray300,
+                      state.enableButton
+                          ? JusicoolColor.main
+                          : JusicoolColor.gray300,
                 ),
                 Text(
                   '아직 계정이 없으신가요?',
