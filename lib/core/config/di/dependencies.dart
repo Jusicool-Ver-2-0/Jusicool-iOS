@@ -3,18 +3,22 @@ import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:jusicool_ios/core/network/api/api_client.dart';
-import 'package:jusicool_ios/data/user/service/user_api.dart';
+import 'package:jusicool_ios/core/network/interceptor/cookie_interceptor.dart';
+import 'package:jusicool_ios/data/account/data_sources/account_data_source.dart';
+import 'package:jusicool_ios/data/account/data_sources/account_data_source_impl.dart';
+import 'package:jusicool_ios/data/account/service/account_api.dart';
 import 'package:jusicool_ios/data/user/data_sources/user_data_source.dart';
+import 'package:jusicool_ios/data/user/data_sources/user_data_source_impl.dart';
+import 'package:jusicool_ios/data/user/repositories/user_repository_impl.dart';
+import 'package:jusicool_ios/data/user/service/neis_api.dart';
+import 'package:jusicool_ios/data/user/service/user_api.dart';
 import 'package:jusicool_ios/domain/sign_in/repositories/sign_in_repository.dart';
 import 'package:jusicool_ios/domain/sign_in/usecase/sign_in_usecase.dart';
 import 'package:jusicool_ios/domain/sign_in/usecase/sign_in_usecase_impl.dart';
 import 'package:jusicool_ios/domain/sign_up/repositories/sign_up_repository.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase_impl.dart';
-import '../../../data/user/data_sources/user_data_source_impl.dart';
-import '../../../data/user/repositories/user_repository_impl.dart';
-import '../../../data/user/service/neis_api.dart';
-import '../../network/interceptor/cookie_interceptor.dart';
+
 
 final di = GetIt.instance;
 
@@ -35,9 +39,10 @@ void _setApi() {
     di.registerLazySingleton<NeisApi>(
       () => NeisApi(di.get<Dio>(instanceName: 'neis')),
     );
+    di.registerLazySingleton<AccountApi>(() => AccountApi(di.get<Dio>()));
     log('✅ :: API DI 성공');
   } catch (e) {
-    log("⛔ :: API DI 실패 \n$e");
+    log('⛔ :: API DI 실패 \n$e');
   }
 }
 
@@ -45,6 +50,9 @@ void _setDataSources() {
   try {
     di.registerLazySingleton<UserDataSource>(
       () => UserDataSourceImpl(di.get<UserApi>(), di.get<NeisApi>()),
+    );
+    di.registerLazySingleton<AccountDataSource>(
+      () => AccountDataSourceImpl(di.get<AccountApi>()),
     );
     log('✅ :: DataSources DI 성공');
   } catch (e) {

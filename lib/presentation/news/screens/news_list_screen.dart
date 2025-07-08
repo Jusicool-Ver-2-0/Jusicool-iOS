@@ -1,10 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_design_system/src/ui/widgets/card/news_card.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// 뉴스 아이템 데이터 모델
@@ -33,7 +30,7 @@ class NewsItem {
 
 /// 뉴스 리스트 화면
 class NewsListScreen extends StatefulWidget {
-  const NewsListScreen({Key? key}) : super(key: key);
+  const NewsListScreen({super.key});
 
   @override
   State<NewsListScreen> createState() => _NewsListScreenState();
@@ -67,9 +64,11 @@ class _NewsListScreenState extends State<NewsListScreen> {
       });
     } catch (e) {
       debugPrint('뉴스 로드 실패: $e');
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('뉴스 데이터를 불러올 수 없습니다.')));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('뉴스 데이터를 불러올 수 없습니다.')));
+      }
     }
   }
 
@@ -88,9 +87,11 @@ class _NewsListScreenState extends State<NewsListScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      ScaffoldMessenger.of(
+      if(mounted) {
+        ScaffoldMessenger.of(
         context,
       ).showSnackBar(const SnackBar(content: Text('링크를 열 수 없습니다.')));
+      }
     }
   }
 
@@ -105,7 +106,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
   @override
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final double JusicoolBarHeight = kToolbarHeight + statusBarHeight;
+    final double jusicoolBarHeight = kToolbarHeight + statusBarHeight;
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
@@ -116,12 +117,12 @@ class _NewsListScreenState extends State<NewsListScreen> {
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child:
                 _newsItems.isEmpty
-                    ? Center(child: CircularProgressIndicator())
+                    ? const Center(child: CircularProgressIndicator())
                     : ListView.separated(
                       controller: _scrollController,
-                      padding: EdgeInsets.only(top: JusicoolBarHeight + 24.h),
+                      padding: EdgeInsets.only(top: jusicoolBarHeight + 24.h),
                       itemCount: _newsItems.length,
-                      separatorBuilder: (_, __) => SizedBox(height: 20.h),
+                      separatorBuilder: (_, _) => SizedBox(height: 20.h),
                       itemBuilder: (context, index) {
                         final item = _newsItems[index];
                         return GestureDetector(
@@ -138,7 +139,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
           ),
           // 커스텀 JusicoolBar
           Container(
-            height: JusicoolBarHeight,
+            height: jusicoolBarHeight,
             padding: EdgeInsets.only(top: statusBarHeight),
             color: _getJusicoolBarColor(),
             child: Row(
@@ -150,7 +151,9 @@ class _NewsListScreenState extends State<NewsListScreen> {
                 const Spacer(),
                 Text(
                   "뉴스",
-                  style: JusicoolTypography.subTitle.copyWith(color: Colors.black),
+                  style: JusicoolTypography.subTitle.copyWith(
+                    color: Colors.black,
+                  ),
                 ),
                 const Spacer(),
                 SizedBox(width: 48.w), // 아이콘 영역 여백

@@ -5,9 +5,9 @@ import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get_it/get_it.dart';
+import 'package:jusicool_ios/core/network/interceptor/dio_error_interceptor.dart';
 import 'package:jusicool_ios/core/network/interceptor/dio_request_interceptor.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import '../interceptor/dio_error_interceptor.dart';
 
 Dio dio() {
   String? _baseUrlDev = dotenv.env['BASE_URL_DEV'];
@@ -28,8 +28,8 @@ Dio dio() {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      connectTimeout: Duration(seconds: 30),
-      receiveTimeout: Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
     ),
   );
 
@@ -58,8 +58,8 @@ Dio neis() {
   Dio dio = Dio(
     BaseOptions(
       baseUrl: 'https://open.neis.go.kr/hub/schoolInfo',
-      connectTimeout: Duration(seconds: 30),
-      receiveTimeout: Duration(seconds: 30),
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
       queryParameters: {'KEY': _neisApiKey ?? '', 'Type': 'json'},
     ),
   );

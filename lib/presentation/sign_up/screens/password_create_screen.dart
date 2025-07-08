@@ -62,7 +62,7 @@ class PasswordCreateScreen extends ConsumerWidget {
                         !state.isPasswordValid
                             ? '영문, 숫자, 특수문자 중 2개 이상 조합으로 8~13자'
                             : null,
-                    validator: (String) => null,
+                    validator: (String? value) => null,
                   ),
                 ],
               ),
@@ -85,7 +85,7 @@ class PasswordCreateScreen extends ConsumerWidget {
                     obscureText: true,
                     errorText:
                         !state.isPasswordMatched ? '비밀번호가 일치하지 않아요' : null,
-                    validator: (String) => null,
+                    validator: (String? value) => null,
                   ),
                 ],
               ),

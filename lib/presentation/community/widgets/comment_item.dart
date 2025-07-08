@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class CommentItem extends StatelessWidget {
   final String name;

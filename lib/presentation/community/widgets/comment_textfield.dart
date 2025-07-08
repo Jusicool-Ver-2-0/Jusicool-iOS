@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class CommentTextField extends StatefulWidget {
   final void Function(String)? onSubmit;
+
   const CommentTextField({super.key, this.onSubmit});
 
   @override
