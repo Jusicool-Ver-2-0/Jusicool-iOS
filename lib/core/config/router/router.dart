@@ -10,8 +10,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
 import 'package:jusicool_ios/presentation/community/screens/community_post_list_screen.dart';
-
-import 'main.dart';
+import '../../../main.dart';
 
 class RoutePaths {
   static const String splash = '/splash';
@@ -45,7 +44,7 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.login,
-        builder: (context, state) => const LoginScreen(),
+        builder: (context, state) => LoginScreen(),
       ),
       GoRoute(
         path: RoutePaths.main,
@@ -57,31 +56,15 @@ class AppRouter {
       ),
       GoRoute(
         path: RoutePaths.emailAuth,
-        builder: (context, state) {
-          final username = state.extra as String?;
-          return EmailAuthScreen(username: username ?? '');
-        },
+        builder: (context, state) => EmailAuthScreen(),
       ),
       GoRoute(
         path: RoutePaths.passwordCreate,
-        builder: (context, state) {
-          final extra = state.extra as Map<String, String>?;
-          return PasswordCreateScreen(
-            username: extra?['username'] ?? '',
-            email: extra?['email'] ?? '',
-          );
-        },
+        builder: (context, state) => PasswordCreateScreen(),
       ),
       GoRoute(
         path: RoutePaths.findSchool,
-        builder: (context, state) {
-          final extra = state.extra as Map<String, String>?;
-          return FindSchoolScreen(
-            username: extra?['username'] ?? '',
-            email: extra?['email'] ?? '',
-            password: extra?['password'] ?? '',
-          );
-        },
+        builder: (context, state) => FindSchoolScreen(),
       ),
       GoRoute(
         path: RoutePaths.mainCapital,

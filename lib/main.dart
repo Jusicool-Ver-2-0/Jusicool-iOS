@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
 import 'package:jusicool_ios/core/config/di/dependencies.dart';
-import 'package:jusicool_ios/menu_bottom.dart';
-import 'package:jusicool_ios/router.dart';
-
+import 'core/config/router/router.dart';
 import 'core/config/theme/app_theme.dart';
+import 'core/config/widget/menu_bottom.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await dotenv.load(fileName: '.env');
 
-  setDio();
+  setDependencies();
   await di.allReady();
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -26,7 +26,7 @@ void main() async {
     ),
   );
 
-  runApp(const MyApp());
+  runApp(ProviderScope(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

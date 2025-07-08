@@ -1,88 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
-import 'package:go_router/go_router.dart';
+import 'package:jusicool_ios/presentation/sign_up/controller/sign_up_email_controller.dart';
+import '../controller/sign_up_name_controller.dart';
+import '../controller/sign_up_password_controller.dart';
+import '../controller/sign_up_school_controller.dart';
+import '../state/sign_up_school_state.dart';
 
-class SchoolInfo {
-  final String name;
-  final String address;
-
-  SchoolInfo({required this.name, required this.address});
-
-  Map<String, String> toMap() => {"name": name, "address": address};
-}
-
-class FindSchoolScreen extends StatefulWidget {
-  final String username;
-  final String email;
-  final String password;
-
-  const FindSchoolScreen({
-    super.key,
-    required this.username,
-    required this.email,
-    required this.password,
-  });
-
-  @override
-  State<FindSchoolScreen> createState() => _FindSchoolScreenState();
-}
-
-class _FindSchoolScreenState extends State<FindSchoolScreen> {
-  final TextEditingController schoolNameController = TextEditingController();
-
-  bool isSearchButtonPressed = false;
-  List<SchoolInfo> filteredSchools = [];
-  SchoolInfo? selectedSchool;
-  //==========
-  final List<SchoolInfo> schools = [
-    SchoolInfo(name: "대충중학교", address: "대충남도 대충시 대충면 대충로 1-2"),
-    SchoolInfo(name: "대충고등학교", address: "대충남도 대충시 대충면 대충로 3-4"),
-    SchoolInfo(name: "가나초등학교", address: "대충남도 대충시 가나동 가나로 5-6"),
-    SchoolInfo(name: "다라중학교", address: "대충남도 대충시 다라동 다라로 7-8"),
-  ];
-  //==========
-
-  @override
-  void initState() {
-    super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-      const SystemUiOverlayStyle(
-        statusBarColor: JusicoolColor.white,
-        statusBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: JusicoolColor.white,
-        systemNavigationBarIconBrightness: Brightness.dark,
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    schoolNameController.dispose();
-    super.dispose();
-  }
-
-  void onSearch() {
-    final q = schoolNameController.text.trim();
-    setState(() {
-      if (q.isEmpty) {
-        filteredSchools = [];
-        selectedSchool = null;
-      } else {
-        filteredSchools =
-            schools
-                .where((s) => s.name.toLowerCase().contains(q.toLowerCase()))
-                .toList();
-      }
-    });
-  }
-
-  void onStart() {
-    if (selectedSchool != null) {
-      context.go('/main-capital');
-    }
-  }
+class FindSchoolScreen extends ConsumerWidget {
+  const FindSchoolScreen({super.key});
 
   Widget _labelChip(String text) => Container(
     padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
@@ -99,13 +27,14 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     ),
   );
 
-  Widget _schoolCard(SchoolInfo school) {
-    final isSelected = selectedSchool?.name == school.name;
+  Widget _schoolCard(
+    SchoolInfoState school,
+    SchoolInfoState? selectedSchool,
+    VoidCallback onTap,
+  ) {
+    final isSelected = selectedSchool?.schoolName == school.schoolName;
     return GestureDetector(
-      onTap:
-          () => setState(() {
-            selectedSchool = isSelected ? null : school;
-          }),
+      onTap: () => onTap(),
       child: Container(
         margin: EdgeInsets.only(bottom: 12.h),
         padding: EdgeInsets.all(16.w),
@@ -126,7 +55,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                 Padding(
                   padding: EdgeInsets.only(left: 12.w),
                   child: Text(
-                    school.name,
+                    school.schoolName,
                     style: JusicoolTypography.bodySmall.copyWith(
                       fontSize: 12.sp,
                       color: JusicoolColor.black,
@@ -143,7 +72,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                   Padding(
                     padding: EdgeInsets.only(left: 12.w),
                     child: Text(
-                      school.address,
+                      school.schoolAddress,
                       style: JusicoolTypography.bodySmall.copyWith(
                         fontSize: 12.sp,
                         color: JusicoolColor.black,
@@ -159,12 +88,15 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
     );
   }
 
-  Widget _searchRow() => Row(
+  Widget _searchRow(
+    TextEditingController schoolNameController,
+    bool isSelect,
+    Function onTap,
+  ) => Row(
     children: [
       Expanded(
         child: TextField(
           controller: schoolNameController,
-          onChanged: (_) => onSearch(),
           decoration: InputDecoration(
             hintText: '학교명을 입력해주세요',
             hintStyle: JusicoolTypography.bodySmall.copyWith(
@@ -194,33 +126,39 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
         width: 54.w,
         height: 54.h,
         child: GestureDetector(
-          onTapDown: (_) => setState(() => isSearchButtonPressed = true),
-          onTapUp: (_) {
-            setState(() => isSearchButtonPressed = false);
-            onSearch();
-          },
-          onTapCancel: () => setState(() => isSearchButtonPressed = false),
+          onTap: () => onTap(),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 100),
             decoration: BoxDecoration(
-              color:
-                  isSearchButtonPressed
-                      ? JusicoolColor.gray100
-                      : JusicoolColor.white,
+              color: isSelect ? JusicoolColor.gray100 : JusicoolColor.white,
               borderRadius: BorderRadius.circular(8.r),
             ),
-            child: JusicoolIcon.search(),
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: JusicoolColor.main.withValues(alpha:0.5),
+                  width: 1.sp,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: JusicoolIcon.search(
+                height: 24.h,
+                width: 24.w,
+                color: JusicoolColor.main.withValues(alpha: 0.5),
+              ),
+            ),
           ),
         ),
       ),
     ],
   );
 
-  Widget _startButton(bool enabled) => SizedBox(
+  Widget _startButton(bool enabled, Function onTap) => SizedBox(
     width: double.infinity,
     height: 54.h,
     child: ElevatedButton(
-      onPressed: enabled ? onStart : null,
+      onPressed: () => onTap(),
       style: ElevatedButton.styleFrom(
         backgroundColor: enabled ? JusicoolColor.main : JusicoolColor.gray300,
         foregroundColor: enabled ? JusicoolColor.white : JusicoolColor.gray600,
@@ -239,8 +177,10 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
   );
 
   @override
-  Widget build(BuildContext context) {
-    final isSchoolSelected = selectedSchool != null;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final provider = ref.watch(signupSchoolControllerProvider.notifier);
+    final state = ref.watch(signupSchoolControllerProvider);
+    final isSchoolSelected = state.selectedSchool != null;
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
@@ -289,7 +229,11 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                               color: JusicoolColor.black,
                             ),
                           ),
-                          _searchRow(),
+                          _searchRow(
+                            provider.schoolNameController,
+                            state.selectedSchool != null,
+                            provider.searchSchool,
+                          ),
                         ],
                       ),
                     ],
@@ -298,7 +242,7 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
               ),
               Expanded(
                 child:
-                    filteredSchools.isEmpty
+                    state.filteredSchools.isEmpty
                         ? Center(
                           child: Text(
                             '검색 결과가 없습니다.',
@@ -310,12 +254,31 @@ class _FindSchoolScreenState extends State<FindSchoolScreen> {
                         )
                         : ListView.builder(
                           padding: EdgeInsets.only(top: 2.h),
-                          itemCount: filteredSchools.length,
+                          itemCount: state.filteredSchools.length,
                           itemBuilder:
-                              (_, index) => _schoolCard(filteredSchools[index]),
+                              (_, index) => _schoolCard(
+                                state.filteredSchools[index],
+                                state.selectedSchool,
+                                () => provider.selectSchool(
+                                  state.filteredSchools[index],
+                                ),
+                              ),
                         ),
               ),
-              Column(children: [_startButton(isSchoolSelected)]),
+              Column(
+                children: [
+                  _startButton(
+                    isSchoolSelected,
+                    () => provider.start(
+                      context: context,
+                      email: ref.watch(emailAuthControllerProvider).email,
+                      password:
+                          ref.watch(signupPasswordControllerProvider).password,
+                      name: ref.watch(nameControllerProvider).username,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
