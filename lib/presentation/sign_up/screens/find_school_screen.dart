@@ -30,7 +30,7 @@ class FindSchoolScreen extends ConsumerWidget {
   Widget _schoolCard(
     SchoolInfoState school,
     SchoolInfoState? selectedSchool,
-    Function onTap,
+    VoidCallback onTap,
   ) {
     final isSelected = selectedSchool?.schoolName == school.schoolName;
     return GestureDetector(
