@@ -15,8 +15,8 @@ abstract class MyOrderResponseDto with _$MyOrderResponseDto {
     @JsonKey(name: 'order_type') required OrderType orderType,
     @JsonKey(name: 'reserve_type') required ReserveType reserveType,
     required int quantity,
-    @JsonKey(name: 'execute_price') required int? executePrice,
-    @JsonKey(name: 'reserve_price') required int? reservePrice,
+    @JsonKey(name: 'execute_price') int? executePrice,
+    @JsonKey(name: 'reserve_price') int? reservePrice,
     required MyOrderStatusType status
   }) = _MyOrderResponseDto;
 
