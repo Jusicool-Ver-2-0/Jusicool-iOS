@@ -1,4 +1,4 @@
-import 'package:jusicool_ios/domain/exchange/entity/exchange_entity.dart';
+import 'package:jusicool_ios/domain/exchange/entities/exchange_entity.dart';
 
 abstract class ExchangeRepository {
   Future<void> exchangeKRW(ExchangeEntity exchange);
