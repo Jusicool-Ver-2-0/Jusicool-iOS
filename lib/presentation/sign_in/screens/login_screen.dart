@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/sign_in/screens/widgets/input_field.dart';
-import '../../sign_up/screens/name_input_screen.dart';
+import '../../../core/config/router/router.dart';
 import '../controller/sign_in_controller.dart';
 
 class LoginScreen extends ConsumerWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -55,13 +56,18 @@ class LoginScreen extends ConsumerWidget {
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             Column(
               spacing: 8.h,
               children: [
                 AppButtonMedium(
                   text: '로그인',
-                  onPressed: () => provider.signIn(context),
+                  onPressed: () {
+                    final result = provider.signIn();
+                    if (result) {
+                      context.pushReplacement(RoutePaths.main);
+                    }
+                  },
                   backgroundColor:
                       state.enableButton
                           ? JusicoolColor.main
@@ -83,14 +89,7 @@ class LoginScreen extends ConsumerWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NameInputScreen(),
-                      ),
-                    );
-                  },
+                  onTap: () => context.push(RoutePaths.nameInput),
                   child: Text(
                     '회원가입',
                     style: JusicoolTypography.bodySmall.copyWith(

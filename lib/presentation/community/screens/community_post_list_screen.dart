@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'community_post_detail_screen.dart';
 import 'community_post_write_screen.dart';
 
@@ -83,7 +81,10 @@ class _CommunityPostListScreenState extends State<CommunityPostListScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(post['title'], style: JusicoolTypography.titleSmall),
+                          Text(
+                            post['title'],
+                            style: JusicoolTypography.titleSmall,
+                          ),
                           const SizedBox(height: 8),
                           Text(
                             post['content'],

@@ -4,10 +4,10 @@ import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 
 class ScreenConfig {
+  ScreenConfig({required this.title, required this.widget});
+
   final String title;
   final Widget widget;
-
-  ScreenConfig({required this.title, required this.widget});
 }
 
 class ScreenList {
@@ -37,11 +37,6 @@ class ScreenList {
 }
 
 class NavBarItem extends StatelessWidget {
-  final String iconName;
-  final String label;
-  final bool isSelected;
-  final VoidCallback onTap;
-
   const NavBarItem({
     super.key,
     required this.iconName,
@@ -49,6 +44,11 @@ class NavBarItem extends StatelessWidget {
     required this.isSelected,
     required this.onTap,
   });
+
+  final String iconName;
+  final String label;
+  final bool isSelected;
+  final VoidCallback onTap;
 
   Widget _buildIcon() {
     final color = isSelected ? JusicoolColor.main : JusicoolColor.gray400;
@@ -141,7 +141,7 @@ class _MenuBottomState extends State<MenuBottom> {
                   Positioned(
                     left: 42.w,
                     top: 9.h,
-                    child: Container(
+                    child: SizedBox(
                       width: 277.w,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

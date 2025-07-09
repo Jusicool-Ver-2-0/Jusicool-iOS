@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class OrderItem extends StatelessWidget {
   final String companyName;
@@ -22,7 +21,7 @@ class OrderItem extends StatelessWidget {
     final formattedAmount = numberFormat.format(amount.abs());
     final changeColor = amount >= 0 ? JusicoolColor.error : JusicoolColor.main;
 
-    return Container(
+    return SizedBox(
       width: 312.w,
       height: 40.h,
       child: Column(

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class RevenueCard extends StatelessWidget {
   final String imagePath;
@@ -12,13 +11,13 @@ class RevenueCard extends StatelessWidget {
   final double changePercentage;
 
   const RevenueCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.companyName,
     required this.amount,
     required this.changeValue,
     required this.changePercentage,
-  }) : super(key: key);
+  });
 
   String getFormattedAmount() {
     final numberFormat = NumberFormat("#,###", "en_US");
@@ -46,7 +45,7 @@ class RevenueCard extends StatelessWidget {
     final String formattedAmount = getFormattedAmount();
     final Color changeColor = getChangeColor();
 
-    return Container(
+    return SizedBox(
       width: 312.w,
       height: 48.h,
       child: Row(
@@ -81,11 +80,11 @@ class RevenueCard extends StatelessWidget {
             ),
           ),
           Expanded(child: Container()), // 남은 공간 채우기
-          Container(
+          SizedBox(
             width: 160.w,
             height: 44.h,
             child: Padding(
-              padding: EdgeInsets.only(top: 0, bottom: 0),
+              padding: const EdgeInsets.only(top: 0, bottom: 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.center,

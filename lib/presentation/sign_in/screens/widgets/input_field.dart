@@ -33,7 +33,7 @@ class InputField extends StatelessWidget {
             color: hasError ? JusicoolColor.error : JusicoolColor.black,
           ),
         ),
-        SizedBox.shrink(),
+        const SizedBox.shrink(),
         TextFormField(
           controller: controller,
           obscureText: obscureText,

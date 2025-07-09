@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/order_screens/order_item.dart';
 
 class OrderDetailScreen extends StatefulWidget {
@@ -26,6 +25,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
     _tabController.dispose();
     super.dispose();
   }
+
   //====================================
 
   List<Map<String, dynamic>> _generateDummyCompletedOrders() {
@@ -82,13 +82,13 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
 
     final statusBarHeight = MediaQuery.of(context).padding.top;
 
-    const JusicoolBarHeight = kToolbarHeight;
+    const double jusicoolBarHeight = kToolbarHeight;
 
     const tabBarHeight = 48.0;
 
     final adjustedTopPadding =
-        (176.h - statusBarHeight - JusicoolBarHeight - tabBarHeight) > 0
-            ? (176.h - statusBarHeight - JusicoolBarHeight - tabBarHeight)
+        (176.h - statusBarHeight - jusicoolBarHeight - tabBarHeight) > 0
+            ? (176.h - statusBarHeight - jusicoolBarHeight - tabBarHeight)
             : 0.0;
 
     return Scaffold(
@@ -115,7 +115,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
                 : JusicoolColor.white;
           }),
           splashFactory: NoSplash.splashFactory,
-          indicator: BoxDecoration(
+          indicator: const BoxDecoration(
             color: JusicoolColor.white,
             border: Border(
               bottom: BorderSide(color: JusicoolColor.black, width: 1.0),
