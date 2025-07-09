@@ -7,7 +7,7 @@ part 'month_rate_response_dto.freezed.dart';
 abstract class MonthRateResponseDto with _$MonthRateResponseDto {
   factory MonthRateResponseDto({
     @JsonKey(name: 'monthly_rate') required double monthlyRate,
-    required List<Market> markets,
+    required List<MarketDto> markets,
   }) = _MonthRateResponseDto;
 
   factory MonthRateResponseDto.fromJson(Map<String, dynamic> json) =>
@@ -15,8 +15,8 @@ abstract class MonthRateResponseDto with _$MonthRateResponseDto {
 }
 
 @freezed
-abstract class Market with _$Market {
-  factory Market({
+abstract class MarketDto with _$MarketDto {
+  factory MarketDto({
     required String market,
     @JsonKey(name: 'korean_name') required String koreanName,
     required double rate,
@@ -24,6 +24,6 @@ abstract class Market with _$Market {
     required DateTime day,
   }) = _Market;
 
-  factory Market.fromJson(Map<String, dynamic> json) =>
+  factory MarketDto.fromJson(Map<String, dynamic> json) =>
       _$MarketFromJson(json);
 }
