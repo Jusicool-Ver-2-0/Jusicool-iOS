@@ -1,0 +1,4 @@
+enum StatusType {
+  reserve,
+  completed,
+}
