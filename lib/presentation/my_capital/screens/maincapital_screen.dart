@@ -110,7 +110,7 @@ class MainCapitalScreen extends StatelessWidget {
                     onTap: () => context.push('/login'),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 4.h,
+                      spacing: 2.h,
                       children: [
                         Row(
                           spacing: 4.w,
@@ -306,7 +306,7 @@ class MainCapitalScreen extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Row(
-            spacing: 4.w,
+            spacing: 1.w,
             children: [
               Text(
                 value,
