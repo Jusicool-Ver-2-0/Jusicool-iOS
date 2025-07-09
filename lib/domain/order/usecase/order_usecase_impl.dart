@@ -3,7 +3,7 @@ import 'package:jusicool_ios/domain/order/entities/month_order_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/month_rate_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/my_order_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/order_entity.dart';
-import 'package:jusicool_ios/domain/order/entities/reservation_order_entity.dart';
+import 'package:jusicool_ios/domain/order/entities/reserve_order_entity.dart';
 import 'package:jusicool_ios/domain/order/repositories/order_repository.dart';
 import 'package:jusicool_ios/domain/order/usecase/order_usecase.dart';
 
@@ -29,7 +29,7 @@ class OrderUsecaseImpl extends OrderUsecase {
   }
 
   @override
-  Future<ReservationOrderEntity> fetchReservationOrder() async {
+  Future<ReserveOrderEntity> fetchReservationOrder() async {
     return await _repository.fetchReservationOrder();
   }
 
