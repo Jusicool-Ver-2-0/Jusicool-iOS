@@ -1,4 +1,4 @@
-import 'package:jusicool_ios/domain/exchange/entity/exchange_entity.dart';
+import 'package:jusicool_ios/domain/exchange/entities/exchange_entity.dart';
 import 'package:jusicool_ios/domain/exchange/repositories/exchange_repository.dart';
 import 'package:jusicool_ios/domain/exchange/usecase/exchange_usecase.dart';
 

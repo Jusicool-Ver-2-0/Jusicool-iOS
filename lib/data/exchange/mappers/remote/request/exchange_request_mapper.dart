@@ -1,5 +1,5 @@
 import 'package:jusicool_ios/data/exchange/dto/remote/request/exchange_request_dto.dart';
-import 'package:jusicool_ios/domain/exchange/entity/exchange_entity.dart';
+import 'package:jusicool_ios/domain/exchange/entities/exchange_entity.dart';
 
 class ExchangeRequestMapper {
   static ExchangeRequestDto toDto(ExchangeEntity entity) => 
