@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/widgets/my_asset_tile.dart';
@@ -23,7 +24,6 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     _futureData = _loadAssetsData();
   }
 
-  /* --------------------- 데이터 로드 --------------------- */
   Future<MyAssetsData> _loadAssetsData() async {
     final jsonString = await rootBundle.loadString(
       'assets/data/my_assets.json',
@@ -32,7 +32,6 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
     return MyAssetsData.fromJson(jsonMap);
   }
 
-  /* ----------------- HEX → Color 유틸 ------------------ */
   Color hexToColor(String hex) {
     final buffer = StringBuffer();
     if (hex.length == 7) buffer.write('ff'); // 투명도(100%)
@@ -51,7 +50,11 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
         backgroundColor: JusicoolColor.white,
         centerTitle: true,
         elevation: 0,
-        leading: const BackButton(color: JusicoolColor.black),
+        leading: IconButton(
+          padding: EdgeInsets.only(left: 24.sp),
+          icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
+          onPressed: () => Navigator.of(context).pop,
+        ),
         title: Text('내 자산', style: JusicoolTypography.subTitle),
       ),
       body: SafeArea(
@@ -143,7 +146,6 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  /* ---------- 자산 리스트: ListView.separated ---------- */
                   ListView.separated(
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -159,8 +161,6 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
                       );
                     },
                   ),
-
-                  const SizedBox(height: 32),
                 ],
               ),
             );

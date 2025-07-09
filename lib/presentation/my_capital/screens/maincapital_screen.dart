@@ -9,6 +9,7 @@ class MainCapitalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //===================
     final NumberFormat currencyFormat = NumberFormat('#,###');
     final int investmentValue = 123456789;
     final int changeValue = -6555778;
@@ -34,7 +35,6 @@ class MainCapitalScreen extends StatelessWidget {
         changeValue >= 0 ? JusicoolColor.error : JusicoolColor.main;
     final String monthlyOrderText = "이번달 $formattedOrderCount건";
     final String monthlyProfit = "+$formattedMonthlyProfit원";
-    //===================
     final stockData = [
       {
         'imagePath':
@@ -80,19 +80,16 @@ class MainCapitalScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(72.h),
-        child: AppBar(
-          automaticallyImplyLeading: false,
-          scrolledUnderElevation: 0,
-          backgroundColor: JusicoolColor.white,
-          elevation: 0,
-          flexibleSpace: Padding(
-            padding: EdgeInsets.only(top: 40.h, left: 24.w),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: JusicoolImage.logo(width: 116.w, height: 16.81.h),
-            ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        scrolledUnderElevation: 0,
+        backgroundColor: JusicoolColor.white,
+        elevation: 0,
+        flexibleSpace: Padding(
+          padding: EdgeInsets.only(top: 40.h, left: 24.w),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: JusicoolImage.logo(width: 116.w, height: 16.81.h),
           ),
         ),
       ),
@@ -107,7 +104,7 @@ class MainCapitalScreen extends StatelessWidget {
                 spacing: 24.h,
                 children: [
                   GestureDetector(
-                    onTap: () => context.push('/login'),
+                    onTap: () => context.push('/my-assets'),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 2.h,
@@ -118,15 +115,12 @@ class MainCapitalScreen extends StatelessWidget {
                             Text(
                               "내 자산",
                               style: JusicoolTypography.bodyMedium.copyWith(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600,
-                                height: 22 / 16,
                                 color: JusicoolColor.black,
                               ),
                             ),
                             const Icon(
                               Icons.arrow_forward_ios,
-                              size: 15,
+                              size: 16,
                               color: JusicoolColor.black,
                             ),
                           ],
@@ -134,9 +128,6 @@ class MainCapitalScreen extends StatelessWidget {
                         Text(
                           "$formattedInvestmentValue원",
                           style: JusicoolTypography.titleSmall.copyWith(
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w600,
-                            height: 31 / 24,
                             color: JusicoolColor.black,
                           ),
                         ),
@@ -152,27 +143,18 @@ class MainCapitalScreen extends StatelessWidget {
                       Text(
                         "투자 자산",
                         style: JusicoolTypography.bodyMedium.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w600,
-                          height: 22 / 16,
                           color: JusicoolColor.black,
                         ),
                       ),
                       Text(
                         "$formattedInvestmentValue원",
                         style: JusicoolTypography.titleMedium.copyWith(
-                          fontSize: 36.sp,
-                          fontWeight: FontWeight.w600,
-                          height: 43 / 36,
                           color: JusicoolColor.black,
                         ),
                       ),
                       Text(
                         changeText,
                         style: JusicoolTypography.bodySmall.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
-                          height: 22 / 16,
                           color: changeColor,
                         ),
                       ),
@@ -187,9 +169,6 @@ class MainCapitalScreen extends StatelessWidget {
                       Text(
                         "보유 주식&코인",
                         style: JusicoolTypography.subTitle.copyWith(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w600,
-                          height: 27 / 18,
                           color: JusicoolColor.black,
                         ),
                       ),
@@ -198,11 +177,7 @@ class MainCapitalScreen extends StatelessWidget {
                     ],
                   ),
 
-                  Divider(
-                    height: 1.h,
-                    thickness: 1.h,
-                    color: JusicoolColor.gray400,
-                  ),
+                  Divider(height: 1.h, color: JusicoolColor.gray400),
 
                   Column(
                     spacing: 8.h,
@@ -228,10 +203,7 @@ class MainCapitalScreen extends StatelessWidget {
               height: 24.h,
               color: JusicoolColor.gray100,
             ),
-
-            /// 뉴스 카드
             Container(
-              width: 360.w,
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 16.h),
               color: JusicoolColor.white,
               child: Column(
@@ -254,11 +226,12 @@ class MainCapitalScreen extends StatelessWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(12.r),
-                          child: Image.network(
-                            'https://gongu.copyright.or.kr/gongu/wrt/cmmn/wrtFileImageView.do?wrtSn=11288734&filePath=L2Rpc2sxL25ld2RhdGEvMjAxNS8wMi9DTFM2OS9OVVJJXzAwMV8wMjIwX251cmltZWRpYV8yMDE1MTIwMw==&thumbAt=Y&thumbSe=b_tbumb&wrtTy=10006',
-                            width: 312.w,
-                            height: 156.h,
-                            fit: BoxFit.cover,
+                          child: AspectRatio(
+                            aspectRatio: 2,
+                            child: Image.network(
+                              'https://gongu.copyright.or.kr/gongu/wrt/cmmn/wrtFileImageView.do?wrtSn=11288734&filePath=L2Rpc2sxL25ld2RhdGEvMjAxNS8wMi9DTFM2OS9OVVJJXzAwMV8wMjIwX251cmltZWRpYV8yMDE1MTIwMw==&thumbAt=Y&thumbSe=b_tbumb&wrtTy=10006',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         Text(
