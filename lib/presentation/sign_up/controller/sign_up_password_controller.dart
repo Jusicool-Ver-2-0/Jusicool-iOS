@@ -11,7 +11,7 @@ final signupPasswordControllerProvider =
     );
 
 class SignupPasswordController extends StateNotifier<SignUpPasswordState> {
-  SignupPasswordController() : super(SignUpPasswordState()) {
+  SignupPasswordController() : super(const SignUpPasswordState()) {
     _passwordController.addListener(_onPasswordChanged);
     _confirmPasswordController.addListener(_onConfirmPasswordChanged);
   }

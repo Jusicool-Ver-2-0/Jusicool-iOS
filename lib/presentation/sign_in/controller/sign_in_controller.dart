@@ -1,8 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:jusicool_ios/core/config/router/router.dart';
 import 'package:jusicool_ios/domain/sign_in/usecase/sign_in_usecase.dart';
 import '../../../core/config/di/dependencies.dart';
 import '../mapper/sign_in_mapper.dart';
@@ -76,18 +74,18 @@ class UserSignInController extends StateNotifier<SignInState> {
     state = state.copyWith(enableButton: enable);
   }
 
-  void signIn(BuildContext context) {
+  bool signIn() {
     if (state.email.isEmpty || state.password.isEmpty) {
       _setError("이메일과 비밀번호를 입력해주세요.");
-      return;
+      return false;
     }
     if (!EmailValidator.validate(state.email)) {
       _setError("유효한 이메일을 입력해주세요.");
-      return;
+      return false;
     }
     if (!_isValidPassword(state.password)) {
       _setError("비밀번호는 8~13자이며, 문자, 숫자, 특수문자 중 2가지 이상 포함해야 합니다.");
-      return;
+      return false;
     }
 
     _clearError();
@@ -96,11 +94,13 @@ class UserSignInController extends StateNotifier<SignInState> {
     _signInUseCase
         .signIn(request)
         .then((_) {
-          context.pushReplacement(RoutePaths.main);
+          return true;
         })
         .catchError((error) {
           _setError("아이디와 비밀번호를 다시 한 번 확인해주세요");
+          return false;
         });
+    return false;
   }
 
   @override

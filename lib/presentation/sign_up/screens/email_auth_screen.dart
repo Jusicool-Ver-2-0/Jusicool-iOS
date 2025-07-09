@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:go_router/go_router.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
+import 'package:jusicool_ios/core/config/router/router.dart';
 import '../controller/sign_up_email_controller.dart';
 
 class EmailAuthScreen extends ConsumerWidget {
@@ -235,7 +236,13 @@ class EmailAuthScreen extends ConsumerWidget {
                 onPressed:
                     state.enableButton
                         ? state.codeSent
-                            ? () => controller.sendVerificationCode(context)
+                            ? () {
+                              bool result = controller.sendVerificationCode(
+                              );
+                              if (result) {
+                                context.push(RoutePaths.passwordCreate);
+                              }
+                            }
                             : controller.sendEmail
                         : null,
                 isLoading: state.isSendingCode,

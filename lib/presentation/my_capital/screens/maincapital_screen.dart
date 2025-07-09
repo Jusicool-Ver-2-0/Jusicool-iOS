@@ -13,14 +13,14 @@ class StockCard extends StatelessWidget {
   final double changePercentage;
 
   const StockCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.companyName,
     required this.stockCount,
     required this.amount,
     required this.changeValue,
     required this.changePercentage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -126,14 +126,14 @@ class CoinCard extends StatelessWidget {
   final double changePercentage;
 
   const CoinCard({
-    Key? key,
+    super.key,
     required this.imagePath,
     required this.companyName,
     required this.stockCount,
     required this.amount,
     required this.changeValue,
     required this.changePercentage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -235,17 +235,17 @@ class MainCapitalScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int investmentValue = 123456789;
-    final int changeValue = -6555778;
-    final double changePercent = 4.0;
+    const int investmentValue = 123456789;
+    const int changeValue = -6555778;
+    const double changePercent = 4.0;
 
-    final int monthlyOrderCount = 6;
+    const int monthlyOrderCount = 6;
     final String formattedOrderCount = NumberFormat(
       '#,###',
     ).format(monthlyOrderCount);
-    final String monthlyOrderText = "이번달 ${formattedOrderCount}건";
+    final String monthlyOrderText = "이번달 $formattedOrderCount건";
 
-    final int monthlyProfitValue = 111111111;
+    const int monthlyProfitValue = 111111111;
     final String formattedMonthlyProfit = NumberFormat(
       '#,###',
     ).format(monthlyProfitValue);

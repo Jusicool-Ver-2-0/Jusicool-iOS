@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/widgets/my_asset_tile.dart';
 import '../../../domain/my_capital/entities/my_assets.dart';
 
@@ -52,7 +51,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
         backgroundColor: JusicoolColor.white,
         centerTitle: true,
         elevation: 0,
-        leading: BackButton(color: JusicoolColor.black),
+        leading: const BackButton(color: JusicoolColor.black),
         title: Text('내 자산', style: JusicoolTypography.subTitle),
       ),
       body: SafeArea(
@@ -149,7 +148,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: data.sections.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 24),
+                    separatorBuilder: (_, _) => const SizedBox(height: 24),
                     itemBuilder: (context, index) {
                       final s = data.sections[index];
                       return MyAssetTile(

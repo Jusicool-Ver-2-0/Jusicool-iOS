@@ -2,14 +2,11 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:go_router/go_router.dart';
 import 'package:jusicool_ios/domain/sign_up/entity/sign_up_email_entity.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase.dart';
 import 'package:jusicool_ios/presentation/sign_up/mapper/sign_up_email_mapper.dart';
 import 'package:jusicool_ios/presentation/sign_up/state/sign_up_email_state.dart';
-
 import '../../../core/config/di/dependencies.dart';
-import '../../../core/config/router/router.dart';
 
 final emailAuthControllerProvider =
     StateNotifierProvider<EmailAuthController, SignUpEmailState>(
@@ -98,7 +95,7 @@ class EmailAuthController extends StateNotifier<SignUpEmailState> {
     }
   }
 
-  void sendVerificationCode(BuildContext context) {
+  bool sendVerificationCode() {
     final code = state.verify;
     if (code.isEmpty || code.length != 6) {
       state = state.copyWith(
@@ -106,7 +103,7 @@ class EmailAuthController extends StateNotifier<SignUpEmailState> {
         enableButton: false,
         errorMessage: "인증번호를 입력해주세요.",
       );
-      return;
+      return false;
     }
 
     state = state.copyWith(
@@ -120,12 +117,14 @@ class EmailAuthController extends StateNotifier<SignUpEmailState> {
     _signUpUseCase
         .verifyEmail(request)
         .then((_) {
-          context.push(RoutePaths.passwordCreate);
           state = state.copyWith(isCodeMatched: true, isSendingCode: false);
+          return true;
         })
         .catchError((error) {
           state = state.copyWith(isCodeMatched: false, isSendingCode: false);
+          return false;
         });
+    return false;
   }
 
   void _startVerificationTimers() {

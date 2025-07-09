@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:jusicool_ios/core/config/router/router.dart';
 import 'package:jusicool_ios/domain/sign_up/entity/sign_up_entity.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase.dart';
 import 'package:jusicool_ios/presentation/sign_up/mapper/sign_up_search_school_mapper.dart';
@@ -15,10 +13,11 @@ final signupSchoolControllerProvider =
     );
 
 class SignupSchoolController extends StateNotifier<SignUpSchoolState> {
-  SignUpUseCase _signUpUseCase;
+  final SignUpUseCase _signUpUseCase;
   final _schoolNameSubject = PublishSubject<String>();
 
-  SignupSchoolController(this._signUpUseCase) : super(SignUpSchoolState()) {
+  SignupSchoolController(this._signUpUseCase)
+    : super(const SignUpSchoolState()) {
     _schoolNameController.addListener(() {
       _schoolNameSubject.add(_schoolNameController.text);
     });
@@ -35,7 +34,6 @@ class SignupSchoolController extends StateNotifier<SignUpSchoolState> {
   TextEditingController get schoolNameController => _schoolNameController;
 
   void searchSchool() {
-    print(state.toString());
     _signUpUseCase
         .searchSchool(_schoolNameController.text)
         .then((result) {
@@ -43,7 +41,6 @@ class SignupSchoolController extends StateNotifier<SignUpSchoolState> {
             state = state.copyWith(
               filteredSchools: SignUpSearchSchoolMapper.toState(result),
             );
-            print(state.toString());
           } else {
             state = state.copyWith(filteredSchools: []);
           }
@@ -57,15 +54,14 @@ class SignupSchoolController extends StateNotifier<SignUpSchoolState> {
     state = state.copyWith(selectedSchool: school);
   }
 
-  void start({
-    required BuildContext context,
+  bool start({
     required String email,
     required String password,
     required String name,
   }) {
     final String? schoolName = state.selectedSchool?.schoolName;
     if (schoolName == null) {
-      return;
+      return false;
     } else {
       _signUpUseCase
           .signUp(
@@ -77,9 +73,12 @@ class SignupSchoolController extends StateNotifier<SignUpSchoolState> {
             ),
           )
           .then((value) {
-            context.pushReplacement(RoutePaths.main);
+            return true;
           })
-          .catchError((error) {});
+          .catchError((error) {
+            return false;
+          });
+      return false;
     }
   }
 
