@@ -78,9 +78,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
         centerTitle: true,
         title: Text("주문내역", style: JusicoolTypography.subTitle),
         bottom: _buildTabBar(),
-        leading: Padding(
-          padding: EdgeInsets.only(left: 15.w),
-          child: const BackButton(),
+        leading: IconButton(
+          padding: EdgeInsets.only(left: 24.sp),
+          icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: TabBarView(

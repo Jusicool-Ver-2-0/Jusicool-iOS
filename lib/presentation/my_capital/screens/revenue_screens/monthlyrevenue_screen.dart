@@ -162,6 +162,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
           ),
         ),
         leading: IconButton(
+          padding: EdgeInsets.only(left: 24.sp),
           icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
           onPressed: () {
             context.pop();
