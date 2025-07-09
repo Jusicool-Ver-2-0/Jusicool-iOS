@@ -13,11 +13,11 @@ abstract class OrderDataSource {
 
   Future<MonthRateResponseDto> fetchMonthRate();
 
-  Future<OrderResponseDto> buyOrder(OrderRequestDto body);
+  Future<OrderResponseDto> buyOrder(OrderRequestDto body, String marketCode);
 
-  Future<OrderResponseDto> sellOrder(OrderRequestDto body);
+  Future<OrderResponseDto> sellOrder(OrderRequestDto body, String marketCode);
 
-  Future<void> reserveBuyOrder(ReserveOrderRequestDto body);
+  Future<void> reserveBuyOrder(ReserveOrderRequestDto body, String marketCode);
 
-  Future<void> reserveSellOrder(ReserveOrderRequestDto body);
+  Future<void> reserveSellOrder(ReserveOrderRequestDto body, String marketCode);
 }
