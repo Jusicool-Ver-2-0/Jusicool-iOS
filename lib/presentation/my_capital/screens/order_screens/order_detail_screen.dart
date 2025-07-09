@@ -14,10 +14,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
-  static const double _appBarHeight = kToolbarHeight;
-  static const double _tabBarHeight = 48.0;
-  static const double _totalHeaderHeight = 176.0;
-
   final List<Map<String, dynamic>> _completedOrders = _generateDummyOrders(
     "판매 완료",
   );
@@ -59,17 +55,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
   }
   //=====================
 
-  double _calculateTopPadding(BuildContext context) {
-    final statusBarHeight = MediaQuery.of(context).padding.top;
-    final totalUsedHeight = statusBarHeight + _appBarHeight + _tabBarHeight;
-    final remainingHeight = _totalHeaderHeight.h - totalUsedHeight;
-    return remainingHeight > 0 ? remainingHeight : 0.0;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final topPadding = _calculateTopPadding(context);
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -89,8 +76,8 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          _buildOrderListView(topPadding: topPadding, orders: _completedOrders),
-          _buildOrderListView(topPadding: topPadding, orders: _reservedOrders),
+          _buildOrderListView(orders: _completedOrders),
+          _buildOrderListView(orders: _reservedOrders),
         ],
       ),
     );
@@ -103,7 +90,6 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
       unselectedLabelColor: JusicoolColor.gray400,
       padding: EdgeInsets.symmetric(horizontal: 24.sp),
       indicatorColor: JusicoolColor.black,
-      indicatorWeight: 1.0,
       indicatorPadding: EdgeInsets.zero,
       overlayColor: WidgetStateProperty.resolveWith<Color?>(
         (states) =>
@@ -112,9 +98,7 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
       splashFactory: NoSplash.splashFactory,
       indicator: const BoxDecoration(
         color: JusicoolColor.white,
-        border: Border(
-          bottom: BorderSide(color: JusicoolColor.black, width: 1.0),
-        ),
+        border: Border(bottom: BorderSide(color: JusicoolColor.black)),
       ),
       labelStyle: JusicoolTypography.bodyMedium,
       unselectedLabelStyle: JusicoolTypography.bodySmall,
@@ -123,15 +107,12 @@ class _OrderDetailScreenState extends State<OrderDetailScreen>
     );
   }
 
-  Widget _buildOrderListView({
-    required double topPadding,
-    required List<Map<String, dynamic>> orders,
-  }) {
+  Widget _buildOrderListView({required List<Map<String, dynamic>> orders}) {
     return Container(
       color: JusicoolColor.white,
       child: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.only(top: topPadding, left: 24.sp, bottom: 24.sp),
+          padding: EdgeInsets.only(top: 24.h, left: 24.sp, bottom: 24.sp),
           child: Column(
             spacing: 24.h,
             children:
