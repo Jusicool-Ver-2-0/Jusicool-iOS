@@ -5,32 +5,19 @@ import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/revenue_screens/revenuecard.dart';
 import 'package:go_router/go_router.dart';
 
-const adjustedTopPadding = 16.0;
+const double adjustedTopPadding = 16.0;
 
 class MonthlyRevenueScreen extends StatefulWidget {
   const MonthlyRevenueScreen({super.key});
 
   @override
-  _MonthlyRevenueScreenState createState() => _MonthlyRevenueScreenState();
+  State<MonthlyRevenueScreen> createState() => _MonthlyRevenueScreenState();
 }
 
 class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  //=========================
   final List<Map<String, dynamic>> revenueData = [
     {
       'date': '1월 31일',
@@ -49,7 +36,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'companyName': '삼성',
       'amount': 987654321,
       'changeValue': 2000000,
-
       'changePercentage': 2.5,
       'isStock': true,
     },
@@ -94,23 +80,39 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
       'isStock': false,
     },
   ];
-  //=========================
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   Map<String, dynamic> _calculateTotalRevenue() {
     final numberFormat = NumberFormat("#,###", "en_US");
-    int totalChange = revenueData.fold(
+
+    final totalChange = revenueData.fold<int>(
       0,
       (sum, item) => sum + (item['changeValue'] as int),
     );
-    int totalAmount = revenueData.fold(
+
+    final totalAmount = revenueData.fold<int>(
       0,
       (sum, item) => sum + (item['amount'] as int),
     );
-    double weightedPercentage =
-        revenueData.fold(0.0, (sum, item) {
-          return sum +
-              ((item['amount'] as int) * (item['changePercentage'] as double));
-        }) /
+
+    final weightedPercentage =
+        revenueData.fold<double>(
+          0.0,
+          (sum, item) =>
+              sum +
+              ((item['amount'] as int) * (item['changePercentage'] as double)),
+        ) /
         (totalAmount != 0 ? totalAmount : 1);
 
     return {
@@ -131,6 +133,7 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         totalChange >= 0
             ? "+$formattedChange원 (${weightedPercentage.toStringAsFixed(1)}%)"
             : "-$formattedChange원 (${weightedPercentage.toStringAsFixed(1)}%)";
+
     final revenueColor =
         totalChange > 0
             ? JusicoolColor.error
@@ -138,14 +141,11 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             ? JusicoolColor.main
             : JusicoolColor.gray400;
 
-    List<Map<String, dynamic>> filteredData = revenueData;
-    if (_tabController.index == 1) {
-      filteredData =
-          revenueData.where((item) => item['isStock'] == true).toList();
-    } else if (_tabController.index == 2) {
-      filteredData =
-          revenueData.where((item) => item['isStock'] == false).toList();
-    }
+    List<Map<String, dynamic>> filteredData = switch (_tabController.index) {
+      1 => revenueData.where((item) => item['isStock'] == true).toList(),
+      2 => revenueData.where((item) => item['isStock'] == false).toList(),
+      _ => revenueData,
+    };
 
     return Scaffold(
       appBar: AppBar(
@@ -153,6 +153,11 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         backgroundColor: JusicoolColor.white,
         elevation: 0,
         centerTitle: true,
+        leading: IconButton(
+          padding: EdgeInsets.only(left: 24.sp),
+          icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
+          onPressed: () => context.pop(),
+        ),
         title: Text(
           "이번 달 수익",
           style: JusicoolTypography.subTitle.copyWith(
@@ -161,117 +166,93 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
             color: JusicoolColor.black,
           ),
         ),
-        leading: IconButton(
-          padding: EdgeInsets.only(left: 24.sp),
-          icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
-          onPressed: () {
-            context.pop();
-          },
-        ),
       ),
       body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return [
-            SliverToBoxAdapter(
-              child: Container(
-                color: JusicoolColor.white,
-                padding: EdgeInsets.only(top: 9.h, left: 24.sp, bottom: 16.h),
-                child: Text(
-                  revenueText,
-                  style: JusicoolTypography.titleSmall.copyWith(
-                    fontSize: 24.sp,
-                    fontWeight: FontWeight.w600,
-                    color: revenueColor,
-                  ),
-                ),
-              ),
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: _SliverJusicoolBarDelegate(
-                TabBar(
-                  controller: _tabController,
-                  labelColor: JusicoolColor.black,
-                  unselectedLabelColor: JusicoolColor.gray400,
-                  padding: EdgeInsets.symmetric(horizontal: 24.sp),
-                  indicatorColor: JusicoolColor.black,
-                  automaticIndicatorColorAdjustment: true,
-                  indicatorWeight: 1.0,
-                  indicatorPadding: EdgeInsets.zero,
-                  overlayColor: WidgetStateProperty.resolveWith<Color?>((
-                    Set<WidgetState> states,
-                  ) {
-                    return states.contains(WidgetState.focused)
-                        ? null
-                        : JusicoolColor.white;
-                  }),
-                  splashFactory: NoSplash.splashFactory,
-                  indicator: const BoxDecoration(
-                    color: JusicoolColor.white,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: JusicoolColor.black,
-                        width: 1.0,
-                      ),
+        headerSliverBuilder:
+            (context, _) => [
+              SliverToBoxAdapter(
+                child: Container(
+                  color: JusicoolColor.white,
+                  padding: EdgeInsets.only(top: 9.h, left: 24.sp, bottom: 16.h),
+                  child: Text(
+                    revenueText,
+                    style: JusicoolTypography.titleSmall.copyWith(
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.w600,
+                      color: revenueColor,
                     ),
                   ),
-                  labelStyle: JusicoolTypography.bodyMedium,
-                  unselectedLabelStyle: JusicoolTypography.bodySmall,
-                  indicatorSize: TabBarIndicatorSize.tab,
-                  tabs: const [
-                    Tab(text: "전체"),
-                    Tab(text: "주식"),
-                    Tab(text: "코인"),
-                  ],
-                  onTap: (index) {
-                    setState(() {});
-                  },
                 ),
               ),
-            ),
-          ];
-        },
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverJusicoolBarDelegate(
+                  TabBar(
+                    controller: _tabController,
+                    labelColor: JusicoolColor.black,
+                    unselectedLabelColor: JusicoolColor.gray400,
+                    padding: EdgeInsets.symmetric(horizontal: 24.sp),
+                    indicatorColor: JusicoolColor.black,
+                    indicator: const BoxDecoration(
+                      color: JusicoolColor.white,
+                      border: Border(
+                        bottom: BorderSide(
+                          color: JusicoolColor.black,
+                          width: 1.0,
+                        ),
+                      ),
+                    ),
+                    indicatorWeight: 1.0,
+                    indicatorPadding: EdgeInsets.zero,
+                    splashFactory: NoSplash.splashFactory,
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
+                    labelStyle: JusicoolTypography.bodyMedium,
+                    unselectedLabelStyle: JusicoolTypography.bodySmall,
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    tabs: const [
+                      Tab(text: "전체"),
+                      Tab(text: "주식"),
+                      Tab(text: "코인"),
+                    ],
+                    onTap: (_) => setState(() {}),
+                  ),
+                ),
+              ),
+            ],
         body: Container(
           color: JusicoolColor.white,
           child: Padding(
             padding: EdgeInsets.only(left: 24.sp, top: adjustedTopPadding.h),
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: filteredData.length,
+              separatorBuilder: (_, __) => SizedBox(height: 16.h),
               itemBuilder: (context, index) {
                 final item = filteredData[index];
                 final date = item['date'] as String;
                 final isNewDate =
                     index == 0 || filteredData[index - 1]['date'] != date;
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: isNewDate ? 16.h : 16.h, // 수직 간격을 Padding으로 처리
-                    bottom: index == filteredData.length - 1 ? 0 : 0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (isNewDate)
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 4.h), // 날짜와 카드 사이 간격
-                          child: Text(
-                            date,
-                            style: JusicoolTypography.bodySmall.copyWith(
-                              fontSize: 16.sp,
-                              fontWeight: FontWeight.w400,
-                              color: JusicoolColor.black,
-                            ),
-                          ),
+
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 4.h,
+                  children: [
+                    if (isNewDate)
+                      Text(
+                        date,
+                        style: JusicoolTypography.bodySmall.copyWith(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w400,
+                          color: JusicoolColor.black,
                         ),
-                      // 수평 간격은 RevenueCard 내부에서 Row + Padding/margin으로 처리
-                      RevenueCard(
-                        imagePath: item['imagePath'] as String,
-                        companyName: item['companyName'] as String,
-                        amount: item['amount'] as int,
-                        changeValue: item['changeValue'] as int,
-                        changePercentage: item['changePercentage'] as double,
                       ),
-                    ],
-                  ),
+                    RevenueCard(
+                      imagePath: item['imagePath'] as String,
+                      companyName: item['companyName'] as String,
+                      amount: item['amount'] as int,
+                      changeValue: item['changeValue'] as int,
+                      changePercentage: item['changePercentage'] as double,
+                    ),
+                  ],
                 );
               },
             ),
@@ -289,7 +270,6 @@ class _SliverJusicoolBarDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent => _tabBar.preferredSize.height;
-
   @override
   double get maxExtent => _tabBar.preferredSize.height;
 
@@ -303,7 +283,5 @@ class _SliverJusicoolBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(_SliverJusicoolBarDelegate oldDelegate) {
-    return false;
-  }
+  bool shouldRebuild(covariant _SliverJusicoolBarDelegate oldDelegate) => false;
 }
