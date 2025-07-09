@@ -7,7 +7,7 @@ part 'month_order_response_dto.freezed.dart';
 abstract class MonthOrderResponseDto with _$MonthOrderResponseDto {
   factory MonthOrderResponseDto({
     required double rate,
-    required int order_count
+    @JsonKey(name: 'order_count') required int orderCount
   }) = _MonthOrderResponseDto;
 
   factory MonthOrderResponseDto.fromJson(Map<String, dynamic> json) =>

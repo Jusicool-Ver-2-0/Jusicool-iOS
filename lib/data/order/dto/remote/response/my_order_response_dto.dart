@@ -12,11 +12,11 @@ abstract class MyOrderResponseDto with _$MyOrderResponseDto {
   factory MyOrderResponseDto({
     required int id,
     required String market,
-    required OrderType order_type,
-    required ReserveType reserve_type,
+    @JsonKey(name: 'order_type') required OrderType orderType,
+    @JsonKey(name: 'reserve_type') required ReserveType reserveType,
     required int quantity,
-    required int? execute_price,
-    required int? reserve_price,
+    @JsonKey(name: 'execute_price') required int? executePrice,
+    @JsonKey(name: 'reserve_price') required int? reservePrice,
     required MyOrderStatusType status
   }) = _MyOrderResponseDto;
 

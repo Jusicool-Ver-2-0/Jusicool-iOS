@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:jusicool_ios/domain/enum/status_type.dart';
+import 'package:jusicool_ios/domain/enum/share/order/status_type.dart';
 
 part 'my_order_query_type_request_dto.g.dart';
 
