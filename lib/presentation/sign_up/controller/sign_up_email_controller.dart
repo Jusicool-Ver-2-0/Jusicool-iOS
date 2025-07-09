@@ -95,7 +95,7 @@ class EmailAuthController extends StateNotifier<SignUpEmailState> {
     }
   }
 
-  Future<bool> sendVerificationCode() async {
+  bool sendVerificationCode() {
     final code = state.verify;
     if (code.isEmpty || code.length != 6) {
       state = state.copyWith(
