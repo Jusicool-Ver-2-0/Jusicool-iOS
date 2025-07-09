@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class MyAssetTile extends StatelessWidget {
   final String stockName; // 종목명 (예: AMDL)

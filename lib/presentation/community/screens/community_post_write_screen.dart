@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
-import 'package:jusicool_design_system/src/ui/widgets/button/button_medium.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 
 class CommunityPostWriteScreen extends StatefulWidget {
   const CommunityPostWriteScreen({super.key});
@@ -105,8 +103,10 @@ class _WritePostScreenState extends State<CommunityPostWriteScreen> {
           child: AppButtonMedium(
             text: '올리기',
             onPressed: isFormValid ? _uploadPost : null,
-            backgroundColor: isFormValid ? JusicoolColor.main : JusicoolColor.gray400,
-            textColor: isFormValid ? JusicoolColor.white : JusicoolColor.gray600,
+            backgroundColor:
+                isFormValid ? JusicoolColor.main : JusicoolColor.gray400,
+            textColor:
+                isFormValid ? JusicoolColor.white : JusicoolColor.gray600,
             borderColor: Colors.transparent,
           ),
         ),

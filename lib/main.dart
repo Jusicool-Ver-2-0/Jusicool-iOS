@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'core/config/router/router.dart';
 import 'core/config/theme/app_theme.dart';
@@ -26,7 +26,7 @@ void main() async {
     ),
   );
 
-  runApp(ProviderScope(child: const MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {

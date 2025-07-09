@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:jusicool_design_system/src/core/theme/colors/color_palette.dart';
-import 'package:jusicool_design_system/src/core/theme/texts/typography.dart';
+import 'package:jusicool_design_system/jusicool_design_system.dart'
+    hide CommentTextField;
 import 'package:jusicool_ios/presentation/community/widgets/comment_item.dart';
 import 'package:jusicool_ios/presentation/community/widgets/comment_textfield.dart';
 import 'package:jusicool_ios/presentation/community/widgets/like_button.dart';
-
 import 'community_post_edit_screen.dart';
 
 class CommunityPostDetailScreen extends StatefulWidget {

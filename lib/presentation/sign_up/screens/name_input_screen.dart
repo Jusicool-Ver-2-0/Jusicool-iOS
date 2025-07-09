@@ -88,7 +88,7 @@ class NameInputScreen extends ConsumerWidget {
                   controller: provider.controller,
                   hintText: '실명을 적어주세요',
                   errorText: state.errorMessage,
-                  validator: (String) {
+                  validator: (String? value) {
                     return null;
                   },
                 ),

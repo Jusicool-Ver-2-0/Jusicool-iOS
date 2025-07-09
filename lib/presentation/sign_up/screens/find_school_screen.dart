@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/sign_up/controller/sign_up_email_controller.dart';
+import '../../../core/config/router/router.dart';
 import '../controller/sign_up_name_controller.dart';
 import '../controller/sign_up_password_controller.dart';
 import '../controller/sign_up_school_controller.dart';
@@ -134,10 +136,10 @@ class FindSchoolScreen extends ConsumerWidget {
               borderRadius: BorderRadius.circular(8.r),
             ),
             child: Container(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: JusicoolColor.main.withValues(alpha:0.5),
+                  color: JusicoolColor.main.withValues(alpha: 0.5),
                   width: 1.sp,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -267,16 +269,17 @@ class FindSchoolScreen extends ConsumerWidget {
               ),
               Column(
                 children: [
-                  _startButton(
-                    isSchoolSelected,
-                    () => provider.start(
-                      context: context,
+                  _startButton(isSchoolSelected, () {
+                    final result = provider.start(
                       email: ref.watch(emailAuthControllerProvider).email,
                       password:
                           ref.watch(signupPasswordControllerProvider).password,
                       name: ref.watch(nameControllerProvider).username,
-                    ),
-                  ),
+                    );
+                    if (result) {
+                      context.pushReplacement(RoutePaths.main);
+                    }
+                  }),
                 ],
               ),
             ],
