@@ -34,7 +34,7 @@ class MainCapitalScreen extends StatelessWidget {
         changeValue >= 0 ? JusicoolColor.error : JusicoolColor.main;
     final String monthlyOrderText = "이번달 $formattedOrderCount건";
     final String monthlyProfit = "+$formattedMonthlyProfit원";
-
+    //===================
     final stockData = [
       {
         'imagePath':
@@ -76,6 +76,7 @@ class MainCapitalScreen extends StatelessWidget {
         'changePercentage': 0.9,
       },
     ];
+    //===================
 
     return Scaffold(
       backgroundColor: JusicoolColor.white,
