@@ -15,4 +15,9 @@ abstract class MarketApi {
 
   @GET('/market/search')
   Future<List<MarketResponseDto>> searchMarkets(@Query('query') String query);
+
+  @GET('/market/{marketCode}')
+  Future<void> prediction(
+    @Path('marketCode') String marketCode,
+  );
 } 

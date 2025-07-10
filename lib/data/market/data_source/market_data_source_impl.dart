@@ -16,4 +16,9 @@ class MarketDataSourceImpl extends MarketDataSource {
   Future<List<MarketResponseDto>> searchMarkets(String query) async {
     return await _api.searchMarkets(query);
   }
+  
+  @override
+  Future<void> prediction(String marketCode) async {
+    return await _api.prediction(marketCode);
+  }
 } 

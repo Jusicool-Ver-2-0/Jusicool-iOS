@@ -4,4 +4,6 @@ abstract class MarketUsecase {
   Future<List<MarketEntity>> fetchMarkets(String type);
 
   Future<List<MarketEntity>> searchMarkets(String query);
+
+  Future<void> prediction(String marketCode);
 } 

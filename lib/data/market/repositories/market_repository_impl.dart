@@ -20,4 +20,9 @@ class MarketRepositoryImpl extends MarketRepository {
     final response = await _dataSource.searchMarkets(query);
     return response.map((e) => MarketResponseMapper.toEntity(e)).toList();
   }
+  
+  @override
+  Future<void> prediction(String marketCode) async {
+    return await _dataSource.prediction(marketCode);
+  }
 } 

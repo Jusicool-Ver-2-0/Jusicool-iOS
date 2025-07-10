@@ -15,4 +15,9 @@ class MarketUsecaseImpl extends MarketUsecase {
   Future<List<MarketEntity>> searchMarkets(String query) async {
     return await _repository.searchMarkets(query);
   }
+  
+  @override
+  Future<void> prediction(String marketCode) async {
+    return await _repository.prediction(marketCode);
+  }
 } 

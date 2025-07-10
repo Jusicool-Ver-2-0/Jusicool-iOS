@@ -4,4 +4,5 @@ import 'package:jusicool_ios/data/market/dto/remote/request/market_request_dto.d
 abstract class MarketDataSource {
   Future<List<MarketResponseDto>> fetchMarkets(MarketRequestDto request);
   Future<List<MarketResponseDto>> searchMarkets(String query);
+  Future<void> prediction(String marketCode);
 } 
