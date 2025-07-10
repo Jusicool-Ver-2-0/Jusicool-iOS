@@ -2,30 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
+import 'package:jusicool_ios/presentation/news/screens/news_item.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-class NewsItem {
-  final String title;
-  final String subtitle;
-  final String imageUrl;
-  final String linkUrl;
-
-  const NewsItem({
-    required this.title,
-    required this.subtitle,
-    required this.imageUrl,
-    required this.linkUrl,
-  });
-
-  factory NewsItem.fromJson(Map<String, dynamic> json) {
-    return NewsItem(
-      title: json['title'] as String,
-      subtitle: json['subtitle'] as String,
-      imageUrl: json['imageUrl'] as String,
-      linkUrl: json['linkUrl'] as String,
-    );
-  }
-}
 
 class NewsListScreen extends StatefulWidget {
   const NewsListScreen({super.key});
@@ -93,7 +71,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
                 : ListView.separated(
                   controller: _scrollController,
                   itemCount: newsItems.length,
-                  separatorBuilder: (_, __) => SizedBox(height: 20.h),
+                  separatorBuilder: (_, _) => SizedBox(height: 20.h),
                   itemBuilder: (context, index) {
                     final item = newsItems[index];
                     return GestureDetector(
