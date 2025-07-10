@@ -6,5 +6,6 @@ part 'order_entity.freezed.dart';
 abstract class OrderEntity with _$OrderEntity {
   factory OrderEntity({
     required int price,
+    required double quantity,
   }) = _OrderEntity;
 } 
