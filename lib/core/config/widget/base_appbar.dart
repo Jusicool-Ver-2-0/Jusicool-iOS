@@ -30,16 +30,19 @@ class BaseAppbar extends StatelessWidget implements PreferredSizeWidget {
       elevation: elevation,
       scrolledUnderElevation: 0.0,
       titleTextStyle: textStyle ?? JusicoolTypography.subTitle,
-      leading: IconButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-        icon: JusicoolIcon.backArrow(
-          width: 24.w,
-          height: 24.h,
-          color: JusicoolColor.black,
-        ),
-      ),
+      leading:
+          backButton
+              ? IconButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                icon: JusicoolIcon.backArrow(
+                  width: 24.w,
+                  height: 24.h,
+                  color: JusicoolColor.black,
+                ),
+              )
+              : null,
       actionsPadding: EdgeInsets.only(right: 24),
       actions: actionWidgets ?? [],
     );
