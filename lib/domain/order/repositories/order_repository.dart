@@ -17,7 +17,7 @@ abstract class OrderRepository {
 
   Future<OrderResponseEntity> sellOrder(OrderRequestEntity quantity, String marketCode);
 
-  Future<ReserveOrderEntity> reserveBuyOrder();
+  Future<void> reserveBuyOrder(ReserveOrderEntity body, String marketCode);
 
-  Future<ReserveOrderEntity> reserveSellOrder();
+  Future<void> reserveSellOrder(ReserveOrderEntity body, String marketCode);
 }
