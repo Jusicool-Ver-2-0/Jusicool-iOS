@@ -34,7 +34,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
 
   Color hexToColor(String hex) {
     final buffer = StringBuffer();
-    if (hex.length == 7) buffer.write('ff'); // 투명도(100%)
+    if (hex.length == 7) buffer.write('ff');
     buffer.write(hex.replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
@@ -53,7 +53,7 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
         leading: IconButton(
           padding: EdgeInsets.only(left: 24.sp),
           icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
-          onPressed: () => Navigator.of(context).pop,
+          onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('내 자산', style: JusicoolTypography.subTitle),
       ),
@@ -67,69 +67,83 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
             if (snap.hasError) {
               return Center(child: Text('에러: ${snap.error}'));
             }
+
             final data = snap.data!;
+
             return SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 56.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                spacing: 24.h,
                 children: [
-                  const SizedBox(height: 24),
-                  Text(
-                    "${formatter.format(data.totalAsset)}원",
-                    style: JusicoolTypography.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '지난 달 보다 ',
-                          style: JusicoolTypography.bodySmall,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 4.h,
+                    children: [
+                      Text(
+                        "${formatter.format(data.totalAsset)}원",
+                        style: JusicoolTypography.titleMedium,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '지난 달 보다 ',
+                              style: JusicoolTypography.bodySmall,
+                            ),
+                            TextSpan(
+                              text: '${formatter.format(data.change)}원 ',
+                              style: JusicoolTypography.bodySmall.copyWith(
+                                color: Colors.red,
+                              ),
+                            ),
+                            TextSpan(
+                              text: '늘었어요',
+                              style: JusicoolTypography.bodySmall,
+                            ),
+                          ],
                         ),
-                        TextSpan(
-                          text: '${formatter.format(data.change)}원 ',
-                          style: JusicoolTypography.bodySmall.copyWith(
-                            color: Colors.red,
-                          ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 2.h,
+                    children: [
+                      Text(
+                        "주문 가능 금액",
+                        style: JusicoolTypography.bodyMedium.copyWith(
+                          color: JusicoolColor.gray600,
                         ),
-                        TextSpan(
-                          text: '늘었어요',
-                          style: JusicoolTypography.bodySmall,
+                      ),
+                      Text(
+                        "${formatter.format(data.availableAmount)}원",
+                        style: JusicoolTypography.titleSmall,
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 2.h,
+                    children: [
+                      Text(
+                        "투자 금액",
+                        style: JusicoolTypography.bodyMedium.copyWith(
+                          color: JusicoolColor.gray600,
                         ),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        "${formatter.format(data.investmentAmount)}원",
+                        style: JusicoolTypography.titleSmall,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 32),
-                  Text(
-                    "주문 가능 금액",
-                    style: JusicoolTypography.bodyMedium.copyWith(
-                      color: JusicoolColor.gray600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${formatter.format(data.availableAmount)}원",
-                    style: JusicoolTypography.titleSmall,
-                  ),
-                  const SizedBox(height: 24),
-                  Text(
-                    "투자 금액",
-                    style: JusicoolTypography.bodyMedium.copyWith(
-                      color: JusicoolColor.gray600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${formatter.format(data.investmentAmount)}원",
-                    style: JusicoolTypography.titleSmall,
-                  ),
-                  const SizedBox(height: 32),
-                  SizedBox(
-                    height: 200,
+                  AspectRatio(
+                    aspectRatio: 1.5,
                     child: PieChart(
                       PieChartData(
                         sectionsSpace: 4,
-                        centerSpaceRadius: 80,
+                        centerSpaceRadius: 70.h,
                         sections:
                             data.sections
                                 .map(
@@ -137,29 +151,24 @@ class _MyAssetsScreenState extends State<MyAssetsScreen> {
                                     color: hexToColor(s.colorHex),
                                     value: s.percentage,
                                     title: '',
-                                    radius: 45,
+                                    radius: 40.h,
                                   ),
                                 )
                                 .toList(),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 24),
-
-                  ListView.separated(
-                    physics: const NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: data.sections.length,
-                    separatorBuilder: (_, _) => const SizedBox(height: 24),
-                    itemBuilder: (context, index) {
-                      final s = data.sections[index];
-                      return MyAssetTile(
-                        stockName: s.name,
-                        stockPrice: "${formatter.format(s.price)}원",
-                        percentage: "${s.percentage.toStringAsFixed(1)}%",
-                        iconColor: hexToColor(s.colorHex),
-                      );
-                    },
+                  Column(
+                    spacing: 16.h,
+                    children:
+                        data.sections.map((s) {
+                          return MyAssetTile(
+                            stockName: s.name,
+                            stockPrice: "${formatter.format(s.price)}원",
+                            percentage: "${s.percentage.toStringAsFixed(1)}%",
+                            iconColor: hexToColor(s.colorHex),
+                          );
+                        }).toList(),
                   ),
                 ],
               ),
