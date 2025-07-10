@@ -1,6 +1,6 @@
 import 'package:jusicool_ios/data/order/dto/remote/response/month_rate_response_dto.dart';
 import 'package:jusicool_ios/domain/order/entities/month_rate_entity.dart';
-class MothRateResponseMapper {
+class MonthRateResponseMapper {
   static MonthRateResponseDto toDto(MonthRateEntity entity) =>
       MonthRateResponseDto(
         monthlyRate: entity.monthlyRate,
