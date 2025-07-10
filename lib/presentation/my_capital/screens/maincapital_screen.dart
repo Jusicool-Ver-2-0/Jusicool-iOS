@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:go_router/go_router.dart';
+import 'package:jusicool_ios/presentation/my_capital/screens/widget/stock_cards.dart';
 
 class MainCapitalScreen extends StatelessWidget {
   const MainCapitalScreen({super.key});
@@ -309,8 +310,7 @@ class MainCapitalScreen extends StatelessWidget {
           );
           final priceChange =
               "$sign$changeValueStr원 (${(item['changePercentage'] as double).toStringAsFixed(1)}%)";
-
-          return StockCard(
+          return StockCards(
             companyName: item['companyName'] as String,
             logoUrl: item['imagePath'] as String,
             price: item['amount'] as String,
