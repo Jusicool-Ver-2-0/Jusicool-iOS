@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jusicool_ios/presentation/my_capital/screens/widget/stock_cards.dart';
+import 'package:jusicool_ios/presentation/my_capital/widgets/stock_cards.dart';
 
 class MainCapitalScreen extends StatelessWidget {
   const MainCapitalScreen({super.key});
