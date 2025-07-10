@@ -160,8 +160,6 @@ class MainCapitalScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  /// 보유 주식 & 코인
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 8.h,
@@ -176,9 +174,7 @@ class MainCapitalScreen extends StatelessWidget {
                       _buildAssetSection("코인", coinData, currencyFormat),
                     ],
                   ),
-
                   Divider(height: 1.h, color: JusicoolColor.gray400),
-
                   Column(
                     spacing: 8.h,
                     children: [
@@ -197,7 +193,6 @@ class MainCapitalScreen extends StatelessWidget {
                 ],
               ),
             ),
-
             Container(
               width: double.infinity,
               height: 24.h,

@@ -5,8 +5,6 @@ import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/revenue_screens/revenuecard.dart';
 import 'package:go_router/go_router.dart';
 
-const double adjustedTopPadding = 16.0;
-
 class MonthlyRevenueScreen extends StatefulWidget {
   const MonthlyRevenueScreen({super.key});
 
@@ -161,8 +159,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         title: Text(
           "이번 달 수익",
           style: JusicoolTypography.subTitle.copyWith(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.w600,
             color: JusicoolColor.black,
           ),
         ),
@@ -177,8 +173,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
                   child: Text(
                     revenueText,
                     style: JusicoolTypography.titleSmall.copyWith(
-                      fontSize: 24.sp,
-                      fontWeight: FontWeight.w600,
                       color: revenueColor,
                     ),
                   ),
@@ -196,13 +190,9 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
                     indicator: const BoxDecoration(
                       color: JusicoolColor.white,
                       border: Border(
-                        bottom: BorderSide(
-                          color: JusicoolColor.black,
-                          width: 1.0,
-                        ),
+                        bottom: BorderSide(color: JusicoolColor.black),
                       ),
                     ),
-                    indicatorWeight: 1.0,
                     indicatorPadding: EdgeInsets.zero,
                     splashFactory: NoSplash.splashFactory,
                     overlayColor: WidgetStateProperty.all(Colors.transparent),
@@ -222,16 +212,15 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
         body: Container(
           color: JusicoolColor.white,
           child: Padding(
-            padding: EdgeInsets.only(left: 24.sp, top: adjustedTopPadding.h),
+            padding: EdgeInsets.only(left: 24.sp, top: 16.h),
             child: ListView.separated(
               itemCount: filteredData.length,
-              separatorBuilder: (_, __) => SizedBox(height: 16.h),
+              separatorBuilder: (context, index) => SizedBox(height: 16.h),
               itemBuilder: (context, index) {
                 final item = filteredData[index];
                 final date = item['date'] as String;
                 final isNewDate =
                     index == 0 || filteredData[index - 1]['date'] != date;
-
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   spacing: 4.h,
@@ -240,8 +229,6 @@ class _MonthlyRevenueScreenState extends State<MonthlyRevenueScreen>
                       Text(
                         date,
                         style: JusicoolTypography.bodySmall.copyWith(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w400,
                           color: JusicoolColor.black,
                         ),
                       ),

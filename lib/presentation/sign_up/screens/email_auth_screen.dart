@@ -37,7 +37,6 @@ class EmailAuthScreen extends ConsumerWidget {
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: JusicoolTypography.bodySmall.copyWith(
-          fontSize: 16.sp,
           color: JusicoolColor.gray300,
         ),
         contentPadding: EdgeInsets.all(16.w),
