@@ -35,127 +35,78 @@ class NewsListScreen extends StatefulWidget {
 }
 
 class _NewsListScreenState extends State<NewsListScreen> {
-  List<NewsItem> _newsItems = [];
   final ScrollController _scrollController = ScrollController();
-  double _scrollOffset = 0.0;
+  List<NewsItem> newsItems = [];
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_handleScroll);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadNewsItems();
-    });
+    _loadNewsItems();
   }
 
   Future<void> _loadNewsItems() async {
     try {
-      final String jsonString = await DefaultAssetBundle.of(
+      final jsonString = await DefaultAssetBundle.of(
         context,
       ).loadString('assets/data/news.json');
       final List<dynamic> jsonData = json.decode(jsonString);
+      final items = jsonData.map((e) => NewsItem.fromJson(e)).toList();
 
-      setState(() {
-        _newsItems = jsonData.map((item) => NewsItem.fromJson(item)).toList();
-      });
+      setState(() => newsItems = items);
     } catch (e) {
       debugPrint('뉴스 로드 실패: $e');
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('뉴스 데이터를 불러올 수 없습니다.')));
-      }
+      _showErrorSnackBar('뉴스 데이터를 불러올 수 없습니다.');
     }
   }
 
-  void _handleScroll() {
-    setState(() {
-      _scrollOffset = _scrollController.offset;
-    });
-  }
-
-  Color _getJusicoolBarColor() {
-    return _scrollOffset < 20 ? Colors.transparent : JusicoolColor.white;
+  void _showErrorSnackBar(String message) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   Future<void> _launchUrl(String url) async {
-    final Uri uri = Uri.parse(url);
+    final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('링크를 열 수 없습니다.')));
-      }
+      _showErrorSnackBar('링크를 열 수 없습니다.');
     }
   }
 
   @override
   void dispose() {
-    _scrollController
-      ..removeListener(_handleScroll)
-      ..dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    final double jusicoolBarHeight = kToolbarHeight + statusBarHeight;
-
     return Scaffold(
       backgroundColor: JusicoolColor.white,
-      body: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child:
-                _newsItems.isEmpty
-                    ? const Center(child: CircularProgressIndicator())
-                    : ListView.separated(
-                      controller: _scrollController,
-                      padding: EdgeInsets.only(top: jusicoolBarHeight + 24.h),
-                      itemCount: _newsItems.length,
-                      separatorBuilder: (_, _) => SizedBox(height: 20.h),
-                      itemBuilder: (context, index) {
-                        final item = _newsItems[index];
-                        return GestureDetector(
-                          onTap: () => _launchUrl(item.linkUrl),
-                          child: NewsCard(
-                            key: ValueKey('${item.title}_$index'),
-                            title: item.title,
-                            subtitle: item.subtitle,
-                            imageUrl: item.imageUrl,
-                          ),
-                        );
-                      },
-                    ),
-          ),
-          Container(
-            height: jusicoolBarHeight,
-            padding: EdgeInsets.only(top: statusBarHeight),
-            color: _getJusicoolBarColor(),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () => Navigator.of(context).pop(),
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 56.h),
+        child:
+            newsItems.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : ListView.separated(
+                  controller: _scrollController,
+                  itemCount: newsItems.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 20.h),
+                  itemBuilder: (context, index) {
+                    final item = newsItems[index];
+                    return GestureDetector(
+                      onTap: () => _launchUrl(item.linkUrl),
+                      child: NewsCard(
+                        key: ValueKey('${item.title}_$index'),
+                        title: item.title,
+                        subtitle: item.subtitle,
+                        imageUrl: item.imageUrl,
+                      ),
+                    );
+                  },
                 ),
-                const Spacer(),
-                Text(
-                  "뉴스",
-                  style: JusicoolTypography.subTitle.copyWith(
-                    color: Colors.black,
-                  ),
-                ),
-                const Spacer(),
-                SizedBox(width: 48.w),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

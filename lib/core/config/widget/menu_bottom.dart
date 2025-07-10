@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
+import 'package:jusicool_ios/presentation/news/screens/news_list_screen.dart';
 
 class ScreenConfig {
   ScreenConfig({required this.title, required this.widget});
@@ -14,7 +15,7 @@ class ScreenList {
   static final List<ScreenConfig> configs = [
     ScreenConfig(title: '자산', widget: const MainCapitalScreen()),
     ScreenConfig(title: '차트', widget: const MainCapitalScreen()),
-    ScreenConfig(title: '뉴스', widget: const MainCapitalScreen()),
+    ScreenConfig(title: '뉴스', widget: const NewsListScreen()),
     ScreenConfig(
       title: '마이 페이지',
       widget: const MainCapitalScreen(),
