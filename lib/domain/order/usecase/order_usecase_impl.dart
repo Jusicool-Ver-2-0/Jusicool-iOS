@@ -1,4 +1,5 @@
 import 'package:jusicool_ios/domain/enum/share/order/reserve_type.dart';
+import 'package:jusicool_ios/domain/enum/share/order/status_type.dart';
 import 'package:jusicool_ios/domain/order/entities/month_order_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/month_rate_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/my_order_entity.dart';
@@ -24,7 +25,7 @@ class OrderUsecaseImpl extends OrderUsecase {
   }
 
   @override
-  Future<MyOrderEntity> fetchMyorders(List<ReserveType> type) async {
+  Future<MyOrderEntity> fetchMyorders(StatusType type) async {
     return await _repository.fetchMyorders(type);
   }
 
