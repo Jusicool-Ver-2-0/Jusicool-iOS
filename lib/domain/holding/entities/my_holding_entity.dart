@@ -1,15 +1,15 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'holding_entity.freezed.dart';
+part 'my_holding_entity.freezed.dart';
 
 @freezed
-abstract class HoldingEntity with _$HoldingEntity {
-  const factory HoldingEntity({
+abstract class MyHoldingEntity with _$MyHoldingEntity {
+  const factory MyHoldingEntity({
     required int id,
     required MarketEntity market,
     required int quantity,
     required int price,
-  }) = _HoldingEntity;
+  }) = _MyHoldingEntity;
 }
 
 @freezed
