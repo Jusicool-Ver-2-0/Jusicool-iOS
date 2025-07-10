@@ -1,6 +1,7 @@
 import 'package:jusicool_ios/data/order/data_sources/order_data_source.dart';
 import 'package:jusicool_ios/data/order/dto/remote/request/order_request_dto.dart';
 import 'package:jusicool_ios/data/order/dto/remote/request/reserve_order_request_dto.dart';
+import 'package:jusicool_ios/data/order/dto/remote/response/my_order_response_dto.dart';
 import 'package:jusicool_ios/data/order/dto/remote/response/order_response_dto.dart';
 import 'package:jusicool_ios/data/order/mapper/remote/request/order_request_mapper.dart';
 import 'package:jusicool_ios/data/order/mapper/remote/request/reserve_order_mapper.dart';
@@ -25,12 +26,12 @@ class OrderRepositoryImpl extends OrderRepository {
   OrderRepositoryImpl(this._orderDataSource);
 
   @override
-  Future<MyOrderEntity> fetchMyorders(StatusType type) async {
+  Future<List<MyOrderEntity>> fetchMyorders(StatusType type) async {
     final requestDto = MyOrderRequestDto(
       query: MyOrderQueryTypeRequestDto(type: type),
     );
     final response = await _orderDataSource.fetchMyOrder(requestDto);
-    return MyOrderResponseMapper.toEntity(response);
+    return response.map((e) => MyOrderResponseMapper.toEntity(e)).toList();
   }
 
   @override

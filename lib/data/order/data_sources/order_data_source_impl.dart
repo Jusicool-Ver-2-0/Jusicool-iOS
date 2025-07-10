@@ -15,7 +15,7 @@ class OrderDataSourceImpl extends OrderDataSource {
   OrderDataSourceImpl(this._orderApi);
 
   @override
-  Future<MyOrderResponseDto> fetchMyOrder(MyOrderRequestDto body) async {
+  Future<List<MyOrderResponseDto>> fetchMyOrder(MyOrderRequestDto body) async {
     return await _orderApi.fetchMyOrder(body.query.type.toString());
   }
 

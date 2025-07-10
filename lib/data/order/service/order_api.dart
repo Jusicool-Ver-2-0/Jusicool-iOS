@@ -15,7 +15,7 @@ abstract class OrderApi {
   factory OrderApi(Dio dio,{String baseUrl}) = _OrderApi;
 
   @GET('/order/my')
-  Future<MyOrderResponseDto> fetchMyOrder(
+  Future<List<MyOrderResponseDto>> fetchMyOrder(
     @Query('type') String type
   );
 

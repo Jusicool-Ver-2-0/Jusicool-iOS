@@ -7,7 +7,7 @@ import 'package:jusicool_ios/data/order/dto/remote/response/my_order_response_dt
 import 'package:jusicool_ios/data/order/dto/remote/response/order_response_dto.dart';
 
 abstract class OrderDataSource {
-  Future<MyOrderResponseDto> fetchMyOrder(MyOrderRequestDto body);
+  Future<List<MyOrderResponseDto>> fetchMyOrder(MyOrderRequestDto body);
 
   Future<MonthOrderResponseDto> fetchMonthOrder();
 

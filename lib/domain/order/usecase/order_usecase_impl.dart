@@ -25,7 +25,7 @@ class OrderUsecaseImpl extends OrderUsecase {
   }
 
   @override
-  Future<MyOrderEntity> fetchMyorders(StatusType type) async {
+  Future<List<MyOrderEntity>> fetchMyorders(StatusType type) async {
     return await _repository.fetchMyorders(type);
   }
   

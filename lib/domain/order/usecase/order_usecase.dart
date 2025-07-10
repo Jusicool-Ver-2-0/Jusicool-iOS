@@ -7,7 +7,7 @@ import 'package:jusicool_ios/domain/order/entities/order_response_entity.dart';
 import 'package:jusicool_ios/domain/order/entities/reserve_order_entity.dart';
 
 abstract class OrderUsecase {
-  Future<MyOrderEntity> fetchMyorders(StatusType type);
+  Future<List<MyOrderEntity>> fetchMyorders(StatusType type);
 
   Future<MonthOrderEntity> fetchMonthOrder();
 
