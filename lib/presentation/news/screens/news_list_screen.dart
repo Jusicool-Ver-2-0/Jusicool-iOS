@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// 뉴스 아이템 데이터 모델
 class NewsItem {
   final String title;
   final String subtitle;
@@ -28,7 +27,6 @@ class NewsItem {
   }
 }
 
-/// 뉴스 리스트 화면
 class NewsListScreen extends StatefulWidget {
   const NewsListScreen({super.key});
 
@@ -46,7 +44,6 @@ class _NewsListScreenState extends State<NewsListScreen> {
     super.initState();
     _scrollController.addListener(_handleScroll);
 
-    // 안전하게 JSON 로드
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadNewsItems();
     });
@@ -87,10 +84,10 @@ class _NewsListScreenState extends State<NewsListScreen> {
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
-      if(mounted) {
+      if (mounted) {
         ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('링크를 열 수 없습니다.')));
+          context,
+        ).showSnackBar(const SnackBar(content: Text('링크를 열 수 없습니다.')));
       }
     }
   }
@@ -112,7 +109,6 @@ class _NewsListScreenState extends State<NewsListScreen> {
       backgroundColor: JusicoolColor.white,
       body: Stack(
         children: [
-          // 뉴스 리스트
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child:
@@ -137,7 +133,6 @@ class _NewsListScreenState extends State<NewsListScreen> {
                       },
                     ),
           ),
-          // 커스텀 JusicoolBar
           Container(
             height: jusicoolBarHeight,
             padding: EdgeInsets.only(top: statusBarHeight),
@@ -156,7 +151,7 @@ class _NewsListScreenState extends State<NewsListScreen> {
                   ),
                 ),
                 const Spacer(),
-                SizedBox(width: 48.w), // 아이콘 영역 여백
+                SizedBox(width: 48.w),
               ],
             ),
           ),

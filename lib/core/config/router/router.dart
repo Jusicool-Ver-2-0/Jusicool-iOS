@@ -11,7 +11,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/find_school_screen.dar
 import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart';
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
-
+import 'package:jusicool_ios/presentation/news/screens/news_list_screen.dart';
 
 class RoutePaths {
   static const String splash = '/splash';
@@ -27,6 +27,7 @@ class RoutePaths {
   static const String orderDetail = '/order-detail';
   static const String myAssets = '/my-assets';
   static const String communityPostList = '/community-post-list';
+  static const String newsList = '/news-list';
 }
 
 class AppRouter {
@@ -86,6 +87,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.communityPostList,
         builder: (context, state) => const CommunityPostListScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.newsList,
+        builder: (context, state) => const NewsListScreen(),
       ),
     ],
   );
