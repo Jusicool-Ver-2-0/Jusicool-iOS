@@ -1,6 +1,6 @@
 import 'package:jusicool_ios/data/exchange/data_sources/exchange_data_source.dart';
 import 'package:jusicool_ios/data/exchange/dto/remote/request/exchange_request_dto.dart';
-import 'package:jusicool_ios/data/exchange/serivice/exchange_api.dart';
+import 'package:jusicool_ios/data/exchange/service/exchange_api.dart';
 
 class ExchangeDataSourceImpl extends ExchangeDataSource {
 
