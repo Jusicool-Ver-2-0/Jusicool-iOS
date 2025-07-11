@@ -74,7 +74,7 @@ class UserSignInController extends StateNotifier<SignInState> {
     state = state.copyWith(enableButton: enable);
   }
 
-  bool signIn() {
+  Future<bool> signIn() async {
     if (state.email.isEmpty || state.password.isEmpty) {
       _setError("이메일과 비밀번호를 입력해주세요.");
       return false;
@@ -90,17 +90,14 @@ class UserSignInController extends StateNotifier<SignInState> {
 
     _clearError();
 
-    final request = SignInMapper.toEntity(state);
-    _signInUseCase
-        .signIn(request)
-        .then((_) {
-          return true;
-        })
-        .catchError((error) {
-          _setError("아이디와 비밀번호를 다시 한 번 확인해주세요");
-          return false;
-        });
-    return false;
+    try {
+      final request = SignInMapper.toEntity(state);
+      await _signInUseCase.signIn(request);
+      return true;
+    } catch (error) {
+      _setError("아이디와 비밀번호를 다시 한 번 확인해주세요");
+      return false;
+    }
   }
 
   @override

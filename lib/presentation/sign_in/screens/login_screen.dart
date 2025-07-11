@@ -62,8 +62,8 @@ class LoginScreen extends ConsumerWidget {
               children: [
                 AppButtonMedium(
                   text: '로그인',
-                  onPressed: () {
-                    final result = provider.signIn();
+                  onPressed: () async {
+                    final result = await provider.signIn();
                     if (result) {
                       context.pushReplacement(RoutePaths.main);
                     }
