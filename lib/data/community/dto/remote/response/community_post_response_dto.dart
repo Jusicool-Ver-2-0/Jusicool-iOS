@@ -16,6 +16,6 @@ abstract class CommunityPostResponseDto with _$CommunityPostResponseDto {
     @JsonKey(name: 'is_liked') required bool isLiked,
   }) = _CommunityPostResponseDto;
 
-  factory CommunityPostResponseDto.fromJson(json) =>
+  factory CommunityPostResponseDto.fromJson(Map<String, dynamic> json) =>
       _$CommunityPostResponseDtoFromJson(json);
 }
