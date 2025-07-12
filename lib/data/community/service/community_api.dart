@@ -4,7 +4,7 @@ import 'package:jusicool_ios/data/community/dto/remote/request/write_community_c
 import 'package:jusicool_ios/data/community/dto/remote/request/write_community_post_request_dto.dart';
 import 'package:jusicool_ios/data/community/dto/remote/response/community_post_detail_response_dto.dart';
 import 'package:jusicool_ios/data/community/dto/remote/response/community_post_response_dto.dart';
-import 'package:retrofit/http.dart';
+import 'package:retrofit/retrofit.dart';
 
 part 'community_api.g.dart';
 
