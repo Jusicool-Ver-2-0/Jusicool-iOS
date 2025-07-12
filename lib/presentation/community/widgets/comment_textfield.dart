@@ -60,10 +60,9 @@ class _CommentTextFieldState extends State<CommentTextField> {
           padding: const EdgeInsets.only(right: 10),
           child: IconButton(
             onPressed: _hasText ? _submit : null,
-            icon: Image.asset(
-              'assets/images/ic_arrow_upward.png',
-              width: 28,
-              height: 28,
+            icon: Icon(
+              Icons.send,
+              size: 28,
               color: _hasText ? JusicoolColor.main : Colors.grey,
             ),
           ),
