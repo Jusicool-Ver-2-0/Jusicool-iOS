@@ -18,6 +18,13 @@ import 'package:jusicool_ios/domain/sign_in/usecase/sign_in_usecase_impl.dart';
 import 'package:jusicool_ios/domain/sign_up/repositories/sign_up_repository.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase_impl.dart';
+import 'package:jusicool_ios/data/community/service/community_api.dart';
+import 'package:jusicool_ios/data/community/data_source/community_data_source.dart';
+import 'package:jusicool_ios/data/community/data_source/community_data_source_impl.dart';
+import 'package:jusicool_ios/data/community/repositories/community_repository_impl.dart';
+import 'package:jusicool_ios/domain/community/repositories/community_repository.dart';
+import 'package:jusicool_ios/domain/community/usecase/community_usecase.dart';
+import 'package:jusicool_ios/domain/community/usecase/community_usecase_impl.dart';
 
 
 final di = GetIt.instance;
@@ -40,6 +47,7 @@ void _setApi() {
       () => NeisApi(di.get<Dio>(instanceName: 'neis')),
     );
     di.registerLazySingleton<AccountApi>(() => AccountApi(di.get<Dio>()));
+    di.registerLazySingleton<CommunityApi>(() => CommunityApi(di.get<Dio>()));
     log('✅ :: API DI 성공');
   } catch (e) {
     log('⛔ :: API DI 실패 \n$e');
@@ -53,6 +61,12 @@ void _setDataSources() {
     );
     di.registerLazySingleton<AccountDataSource>(
       () => AccountDataSourceImpl(di.get<AccountApi>()),
+    );
+    di.registerLazySingleton<CommunityDataSource>(
+      () => CommunityDataSourceImpl(di.get<CommunityApi>()),
+    );
+    di.registerLazySingleton<CommunityDataSourceImpl>(
+      () => CommunityDataSourceImpl(di.get<CommunityApi>()),
     );
     log('✅ :: DataSources DI 성공');
   } catch (e) {
@@ -68,6 +82,9 @@ void _setRepository() {
     di.registerLazySingleton<SignUpRepository>(
       () => UserRepositoryImpl(di.get<UserDataSource>()),
     );
+    di.registerLazySingleton<CommunityRepository>(
+      () => CommunityRepositoryImpl(di.get<CommunityDataSourceImpl>()),
+    );
     log('✅ :: Repository DI 성공');
   } catch (e) {
     log("⛔ :: Repository DI 실패 \n$e");
@@ -81,6 +98,9 @@ void _setUseCase() {
     );
     di.registerLazySingleton<SignUpUseCase>(
       () => SignUpUseCaseImpl(di.get<SignUpRepository>()),
+    );
+    di.registerLazySingleton<CommunityUsecase>(
+      () => CommunityUsecaseImpl(di.get<CommunityRepository>()),
     );
     log('✅ :: UseCase DI 성공');
   } catch (e) {
