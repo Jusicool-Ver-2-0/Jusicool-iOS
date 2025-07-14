@@ -1,5 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:jusicool_ios/main.dart';
+import 'package:jusicool_ios/core/config/widget/menu_bottom.dart';
 import 'package:jusicool_ios/presentation/community/screens/community_post_list_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/my_assets_screen.dart';
@@ -27,7 +28,6 @@ class RoutePaths {
   static const String orderDetail = '/order-detail';
   static const String myAssets = '/my-assets';
   static const String communityPostList = '/community-post-list';
-  static const String newsList = '/news-list';
 }
 
 class AppRouter {
@@ -36,6 +36,9 @@ class AppRouter {
   static final AppRouter _instance = AppRouter._internal();
 
   factory AppRouter() => _instance;
+
+  static final GlobalKey<NavigatorState> _shellNavigatorKey =
+      GlobalKey<NavigatorState>();
 
   static final GoRouter router = GoRouter(
     initialLocation: RoutePaths.splash,
@@ -47,10 +50,6 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.login,
         builder: (context, state) => LoginScreen(),
-      ),
-      GoRoute(
-        path: RoutePaths.main,
-        builder: (context, state) => const MainPage(),
       ),
       GoRoute(
         path: RoutePaths.nameInput,
@@ -69,10 +68,6 @@ class AppRouter {
         builder: (context, state) => const FindSchoolScreen(),
       ),
       GoRoute(
-        path: RoutePaths.mainCapital,
-        builder: (context, state) => const MainCapitalScreen(),
-      ),
-      GoRoute(
         path: RoutePaths.monthlyRevenue,
         builder: (context, state) => const MonthlyRevenueScreen(),
       ),
@@ -88,9 +83,30 @@ class AppRouter {
         path: RoutePaths.communityPostList,
         builder: (context, state) => const CommunityPostListScreen(),
       ),
-      GoRoute(
-        path: RoutePaths.newsList,
-        builder: (context, state) => const NewsListScreen(),
+
+      ShellRoute(
+        navigatorKey: _shellNavigatorKey,
+        builder: (context, state, child) {
+          return MenuBottom(child: child);
+        },
+        routes: [
+          GoRoute(
+            path: RoutePaths.mainCapital,
+            builder: (context, state) => const MainCapitalScreen(),
+          ),
+          GoRoute(
+            path: '/chart',
+            builder: (context, state) => const MainCapitalScreen(),
+          ),
+          GoRoute(
+            path: '/news-list',
+            builder: (context, state) => const NewsListScreen(),
+          ),
+          GoRoute(
+            path: '/mypage',
+            builder: (context, state) => const MyAssetsScreen(),
+          ),
+        ],
       ),
     ],
   );

@@ -7,7 +7,6 @@ import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'core/config/router/router.dart';
 import 'core/config/theme/app_theme.dart';
-import 'core/config/widget/menu_bottom.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,14 +47,5 @@ class MyApp extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MenuBottom(child: SizedBox());
   }
 }
