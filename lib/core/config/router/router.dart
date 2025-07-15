@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_ios/main.dart';
+import 'package:jusicool_ios/presentation/chart_search/chart_search_page.dart';
 import 'package:jusicool_ios/presentation/community/screens/community_post_list_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/my_assets_screen.dart';
@@ -11,7 +12,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/find_school_screen.dar
 import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart';
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
-
+import 'package:jusicool_ios/presentation/chart_detail/chart_list_page.dart';
 
 class RoutePaths {
   static const String splash = '/splash';
@@ -27,6 +28,8 @@ class RoutePaths {
   static const String orderDetail = '/order-detail';
   static const String myAssets = '/my-assets';
   static const String communityPostList = '/community-post-list';
+  static const String chartList = '/chart-list';
+  static const String chartSearch = '/chart-search';
 }
 
 class AppRouter {
@@ -86,6 +89,14 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.communityPostList,
         builder: (context, state) => const CommunityPostListScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.chartList,
+        builder: (context, state) => const ChartListPage(),
+      ),
+      GoRoute(
+        path: RoutePaths.chartSearch,
+        builder: (context, state) => ChartSearchPage(),
       ),
     ],
   );
