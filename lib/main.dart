@@ -8,6 +8,7 @@ import 'package:jusicool_ios/core/config/di/dependencies.dart';
 import 'core/config/router/router.dart';
 import 'core/config/theme/app_theme.dart';
 import 'core/config/widget/menu_bottom.dart';
+import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,6 +57,9 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MenuBottom();
+    return Scaffold(
+      body: const MainCapitalScreen(),
+      bottomNavigationBar: const MenuBottom(),
+    );
   }
 }

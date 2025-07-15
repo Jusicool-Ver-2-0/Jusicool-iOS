@@ -1,0 +1,95 @@
+Flutter crash report.
+Please report a bug at https://github.com/flutter/flutter/issues.
+
+## command
+
+flutter analyze
+
+## exception
+
+_Exception: Exception: analysis server exited with code 255 and output:
+[stderr] #24     AnalysisDriver._produceErrors (package:analyzer/src/dart/analysis/driver.dart:2047:38)
+[stderr] #25     AnalysisDriver.performWork (package:analyzer/src/dart/analysis/driver.dart:1267:7)
+[stderr] #26     AnalysisDriverScheduler._run (package:analyzer/src/dart/analysis/driver.dart:2659:24)
+[stderr] <asynchronous suspension>
+[stderr] 
+[stderr] 
+[stderr] #0      LibraryContext._throwLibraryCycleLinkException (package:analyzer/src/dart/analysis/library_context.dart:419:5)
+[stderr] #1      LibraryContext.load.loadBundle (package:analyzer/src/dart/analysis/library_context.dart:294:11)
+[stderr] #2      LibraryContext.load.loadBundle (package:analyzer/src/dart/analysis/library_context.dart:153:9)
+[stderr] #3      LibraryContext.load.<anonymous closure> (package:analyzer/src/dart/analysis/library_context.dart:344:7)
+[stderr] #4      PerformanceLog.run (package:analyzer/src/dart/analysis/performance_logger.dart:38:15)
+[stderr] #5      LibraryContext.load (package:analyzer/src/dart/analysis/library_context.dart:343:12)
+[stderr] #6      AnalysisDriver._produceErrors.<anonymous closure>.<anonymous closure> (package:analyzer/src/dart/analysis/driver.dart:2058:26)
+[stderr] #7      OperationPerformanceImpl.run (package:analyzer/src/util/performance/operation_performance.dart:155:23)
+[stderr] #8      AnalysisDriver._produceErrors.<anonymous closure> (package:analyzer/src/dart/analysis/driver.dart:2057:21)
+[stderr] #9      OperationPerformanceImpl.run (package:analyzer/src/util/performance/operation_performance.dart:155:23)
+[stderr] #10     AnalysisDriver._produceErrors (package:analyzer/src/dart/analysis/driver.dart:2047:38)
+[stderr] #11     AnalysisDriver.performWork (package:analyzer/src/dart/analysis/driver.dart:1267:7)
+[stderr] #12     AnalysisDriverScheduler._run (package:analyzer/src/dart/analysis/driver.dart:2659:24)
+[stderr] <asynchronous suspension>
+
+```
+```
+
+## flutter doctor
+
+```
+[32m[✓][39m Flutter (Channel stable, 3.32.4, on macOS 15.5 24F74 darwin-arm64, locale
+    ko-KR) [179ms]
+    [32m•[39m Flutter version 3.32.4 on channel stable at
+      /opt/homebrew/Caskroom/flutter/3.29.2/flutter
+    [32m•[39m Upstream repository https://github.com/flutter/flutter.git
+    [32m•[39m Framework revision 6fba2447e9 (5 weeks ago), 2025-06-12 19:03:56 -0700
+    [32m•[39m Engine revision 8cd19e509d
+    [32m•[39m Dart version 3.8.1
+    [32m•[39m DevTools version 2.45.1
+
+[32m[✓][39m Android toolchain - develop for Android devices (Android SDK version
+    35.0.1) [1,063ms]
+    [32m•[39m Android SDK at /Users/damn_yul/Library/Android/sdk
+    [32m•[39m Platform android-35, build-tools 35.0.1
+    [32m•[39m Java binary at: /Applications/Android
+      Studio.app/Contents/jbr/Contents/Home/bin/java
+      This is the JDK bundled with the latest Android Studio installation on
+      this machine.
+      To manually set the JDK path, use: `flutter config
+      --jdk-dir="path/to/jdk"`.
+    [32m•[39m Java version OpenJDK Runtime Environment (build
+      21.0.5+-13047016-b750.29)
+    [32m•[39m All Android licenses accepted.
+
+[32m[✓][39m Xcode - develop for iOS and macOS (Xcode 16.3) [529ms]
+    [32m•[39m Xcode at /Applications/Xcode.app/Contents/Developer
+    [32m•[39m Build 16E140
+    [32m•[39m CocoaPods version 1.16.2
+
+[32m[✓][39m Chrome - develop for the web [6ms]
+    [32m•[39m Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
+
+[32m[✓][39m Android Studio (version 2024.3) [5ms]
+    [32m•[39m Android Studio at /Applications/Android Studio.app/Contents
+    [32m•[39m Flutter plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/9212-flutter
+    [32m•[39m Dart plugin can be installed from:
+      🔨 https://plugins.jetbrains.com/plugin/6351-dart
+    [32m•[39m Java version OpenJDK Runtime Environment (build
+      21.0.5+-13047016-b750.29)
+
+[32m[✓][39m VS Code (version 1.102.0) [4ms]
+    [32m•[39m VS Code at /Applications/Visual Studio Code.app/Contents
+    [32m•[39m Flutter extension version 3.114.0
+
+[32m[✓][39m Connected device (3 available) [5.8s]
+    [32m•[39m iPhone 15 Pro Max (mobile) • C25F166E-C04A-4C97-BC34-F232D5F33DB2 • ios
+      • com.apple.CoreSimulator.SimRuntime.iOS-17-5 (simulator)
+    [32m•[39m macOS (desktop)            • macos                                •
+      darwin-arm64   • macOS 15.5 24F74 darwin-arm64
+    [32m•[39m Chrome (web)               • chrome                               •
+      web-javascript • Google Chrome 138.0.7204.101
+
+[32m[✓][39m Network resources [344ms]
+    [32m•[39m All expected network resources are available.
+
+[32m•[39m No issues found!
+```

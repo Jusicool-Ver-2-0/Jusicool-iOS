@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
+import 'package:jusicool_ios/presentation/chart_detail/chart_list_page.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 
 class ScreenConfig {
@@ -13,12 +14,9 @@ class ScreenConfig {
 class ScreenList {
   static final List<ScreenConfig> configs = [
     ScreenConfig(title: '자산', widget: const MainCapitalScreen()),
-    ScreenConfig(title: '차트', widget: const MainCapitalScreen()),
+    ScreenConfig(title: '차트', widget: const ChartListPage()),
     ScreenConfig(title: '뉴스', widget: const MainCapitalScreen()),
-    ScreenConfig(
-      title: '마이 페이지',
-      widget: const MainCapitalScreen(),
-    ), //임시 경로 설정, 추후 파일이 생성되면 변경 필요
+    ScreenConfig(title: '마이 페이지', widget: const MainCapitalScreen()),
   ];
 
   static Widget getScreen(int index) {
