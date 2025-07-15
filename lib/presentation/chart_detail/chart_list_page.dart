@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
 import 'package:jusicool_ios/presentation/chart_detail/chart_list_card.dart';
-import 'package:jusicool_ios/presentation/chart_search/recently_search.dart';
+import 'package:jusicool_ios/presentation/chart_search/screens/recently_search.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_ios/core/config/router/router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jusicool_ios/presentation/chart_search/recently_search_provider.dart';
+import 'package:jusicool_ios/presentation/chart_search/controller/recently_search_provider.dart';
 
 class ChartListPage extends ConsumerStatefulWidget {
   const ChartListPage({super.key});

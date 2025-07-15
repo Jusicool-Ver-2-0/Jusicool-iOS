@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
-import 'package:jusicool_ios/presentation/chart_search/recently_search.dart';
-import 'package:jusicool_ios/presentation/chart_search/popular_item.dart';
+import 'package:jusicool_ios/presentation/chart_search/screens/recently_search.dart';
+import 'package:jusicool_ios/presentation/chart_search/screens/popular_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:jusicool_ios/presentation/chart_search/recently_search_provider.dart';
+import 'package:jusicool_ios/presentation/chart_search/controller/recently_search_provider.dart';
 
 class ChartSearchPage extends ConsumerWidget {
   ChartSearchPage({super.key});

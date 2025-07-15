@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:jusicool_ios/main.dart';
-import 'package:jusicool_ios/presentation/chart_search/chart_search_page.dart';
+import 'package:jusicool_ios/presentation/chart_search/screens/chart_search_page.dart';
 import 'package:jusicool_ios/presentation/community/screens/community_post_list_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
 import 'package:jusicool_ios/presentation/my_capital/screens/my_assets_screen.dart';
