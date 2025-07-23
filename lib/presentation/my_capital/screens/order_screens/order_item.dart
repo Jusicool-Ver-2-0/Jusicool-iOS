@@ -31,18 +31,12 @@ class OrderItem extends StatelessWidget {
           Text(
             companyName,
             style: JusicoolTypography.bodySmall.copyWith(
-              fontSize: 16.sp,
-              fontWeight: FontWeight.w400,
               color: JusicoolColor.black,
             ),
           ),
           Text(
             "$formattedAmount원 $statusText",
-            style: JusicoolTypography.label.copyWith(
-              fontSize: 12.sp,
-              fontWeight: FontWeight.w400,
-              color: changeColor,
-            ),
+            style: JusicoolTypography.label.copyWith(color: changeColor),
           ),
         ],
       ),

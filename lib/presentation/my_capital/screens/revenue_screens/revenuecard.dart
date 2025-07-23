@@ -21,13 +21,8 @@ class RevenueCard extends StatelessWidget {
 
   String getFormattedAmount() {
     final numberFormat = NumberFormat("#,###", "en_US");
-    if (changeValue > 0) {
-      return "+${numberFormat.format(amount)}";
-    } else if (changeValue < 0) {
-      return "-${numberFormat.format(amount)}";
-    } else {
-      return "+${numberFormat.format(amount)}";
-    }
+    final sign = changeValue < 0 ? "-" : "+";
+    return "$sign${numberFormat.format(amount)}";
   }
 
   Color getChangeColor() {
@@ -42,29 +37,25 @@ class RevenueCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String formattedAmount = getFormattedAmount();
-    final Color changeColor = getChangeColor();
+    final formattedAmount = getFormattedAmount();
+    final changeColor = getChangeColor();
 
     return SizedBox(
       width: 312.w,
       height: 48.h,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        spacing: 12.w, // 이미지와 다음 요소 사이 간격
         children: [
-          Padding(
-            padding: EdgeInsets.only(right: 12.w),
-            child: Image.network(
-              imagePath,
-              width: 40.w,
-              height: 40.h,
-              fit: BoxFit.cover,
-            ),
+          Image.network(
+            imagePath,
+            width: 40.w,
+            height: 40.h,
+            fit: BoxFit.cover,
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 8.w), // 수평 간격 조정
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+          Expanded(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   companyName,
@@ -72,48 +63,36 @@ class RevenueCard extends StatelessWidget {
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w400,
                     height: 22 / 16,
-                    letterSpacing: 0,
                     color: JusicoolColor.black,
                   ),
                 ),
-              ],
-            ),
-          ),
-          Expanded(child: Container()), // 남은 공간 채우기
-          SizedBox(
-            width: 160.w,
-            height: 44.h,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 0, bottom: 0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    formattedAmount,
-                    style: JusicoolTypography.bodySmall.copyWith(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w400,
-                      height: 22 / 16,
-                      letterSpacing: 0,
-                      color: changeColor,
+                const Spacer(),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 2.h, // 수익 금액과 퍼센트 사이 간격
+                  children: [
+                    Text(
+                      formattedAmount,
+                      style: JusicoolTypography.bodySmall.copyWith(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w400,
+                        height: 22 / 16,
+                        color: changeColor,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 4.h), // 수직 간격을 Padding으로 처리
-                    child: Text(
+                    Text(
                       "(${changePercentage.toStringAsFixed(1)}%)",
                       style: TextStyle(
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w400,
                         height: 16 / 12,
-                        letterSpacing: 0,
                         color: changeColor,
                       ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
