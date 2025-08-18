@@ -67,3 +67,36 @@ Dio neis() {
   dio.interceptors.add(PrettyDioLogger(responseBody: true));
   return dio;
 }
+
+Dio upBit() {
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://api.upbit.com/v1',
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+    ),
+  );
+  return dio;
+}
+
+Dio koreaInvestment() {
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: 'https://openapi.koreainvestment.com:9443',
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+    ),
+  );
+  dio.interceptors.add(CookieManager(GetIt.I<CookieJar>()));
+  dio.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: true,
+      responseHeader: true,
+      responseBody: true,
+      error: false,
+      compact: true,
+      enabled: kDebugMode,
+    ),
+  );
+  return dio;
+}

@@ -12,6 +12,7 @@ import 'package:jusicool_ios/presentation/sign_up/screens/name_input_screen.dart
 import 'package:jusicool_ios/presentation/sign_up/screens/password_create_screen.dart';
 import 'package:jusicool_ios/presentation/splash/screens/splash_screen.dart';
 
+import '../../../presentation/candle_stick_chart/screens/candle_stick_chart_screen.dart';
 
 class RoutePaths {
   static const String splash = '/splash';
@@ -27,6 +28,7 @@ class RoutePaths {
   static const String orderDetail = '/order-detail';
   static const String myAssets = '/my-assets';
   static const String communityPostList = '/community-post-list';
+  static const String candleStickChart = '/candle-stick-chart';
 }
 
 class AppRouter {
@@ -37,7 +39,7 @@ class AppRouter {
   factory AppRouter() => _instance;
 
   static final GoRouter router = GoRouter(
-    initialLocation: RoutePaths.splash,
+    initialLocation: RoutePaths.candleStickChart,
     routes: [
       GoRoute(
         path: RoutePaths.splash,
@@ -86,6 +88,10 @@ class AppRouter {
       GoRoute(
         path: RoutePaths.communityPostList,
         builder: (context, state) => const CommunityPostListScreen(),
+      ),
+      GoRoute(
+        path: RoutePaths.candleStickChart,
+        builder: (context, state) => CandleStickChartScreen(),
       ),
     ],
   );

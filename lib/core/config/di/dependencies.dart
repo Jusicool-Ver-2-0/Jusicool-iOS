@@ -7,6 +7,10 @@ import 'package:jusicool_ios/core/network/interceptor/cookie_interceptor.dart';
 import 'package:jusicool_ios/data/account/data_sources/account_data_source.dart';
 import 'package:jusicool_ios/data/account/data_sources/account_data_source_impl.dart';
 import 'package:jusicool_ios/data/account/service/account_api.dart';
+import 'package:jusicool_ios/data/stock/data_sources/stock_data_source.dart';
+import 'package:jusicool_ios/data/stock/data_sources/stock_data_source_impl.dart';
+import 'package:jusicool_ios/data/stock/repositories/stock_repository_impl.dart';
+import 'package:jusicool_ios/data/stock/service/up_bit_api.dart';
 import 'package:jusicool_ios/data/user/data_sources/user_data_source.dart';
 import 'package:jusicool_ios/data/user/data_sources/user_data_source_impl.dart';
 import 'package:jusicool_ios/data/user/repositories/user_repository_impl.dart';
@@ -18,7 +22,9 @@ import 'package:jusicool_ios/domain/sign_in/usecase/sign_in_usecase_impl.dart';
 import 'package:jusicool_ios/domain/sign_up/repositories/sign_up_repository.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase.dart';
 import 'package:jusicool_ios/domain/sign_up/usecase/sign_up_usecase_impl.dart';
-
+import '../../../domain/candle_stick_chart/repositories/candle_stick_chart_repository.dart';
+import '../../../domain/candle_stick_chart/usecase/candle_stick_chart_usecase.dart';
+import '../../../domain/candle_stick_chart/usecase/candle_stick_chart_usecase_impl.dart';
 
 final di = GetIt.instance;
 
@@ -27,6 +33,11 @@ void _setDio() {
     di.registerLazySingleton<Dio>(() => dio());
     di.registerSingletonAsync<CookieJar>(() async => await cookieJar());
     di.registerLazySingleton<Dio>(() => neis(), instanceName: 'neis');
+    di.registerLazySingleton<Dio>(() => upBit(), instanceName: 'upbit');
+    di.registerLazySingleton<Dio>(
+      () => koreaInvestment(),
+      instanceName: 'koreaInvestment',
+    );
     log('✅ :: DIO DI 성공');
   } catch (e) {
     log("⛔ :: DIO DI 실패 \n$e");
@@ -40,6 +51,9 @@ void _setApi() {
       () => NeisApi(di.get<Dio>(instanceName: 'neis')),
     );
     di.registerLazySingleton<AccountApi>(() => AccountApi(di.get<Dio>()));
+    di.registerLazySingleton<UpBitApi>(
+      () => UpBitApi(di.get<Dio>(instanceName: 'upbit')),
+    );
     log('✅ :: API DI 성공');
   } catch (e) {
     log('⛔ :: API DI 실패 \n$e');
@@ -53,6 +67,9 @@ void _setDataSources() {
     );
     di.registerLazySingleton<AccountDataSource>(
       () => AccountDataSourceImpl(di.get<AccountApi>()),
+    );
+    di.registerLazySingleton<StockDataSource>(
+      () => StockDataSourceImpl(di.get<UpBitApi>()),
     );
     log('✅ :: DataSources DI 성공');
   } catch (e) {
@@ -68,6 +85,9 @@ void _setRepository() {
     di.registerLazySingleton<SignUpRepository>(
       () => UserRepositoryImpl(di.get<UserDataSource>()),
     );
+    di.registerLazySingleton<CandleStickChartRepository>(
+      () => StockRepositoryImpl(di.get<StockDataSource>()),
+    );
     log('✅ :: Repository DI 성공');
   } catch (e) {
     log("⛔ :: Repository DI 실패 \n$e");
@@ -81,6 +101,9 @@ void _setUseCase() {
     );
     di.registerLazySingleton<SignUpUseCase>(
       () => SignUpUseCaseImpl(di.get<SignUpRepository>()),
+    );
+    di.registerLazySingleton<CandleStickChartUseCase>(
+      () => CandleStickChartUseCaseImpl(di.get<CandleStickChartRepository>()),
     );
     log('✅ :: UseCase DI 성공');
   } catch (e) {

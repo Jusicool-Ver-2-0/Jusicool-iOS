@@ -807,6 +807,9 @@
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider_foundation/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider_foundation/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/ios/.symlinks/plugins/path_provider_foundation/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/.fvm/flutter_sdk/bin/cache/dart-sdk/lib/_internal/sdk_library_metadata/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/.fvm/flutter_sdk/bin/cache/dart-sdk/lib/_internal/sdk_library_metadata/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/.fvm/flutter_sdk/bin/cache/dart-sdk/lib/_internal/sdk_library_metadata/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -57,6 +57,8 @@ dependencies:
   
   rxdart: ^0.28.0
   flutter_lints: ^6.0.0
+  animated_digit: ^3.2.3
+  get: ^4.7.2
 
 
 dev_dependencies:
