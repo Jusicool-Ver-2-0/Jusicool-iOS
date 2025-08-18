@@ -1,40 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:jusicool_design_system/jusicool_design_system.dart';
-import 'package:jusicool_ios/presentation/my_capital/screens/maincapital_screen.dart';
-
-class ScreenConfig {
-  ScreenConfig({required this.title, required this.widget});
-
-  final String title;
-  final Widget widget;
-}
-
-class ScreenList {
-  static final List<ScreenConfig> configs = [
-    ScreenConfig(title: '자산', widget: const MainCapitalScreen()),
-    ScreenConfig(title: '차트', widget: const MainCapitalScreen()),
-    ScreenConfig(title: '뉴스', widget: const MainCapitalScreen()),
-    ScreenConfig(
-      title: '마이 페이지',
-      widget: const MainCapitalScreen(),
-    ), //임시 경로 설정, 추후 파일이 생성되면 변경 필요
-  ];
-
-  static Widget getScreen(int index) {
-    if (index < 0 || index >= configs.length) {
-      return configs[0].widget;
-    }
-    return configs[index].widget;
-  }
-
-  static String getTitle(int index) {
-    if (index < 0 || index >= configs.length) {
-      return configs[0].title;
-    }
-    return configs[index].title;
-  }
-}
 
 class NavBarItem extends StatelessWidget {
   const NavBarItem({
@@ -91,24 +58,26 @@ class NavBarItem extends StatelessWidget {
   }
 }
 
-class MenuBottom extends StatefulWidget {
-  const MenuBottom({super.key});
+class MenuBottom extends StatelessWidget {
+  const MenuBottom({super.key, required this.child});
+  final Widget child;
 
-  @override
-  _MenuBottomState createState() => _MenuBottomState();
-}
+  static const List<_NavItemData> _navItems = [
+    _NavItemData(path: '/main-capital', iconName: 'capital', label: '자산'),
+    _NavItemData(path: '/main-capital', iconName: 'chart', label: '차트'),
+    _NavItemData(path: '/news-list', iconName: 'news', label: '뉴스'),
+    _NavItemData(path: '/main-capital', iconName: 'account', label: '마이 페이지'),
+  ];
 
-class _MenuBottomState extends State<MenuBottom> {
-  int selectedIndex = 0;
-
-  void onTap(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
+  int _locationToIndex(String location) {
+    return _navItems.indexWhere((item) => location.startsWith(item.path));
   }
 
   @override
   Widget build(BuildContext context) {
+    final location = GoRouterState.of(context).uri.toString();
+    final selectedIndex = _locationToIndex(location);
+
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       body: SafeArea(
@@ -117,15 +86,7 @@ class _MenuBottomState extends State<MenuBottom> {
         maintainBottomViewPadding: true,
         child: Column(
           children: [
-            Expanded(
-              child: IndexedStack(
-                index: selectedIndex,
-                children: List.generate(
-                  ScreenList.configs.length,
-                  (index) => ScreenList.getScreen(index),
-                ),
-              ),
-            ),
+            Expanded(child: child),
             Container(
               height: 52.h,
               color: JusicoolColor.white,
@@ -148,10 +109,14 @@ class _MenuBottomState extends State<MenuBottom> {
                         children: List.generate(
                           _navItems.length,
                           (index) => NavBarItem(
-                            iconName: _navItems[index]['image']!,
-                            label: ScreenList.getTitle(index),
+                            iconName: _navItems[index].iconName,
+                            label: _navItems[index].label,
                             isSelected: selectedIndex == index,
-                            onTap: () => onTap(index),
+                            onTap: () {
+                              if (selectedIndex != index) {
+                                context.go(_navItems[index].path);
+                              }
+                            },
                           ),
                         ),
                       ),
@@ -165,11 +130,16 @@ class _MenuBottomState extends State<MenuBottom> {
       ),
     );
   }
+}
 
-  static const List<Map<String, String>> _navItems = [
-    {'label': '자산', 'image': 'capital'},
-    {'label': '차트', 'image': 'chart'},
-    {'label': '뉴스', 'image': 'news'},
-    {'label': '마이 페이지', 'image': 'account'},
-  ];
+class _NavItemData {
+  final String path;
+  final String iconName;
+  final String label;
+
+  const _NavItemData({
+    required this.path,
+    required this.iconName,
+    required this.label,
+  });
 }

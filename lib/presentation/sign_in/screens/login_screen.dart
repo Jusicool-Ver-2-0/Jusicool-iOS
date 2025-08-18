@@ -65,7 +65,7 @@ class LoginScreen extends ConsumerWidget {
                   onPressed: () {
                     final result = provider.signIn();
                     if (result) {
-                      context.pushReplacement(RoutePaths.main);
+                      context.pushReplacement('/main-capital');
                     }
                   },
                   backgroundColor:

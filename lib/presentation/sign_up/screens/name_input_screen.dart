@@ -64,9 +64,13 @@ class NameInputScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: JusicoolColor.white,
       appBar: AppBar(
-        leading: Padding(
-          padding: EdgeInsets.only(left: 15.w, top: 20.h),
-          child: const BackButton(),
+        leading: IconButton(
+          iconSize: 24.sp,
+          padding: EdgeInsets.only(left: 24.sp, top: 20.h),
+          icon: const Icon(Icons.arrow_back, color: JusicoolColor.black),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
         elevation: 0,
         backgroundColor: JusicoolColor.white,
